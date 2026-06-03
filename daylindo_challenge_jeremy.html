@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daylindo — Challenge Jérémy · Cold Call</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0c0f;--bg2:#111318;--bg3:#181b22;
+  --border:#222530;--border-soft:#1d2030;
+  --text:#e8eaf0;--text-muted:#6b7280;--text-dim:#9ca3af;
+  --seg1:#f5a623;--seg1-dim:rgba(245,166,35,.12);--seg1-glow:rgba(245,166,35,.25);
+  --seg2:#3b82f6;--seg2-dim:rgba(59,130,246,.12);--seg2-glow:rgba(59,130,246,.25);
+  --seg3:#10b981;--seg3-dim:rgba(16,185,129,.12);--seg3-glow:rgba(16,185,129,.25);
+  --s2a:#6366f1;--s2b:#3b82f6;--s2c:#ec4899;--s2d:#a78bfa;
+  --rdv:#22c55e;--appele:#60a5fa;--nrep:#f87171;--encours:#f59e0b;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;overflow-x:hidden}
+/* HEADER */
+header{border-bottom:1px solid var(--border);padding:15px 32px;display:flex;align-items:center;gap:14px;position:sticky;top:0;background:rgba(11,12,15,.94);backdrop-filter:blur(12px);z-index:100}
+.logo{font-family:'DM Serif Display',serif;font-size:20px;letter-spacing:-.5px}
+.logo span{color:var(--seg1)}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.badge{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:4px;border:1px solid var(--border);color:var(--text-muted);background:var(--bg2)}
+.badge.live{border-color:var(--rdv);color:var(--rdv)}
+/* STATS BAR */
+.statsbar{display:flex;gap:0;border-bottom:1px solid var(--border);background:var(--bg2)}
+.stat-pill{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 6px;border-right:1px solid var(--border);cursor:pointer;transition:background .15s}
+.stat-pill:last-child{border-right:none}
+.stat-pill:hover{background:var(--bg3)}
+.stat-num{font-family:'DM Serif Display',serif;font-size:22px;line-height:1}
+.stat-lbl{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:2px}
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:256px 1fr;min-height:calc(100vh - 105px)}
+/* SIDEBAR */
+.sidebar{border-right:1px solid var(--border);padding:24px 0;position:sticky;top:105px;height:calc(100vh - 105px);overflow-y:auto}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.sidebar-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);padding:0 20px 10px}
+.seg-group{margin-bottom:2px}
+.seg-hdr{display:flex;align-items:center;gap:9px;padding:8px 20px;cursor:pointer;transition:background .13s;user-select:none}
+.seg-hdr:hover{background:var(--bg2)}
+.seg-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.seg-lbl{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-dim)}
+.seg-cnt{margin-left:auto;font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted)}
+.pitch-btn{display:flex;align-items:center;gap:9px;width:100%;padding:7px 20px 7px 36px;background:none;border:none;cursor:pointer;text-align:left;transition:background .12s;position:relative}
+.pitch-btn::before{content:'';position:absolute;left:20px;top:50%;transform:translateY(-50%);width:1px;height:55%;background:var(--border)}
+.pitch-btn:hover{background:var(--bg2)}
+.pitch-btn.active{background:var(--bg3)}
+.pitch-btn.active::after{content:'';position:absolute;right:0;top:0;bottom:0;width:2px;background:var(--pitch-color)}
+.pitch-code{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;padding:2px 5px;border-radius:3px;border:1px solid currentColor;opacity:.75;flex-shrink:0}
+.pitch-name{font-size:11px;color:var(--text-dim);font-weight:600}
+.pitch-btn.active .pitch-name{color:var(--text)}
+.pitch-btn .p-cnt{margin-left:auto;font-family:'DM Mono',monospace;font-size:9px;color:var(--text-muted)}
+/* RECAP BTN sidebar */
+.recap-btn{display:flex;align-items:center;gap:9px;width:100%;padding:9px 20px;background:none;border:none;cursor:pointer;text-align:left;border-top:1px solid var(--border);margin-top:12px;font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted);letter-spacing:.5px;text-transform:uppercase;transition:background .13s}
+.recap-btn:hover{background:var(--bg2);color:var(--rdv)}
+/* MAIN */
+.main{padding:28px 36px;overflow-y:auto}
+/* OVERVIEW */
+.overview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
+.seg-card{border:1px solid var(--border);border-radius:10px;padding:22px;background:var(--bg2);cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.seg-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--card-color)}
+.seg-card:hover{border-color:var(--card-color);background:var(--card-dim);transform:translateY(-2px);box-shadow:0 8px 30px var(--card-glow)}
+.seg-card-icon{font-size:24px;margin-bottom:9px}
+.seg-card-name{font-family:'DM Serif Display',serif;font-size:16px;margin-bottom:4px}
+.seg-card-sub{font-size:11px;color:var(--text-muted);line-height:1.5;margin-bottom:12px}
+.sn{font-family:'DM Serif Display',serif;font-size:28px;color:var(--card-color);line-height:1}
+.sl{font-size:11px;color:var(--text-muted);margin-top:2px}
+.pitch-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.pitch-tag{font-family:'DM Mono',monospace;font-size:9px;padding:2px 6px;border-radius:3px;border:1px solid var(--card-color);color:var(--card-color);opacity:.65}
+/* DETAIL */
+.sec-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px}
+.detail-hdr{margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.breadcrumb{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted);margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.breadcrumb button{background:none;border:none;color:var(--pitch-active-color);cursor:pointer;font-family:inherit;font-size:inherit}
+.breadcrumb button:hover{text-decoration:underline}
+.detail-top{display:flex;align-items:flex-start;gap:16px}
+.d-badge{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;padding:5px 12px;border-radius:6px;border:1px solid var(--pitch-active-color);color:var(--pitch-active-color);flex-shrink:0}
+.d-title{font-family:'DM Serif Display',serif;font-size:24px;line-height:1.2}
+.d-interlo{font-size:11px;color:var(--text-muted);margin-top:3px}
+/* PAIN + SCRIPT */
+.pain-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:24px}
+.pain-item{background:var(--bg2);border:1px solid var(--border-soft);border-radius:7px;padding:11px 14px;font-size:12px;color:var(--text-dim);line-height:1.5;display:flex;gap:9px}
+.pain-item::before{content:'→';color:var(--pitch-active-color);flex-shrink:0;font-family:'DM Mono',monospace;font-size:11px;margin-top:1px}
+.script-block{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--pitch-active-color);border-radius:7px;padding:20px;margin-bottom:24px;font-family:'DM Mono',monospace;font-size:11.5px;line-height:1.85;color:var(--text-dim);white-space:pre-wrap}
+.script-block strong{color:var(--text);font-weight:500}
+.phase-title{color:var(--pitch-active-color);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;display:block;margin:10px 0 4px;opacity:.8}
+.script-note{font-size:11px;color:var(--text-muted);font-style:italic;margin-top:-16px;margin-bottom:20px}
+.ref-block{background:var(--bg2);border:1px solid var(--border-soft);border-radius:7px;padding:13px;margin-bottom:22px}
+.ref-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px}
+.ref-val{font-size:12px;color:var(--text-dim);line-height:1.6}
+/* FILTER BAR */
+.filter-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:12px;flex-wrap:wrap}
+.filter-left{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cnt-big{font-family:'DM Serif Display',serif;font-size:26px;color:var(--pitch-active-color);line-height:1}
+.cnt-sub{font-size:11px;color:var(--text-muted)}
+.search-box{display:flex;align-items:center;gap:7px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:6px 11px}
+.search-box input{background:none;border:none;outline:none;color:var(--text);font-family:'DM Mono',monospace;font-size:11px;width:160px}
+.search-box input::placeholder{color:var(--text-muted)}
+.filter-tabs{display:flex;gap:4px}
+.ftab{font-family:'DM Mono',monospace;font-size:9px;padding:4px 9px;border-radius:4px;border:1px solid var(--border);background:var(--bg2);color:var(--text-muted);cursor:pointer;transition:all .13s;text-transform:uppercase;letter-spacing:.5px}
+.ftab.on{border-color:var(--pitch-active-color);color:var(--pitch-active-color);background:rgba(255,255,255,.04)}
+/* TABLE */
+.ctable{width:100%;border-collapse:collapse}
+.ctable th{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);text-align:left;padding:0 10px 9px;border-bottom:1px solid var(--border)}
+.ctable td{padding:10px;border-bottom:1px solid var(--border-soft);font-size:12px;vertical-align:middle}
+.ctable tr:hover td{background:rgba(255,255,255,.02)}
+.cname{font-weight:600;color:var(--text)}
+.crole{color:var(--text-dim);font-size:10px;margin-top:1px}
+.cco{color:var(--text-dim);font-size:11px}
+.ctel{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted)}
+/* STATUT BADGE inline */
+.stat-badge{display:inline-flex;align-items:center;gap:4px;font-family:'DM Mono',monospace;font-size:9px;padding:3px 7px;border-radius:3px;font-weight:500;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+.stat-badge.none{border:1px solid var(--border);color:var(--text-muted);background:var(--bg3)}
+.stat-badge.rdv{border:1px solid var(--rdv);color:var(--rdv);background:rgba(34,197,94,.1)}
+.stat-badge.appele{border:1px solid var(--appele);color:var(--appele);background:rgba(96,165,250,.1)}
+.stat-badge.nrep{border:1px solid var(--nrep);color:var(--nrep);background:rgba(248,113,113,.1)}
+.stat-badge.encours{border:1px solid var(--encours);color:var(--encours);background:rgba(245,158,11,.1)}
+/* SELECT statut inline */
+.stat-sel{appearance:none;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--text-dim);font-family:'DM Mono',monospace;font-size:10px;padding:4px 7px;cursor:pointer;outline:none;transition:border .15s}
+.stat-sel:focus{border-color:var(--pitch-active-color)}
+/* NOTE inline */
+.note-cell textarea{background:transparent;border:none;border-bottom:1px solid var(--border-soft);color:var(--text-dim);font-family:'DM Mono',monospace;font-size:10px;resize:none;outline:none;width:140px;padding:3px 0;line-height:1.4;transition:border .15s}
+.note-cell textarea:focus{border-color:var(--pitch-active-color)}
+.note-cell textarea::placeholder{color:var(--text-muted);font-style:italic}
+/* ACTIONS */
+.act-btns{display:flex;gap:4px;flex-wrap:nowrap}
+.abtn{padding:3px 8px;border-radius:4px;font-size:10px;font-family:'DM Mono',monospace;border:1px solid var(--border);background:var(--bg3);color:var(--text-dim);cursor:pointer;transition:all .13s;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:3px}
+.abtn:hover{border-color:var(--pitch-active-color);color:var(--pitch-active-color)}
+.abtn.saved{border-color:var(--rdv);color:var(--rdv)}
+.no-res{text-align:center;padding:40px;color:var(--text-muted);font-size:13px}
+/* MODAL SCRIPT */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:200;display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(5px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:12px;width:100%;max-width:560px;max-height:88vh;overflow-y:auto;padding:28px;position:relative}
+.modal::-webkit-scrollbar{width:3px}
+.modal::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.modal-close{position:absolute;top:12px;right:12px;background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:20px;line-height:1;padding:4px 8px}
+.modal-close:hover{color:var(--text)}
+.mname{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:2px}
+.mrole{font-size:12px;color:var(--text-dim);margin-bottom:16px}
+.mcontacts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.mci label{display:block;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:3px}
+.mci a,.mci span{font-size:12px;color:var(--text-dim);text-decoration:none;word-break:break-all}
+.mci a:hover{color:var(--pitch-active-color)}
+.mscript-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--border)}
+.mscript{font-family:'DM Mono',monospace;font-size:11px;line-height:1.85;color:var(--text-dim);white-space:pre-wrap}
+.mscript strong{color:var(--text);font-weight:500}
+/* RECAP MODAL */
+.recap-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:300;display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(8px)}
+.recap-modal-overlay.open{display:flex}
+.recap-modal{background:var(--bg2);border:1px solid var(--border);border-radius:14px;width:100%;max-width:680px;max-height:90vh;overflow-y:auto;padding:32px;position:relative}
+.recap-modal::-webkit-scrollbar{width:3px}
+.recap-modal::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.recap-title{font-family:'DM Serif Display',serif;font-size:24px;margin-bottom:4px}
+.recap-sub{font-size:11px;color:var(--text-muted);margin-bottom:22px}
+.recap-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px}
+.rstat{background:var(--bg3);border:1px solid var(--border-soft);border-radius:8px;padding:14px;text-align:center}
+.rstat-num{font-family:'DM Serif Display',serif;font-size:26px;line-height:1}
+.rstat-lbl{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px}
+.recap-section{margin-bottom:20px}
+.recap-section-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--border-soft)}
+.recap-row{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--border-soft);align-items:flex-start;font-size:12px}
+.recap-row:last-child{border-bottom:none}
+.recap-contact{flex:1;min-width:0}
+.recap-cname{font-weight:600;color:var(--text)}
+.recap-crole{color:var(--text-dim);font-size:10px;margin-top:1px}
+.recap-cnote{color:var(--text-dim);font-size:10px;margin-top:4px;font-style:italic;font-family:'DM Mono',monospace;line-height:1.4}
+.recap-tel{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted);white-space:nowrap}
+.recap-pitch{font-family:'DM Mono',monospace;font-size:9px;padding:2px 6px;border-radius:3px;border:1px solid currentColor;font-weight:500}
+.copy-recap-btn{display:inline-flex;align-items:center;gap:6px;margin-top:16px;padding:9px 16px;border-radius:6px;font-family:'DM Mono',monospace;font-size:11px;border:1px solid var(--border);background:var(--bg3);color:var(--text-dim);cursor:pointer;transition:all .15s}
+.copy-recap-btn:hover{border-color:var(--rdv);color:var(--rdv)}
+.empty-recap{text-align:center;padding:32px;color:var(--text-muted);font-size:13px}
+/* REMIND */
+.remind-block{background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:20px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">DAY<span>·</span>LINDO</div>
+  <div class="header-right">
+    <div class="badge">Challenge Jérémy</div>
+    <div class="badge live" id="hdr-rdv">✅ 0 RDV</div>
+    <div class="badge" id="hdr-appele">📞 0 appelés</div>
+    <div class="badge" style="cursor:pointer" onclick="openRecap()">📋 Récap journée</div>
+  </div>
+</header>
+
+<!-- STATS BAR -->
+<div class="statsbar">
+  <div class="stat-pill" onclick="showOverview()">
+    <div class="stat-num" style="color:var(--seg1)" id="st-s1">47</div>
+    <div class="stat-lbl">💰 SEG 1</div>
+  </div>
+  <div class="stat-pill" onclick="showPitch('S2b')">
+    <div class="stat-num" style="color:var(--seg2)" id="st-s2">54</div>
+    <div class="stat-lbl">🔧 SEG 2</div>
+  </div>
+  <div class="stat-pill" onclick="showPitch('S3b')">
+    <div class="stat-num" style="color:var(--seg3)" id="st-s3">41</div>
+    <div class="stat-lbl">🏦 SEG 3</div>
+  </div>
+  <div class="stat-pill">
+    <div class="stat-num" style="color:var(--rdv)" id="st-rdv">0</div>
+    <div class="stat-lbl">✅ RDV</div>
+  </div>
+  <div class="stat-pill">
+    <div class="stat-num" style="color:var(--appele)" id="st-app">0</div>
+    <div class="stat-lbl">📞 Appelés</div>
+  </div>
+  <div class="stat-pill">
+    <div class="stat-num" style="color:var(--nrep)" id="st-nrp">0</div>
+    <div class="stat-lbl">❌ Sans réponse</div>
+  </div>
+</div>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-title">Segments & Pitchs</div>
+    <div class="seg-group">
+      <div class="seg-hdr" onclick="showOverview()">
+        <div class="seg-dot" style="background:#555"></div>
+        <div class="seg-lbl">Vue globale</div>
+      </div>
+    </div>
+    <div class="seg-group">
+      <div class="seg-hdr">
+        <div class="seg-dot" style="background:var(--seg1)"></div>
+        <div class="seg-lbl" style="color:var(--seg1)">SEG 1</div>
+        <div class="seg-cnt">47</div>
+      </div>
+      <button class="pitch-btn" style="--pitch-color:var(--seg1)" onclick="showPitch('S1b')" id="btn-S1b">
+        <span class="pitch-code" style="color:var(--seg1)">S1b</span>
+        <span class="pitch-name">Saisonnalité</span>
+        <span class="p-cnt" id="pc-S1b">47</span>
+      </button>
+    </div>
+    <div class="seg-group">
+      <div class="seg-hdr">
+        <div class="seg-dot" style="background:var(--seg3)"></div>
+        <div class="seg-lbl" style="color:var(--seg3)">SEG 3</div>
+        <div class="seg-cnt">41</div>
+      </div>
+      <button class="pitch-btn" style="--pitch-color:var(--seg3)" onclick="showPitch('S3b')" id="btn-S3b">
+        <span class="pitch-code" style="color:var(--seg3)">S3b</span>
+        <span class="pitch-name">Franchise / Bancaire</span>
+        <span class="p-cnt" id="pc-S3b">41</span>
+      </button>
+    </div>
+    <div class="seg-group">
+      <div class="seg-hdr">
+        <div class="seg-dot" style="background:var(--seg2)"></div>
+        <div class="seg-lbl" style="color:var(--seg2)">SEG 2</div>
+        <div class="seg-cnt">54</div>
+      </div>
+      <button class="pitch-btn" style="--pitch-color:var(--s2a)" onclick="showPitch('S2a')" id="btn-S2a">
+        <span class="pitch-code" style="color:var(--s2a)">S2a</span>
+        <span class="pitch-name">Coût caché</span>
+        <span class="p-cnt" id="pc-S2a">4</span>
+      </button>
+      <button class="pitch-btn" style="--pitch-color:var(--s2b)" onclick="showPitch('S2b')" id="btn-S2b">
+        <span class="pitch-code" style="color:var(--s2b)">S2b</span>
+        <span class="pitch-name">Turnover & Onboarding</span>
+        <span class="p-cnt" id="pc-S2b">31</span>
+      </button>
+      <button class="pitch-btn" style="--pitch-color:var(--s2c)" onclick="showPitch('S2c')" id="btn-S2c">
+        <span class="pitch-code" style="color:var(--s2c)">S2c</span>
+        <span class="pitch-name">Conformité</span>
+        <span class="p-cnt" id="pc-S2c">8</span>
+      </button>
+      <button class="pitch-btn" style="--pitch-color:var(--s2d)" onclick="showPitch('S2d')" id="btn-S2d">
+        <span class="pitch-code" style="color:var(--s2d)">S2d</span>
+        <span class="pitch-name">Transmission savoirs</span>
+        <span class="p-cnt" id="pc-S2d">11</span>
+      </button>
+    </div>
+    <button class="recap-btn" onclick="openRecap()">📋 Récap journée →</button>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main" id="main-content">
+    <div id="view-overview">
+      <div style="margin-bottom:24px">
+        <h1 style="font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:6px">Challenge Jérémy <span style="font-style:italic;color:var(--text-muted)">— Cold Calls</span></h1>
+        <p style="font-size:12px;color:var(--text-muted);line-height:1.7;max-width:540px">142 contacts · 6 pitchs · Qualifie chaque appel directement dans le tableau. Clique sur <strong style="color:var(--text)">📋 Récap journée</strong> pour exporter le bilan.</p>
+      </div>
+      <div class="overview-grid">
+        <div class="seg-card" style="--card-color:var(--seg1);--card-dim:var(--seg1-dim);--card-glow:var(--seg1-glow)" onclick="showPitch('S1b')">
+          <div class="seg-card-icon">💰</div>
+          <div class="seg-card-name">Segment 1</div>
+          <div class="seg-card-sub">Optimisateurs financeurs<br>Retail · Logistique · BTP</div>
+          <div class="sn">47</div><div class="sl">contacts</div>
+          <div class="pitch-tags"><div class="pitch-tag">S1b Saisonnalité</div></div>
+        </div>
+        <div class="seg-card" style="--card-color:var(--seg3);--card-dim:var(--seg3-dim);--card-glow:var(--seg3-glow)" onclick="showPitch('S3b')">
+          <div class="seg-card-icon">🏦</div>
+          <div class="seg-card-name">Segment 3</div>
+          <div class="seg-card-sub">Réseaux multisite<br>Banque · Assurance · Mutuelle</div>
+          <div class="sn">41</div><div class="sl">contacts</div>
+          <div class="pitch-tags"><div class="pitch-tag">S3b Réseau</div></div>
+        </div>
+        <div class="seg-card" style="--card-color:var(--seg2);--card-dim:var(--seg2-dim);--card-glow:var(--seg2-glow)" onclick="showPitch('S2b')">
+          <div class="seg-card-icon">🔧</div>
+          <div class="seg-card-name">Segment 2</div>
+          <div class="seg-card-sub">Gestes métiers critiques<br>Industrie · Énergie · Aéro</div>
+          <div class="sn">54</div><div class="sl">contacts</div>
+          <div class="pitch-tags">
+            <div class="pitch-tag">S2a Coût caché</div>
+            <div class="pitch-tag">S2b Turnover</div>
+            <div class="pitch-tag">S2c Conformité</div>
+            <div class="pitch-tag">S2d Savoirs</div>
+          </div>
+        </div>
+      </div>
+      <div class="remind-block">
+        <div class="sec-lbl">Rappel fondamental</div>
+        <p style="font-family:'DM Serif Display',serif;font-size:15px;line-height:1.65;color:var(--text-dim)">L'objectif du cold call n'est <em>pas</em> de vendre.<br>C'est d'obtenir <strong style="color:var(--text)">20 à 30 minutes</strong>.</p>
+      </div>
+    </div>
+    <div id="view-detail" style="display:none"></div>
+  </main>
+</div>
+
+<!-- MODAL SCRIPT -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal-content"></div>
+</div>
+
+<!-- MODAL RECAP -->
+<div class="recap-modal-overlay" id="recap-overlay" onclick="closeRecap(event)">
+  <div class="recap-modal" id="recap-content"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════
+const PITCHES = {
+  S1b:{code:'S1b',name:'Saisonnalité',seg:'💰 Segment 1 — Optimisateurs',color:'#f5a623',
+    interlo:'DRH · Directeur exploitation · Directeur des opérations',
+    pains:['Volumes importants de nouveaux arrivants à intégrer en temps très court','Coût d\'intégration élevé et répété à chaque saison sans optimisation structurelle','Parcours de formation non financés alors que les OPCO le permettent','Opérateurs peu productifs en début de cycle faute d\'intégration au poste'],
+    script:`« Bonjour [Prénom], je vous appelle parce que je pense que vous êtes confronté **à une double contrainte que l'on voit partout dans les secteurs saisonniers : former vite des collaborateurs qui arrivent en masse, et maîtriser le coût de cette intégration qui se répète à chaque cycle.**
+
+On travaille justement avec les **grands acteurs de la logistique** — un secteur soumis à une très forte saisonnalité. On optimise le parcours d'intégration **directement au poste de travail** et on fait **financer ces parcours par les OPCO** — ce qui réduit significativement le coût net pour l'entreprise.
+
+Est-ce que vous avez **20 à 30 minutes** cette semaine ou la suivante pour voir comment on fait et ce que ça donnerait chez vous ? »`,
+    scriptNote:'→ Pause après la question finale. Attendre la réponse.',
+    ref:'Grands acteurs de la logistique · Saisonnalité forte · Financement OPCO'},
+  S2a:{code:'S2a',name:'Coût caché industriel',seg:'🔧 Segment 2 — Gestes métiers',color:'#6366f1',
+    interlo:'Directeur de production · Directeur des opérations',
+    pains:['Lignes fermées faute de personnel qualifié disponible au bon moment','Rebuts et non-conformités générés par des opérateurs sur des postes non maîtrisés','Coût invisible car jamais mesuré ni attribué à la gestion des compétences'],
+    script:`PHASE 1 — Accroche + question
+
+« Bonjour [Prénom], je vous appelle parce que je pense que vous êtes confronté à un enjeu **que l'on voit partout dans l'industrie : sécuriser la maîtrise des gestes métiers sur vos lignes.**
+
+On vient justement de mesurer chez un industriel **380 000 € de pertes annuelles** directement liées au manque de visibilité sur les compétences terrain — **200 000 € de lignes fermées** faute de personnel qualifié disponible, et **180 000 € de rebuts** générés par des opérateurs sur des postes qu'ils ne maîtrisaient pas encore.
+
+**Vous avez ce sujet chez vous ? »**
+
+→ Pause. Laisser répondre.
+
+PHASE 2 — Solution + CTA
+
+« Daylindo permet justement de **sécuriser la transmission des gestes métiers** et de savoir en temps réel qui peut tenir quel poste, à quel niveau.
+
+Je vous propose **20 minutes** pour vous montrer comment on fait et ce que ça donnerait chez vous ? »`,
+    ref:'Mesure réelle chez un client industriel Daylindo. Chiffres opposables.'},
+  S2b:{code:'S2b',name:'Turnover & Onboarding',seg:'🔧 Segment 2 — Gestes métiers',color:'#3b82f6',
+    interlo:'DRH · Responsable formation · Responsable RH opérationnel',
+    pains:['Chaque départ efface un savoir-faire non tracé — on repart de zéro à chaque arrivée','Temps d\'intégration trop long : le nouvel opérateur n\'est pas productif assez vite','Parcours internes peu valorisés : pas de visibilité sur la progression possible'],
+    script:`PHASE 1 — Accroche + question
+
+« Bonjour [Prénom], je vous contacte parce qu'on travaille avec des industriels qui font face **à deux réalités simultanées : un turnover qui s'accélère et une difficulté croissante à trouver les bons profils opérationnels.**
+
+**Vous avez ce sujet chez vous ? »**
+
+→ Pause. Laisser répondre.
+
+PHASE 2 — Solution + CTA
+
+« Chez Daylindo on aide les industriels à **former leurs nouveaux collaborateurs directement au poste de travail** et à **valoriser les parcours internes** pour limiter le turnover.
+
+On fait ça par exemple avec les intérimaires de **Supplay** pour leurs entreprises utilisatrices, et pour les techniciens d'**Orange**.
+
+Est-ce que vous avez **20 minutes** cette semaine pour voir ce que ça donne concrètement chez vous ? »`,
+    ref:'Supplay (intérim industriel) · Orange (grands comptes / techniciens terrain)'},
+  S2c:{code:'S2c',name:'Conformité réglementaire',seg:'🔧 Segment 2 — Gestes métiers',color:'#ec4899',
+    interlo:'Directeur HSE · Responsable conformité · DRH secteurs réglementés',
+    pains:['Impossibilité de prouver qu\'un opérateur était dûment formé en cas de contrôle','Habilitations gérées en silo ou sur Excel — non opposables','Responsabilité pénale du dirigeant engagée si la preuve ne peut être apportée'],
+    script:`VARIANTE A — Sans référence nommée
+
+« Bonjour [Prénom], je vous appelle parce que je pense que vous êtes soumis à une réglementation **assez forte sur les compétences de vos opérateurs.**
+
+Pour toute formation réglementaire où vous devez **prouver que vous avez fait le nécessaire**, on a exactement ce qu'il faut — traçabilité complète, niveau validé pour chaque opérateur, directement au poste.
+
+Est-ce que vous avez **20 minutes** cette semaine pour voir si ça peut s'appliquer chez vous ? »
+
+---
+
+VARIANTE B — Avec référence Orange / Dekra
+
+« Bonjour [Prénom], je vous appelle parce que je pense que vous êtes soumis à une réglementation **assez forte sur les compétences de vos opérateurs.**
+
+On a justement travaillé avec **Orange et Dekra** sur la formation aux habilitations électriques — directement au poste de travail, avec la **traçabilité complète** pour prouver à tout moment que l'opérateur était dûment formé et évalué.
+
+Est-ce que vous avez **20 minutes** cette semaine pour voir ce qu'on a fait et si ça s'applique chez vous ? »
+
+→ Pause après la question finale. Attendre la réponse.`,
+    ref:'Orange + Dekra · Habilitations électriques · Formation réglementaire au poste'},
+  S2d:{code:'S2d',name:'Transmission des savoirs',seg:'🔧 Segment 2 — Gestes métiers',color:'#a78bfa',
+    interlo:'Responsable formation · Responsable transmission des savoirs · DRH',
+    pains:['59% des +55 ans envisagent de quitter l\'industrie dans les 5 prochaines années','68% des managers estiment que la moitié de leurs connaissances critiques sera perdue','Le savoir tacite (gestes, réflexes terrain) ne se transmet pas par les formations classiques'],
+    script:`VARIANTE A — angle Orange
+
+« Bonjour [Prénom], je vous appelle parce qu'on travaille avec des industriels qui font face **à une réalité qu'on voit s'accélérer : dans les 5 prochaines années, près de 60% de vos collaborateurs les plus expérimentés vont partir à la retraite — et avec eux, des années de savoir-faire qui ne sont nulle part documentés.**
+
+**Vous avez ce sujet chez vous ? »**
+
+→ Pause. Laisser répondre.
+
+« C'est exactement ce qu'on a traité avec **Orange** — capturer les gestes métiers des experts directement au poste de travail, avant qu'ils partent, pour les rendre **transmissibles et évaluables** pour les suivants.
+
+Est-ce que vous avez **20 minutes** cette semaine pour voir comment on fait concrètement ? »
+
+---
+
+VARIANTE B — angle Thalès
+
+« Bonjour [Prénom], je vous appelle parce qu'on a été sélectionné par **Thalès** pour un sujet que vous connaissez bien : capturer et transmettre les savoirs critiques avant que les experts ne partent.
+
+Une étude récente montre que **68% des managers dans l'industrie** estiment que la moitié de leurs connaissances clés sera perdue définitivement lors des prochains départs.
+
+**Vous avez ce risque identifié chez vous ? »**
+
+→ Pause. Laisser répondre.
+
+« Daylindo permet de **capturer ces gestes et ces savoirs directement au poste de travail** — c'est exactement l'usage qu'on déploie chez **Thalès**.
+
+Est-ce que vous avez **20 minutes** cette semaine pour voir ce que ça donnerait dans votre contexte ? »`,
+    ref:'Orange (transmission gestes métiers) · Thalès (savoirs critiques · départs seniors)'},
+  S3b:{code:'S3b',name:'Réseau franchise / bancaire / assurance',seg:'🏦 Segment 3 — Réseaux multisite',color:'#10b981',
+    interlo:'DRH groupe · Directeur formation · Directeur réseau',
+    pains:['Les meilleures agences performent bien — les autres peinent sans diagnostic clair','Pratiques métiers et compétences hétérogènes d\'un site à l\'autre','Pas de visibilité centrale sur les compétences réelles par site — pilotage à l\'aveugle','Engagement faible faute de parcours de développement lisibles'],
+    script:`PHASE 1 — Accroche + question
+
+« Bonjour [Prénom], je vous appelle parce que dans les réseaux comme le vôtre, **on observe souvent le même écart : les meilleures agences performent très bien, et les autres peinent à atteindre le même niveau — non pas par manque de volonté, mais parce que les pratiques et les compétences ne sont pas homogènes d'un site à l'autre.**
+
+**C'est un sujet que vous reconnaissez ? »**
+
+→ Pause. Laisser répondre.
+
+PHASE 2 — Solution + CTA
+
+« Daylindo permet à l'équipe centrale d'avoir une **visibilité en temps réel sur la maîtrise des compétences dans chaque site**, de standardiser les parcours de montée en compétence, et de piloter l'homogénéisation des pratiques à l'échelle du réseau.
+
+Et nous pouvons **faire financer la démarche par l'OPCO**.
+
+Est-ce que vous avez **20 à 30 minutes** cette semaine pour voir ce que ça donnerait chez vous ? »
+
+→ Pause après la question finale. Attendre la réponse.`,
+    ref:'Réseau bancaire · Assurance · Franchise · Financement OPCO'}
+};
+
+const CONTACTS_RAW = {
+  S1b:[
+    {p:'S1b',pr:'Stephanie',n:'Ducatez',co:'Le Groupe La Poste',po:'Directrice des ressources humaines',t:'33631566984',e:'stephanie.ducatez@laposte.fr',li:'https://www.linkedin.com/in/stephanie-ducatez-98228a139'},
+    {p:'S1b',pr:'Didier',n:'LALLEMAND',co:'VINCI Construction',po:'Directeur des ressources humaines',t:'33618693434',e:'didier.lallemand@vinci-construction.fr',li:''},
+    {p:'S1b',pr:'Charles',n:'Goument',co:'Bouygues Bâtiment IDF',po:'Directeur des ressources humaines',t:'33659547337',e:'cgoument@bouygues-batiment-ile-de-france.com',li:'https://www.linkedin.com/in/charles-goument'},
+    {p:'S1b',pr:'Marion',n:'Viguier',co:'VINCI Construction',po:'Directrice des ressources humaines',t:'33777606374',e:'marion.valla@vinci-construction.fr',li:''},
+    {p:'S1b',pr:'Aurélie',n:'Mottier',co:'VINCI Construction',po:'DRH déléguée',t:'33147164522',e:'aurelie.mottier@vinci-construction.com',li:''},
+    {p:'S1b',pr:'Sarah',n:'BEN REHOUMA',co:'VINCI Construction',po:'Directrice des ressources humaines',t:'33779495348',e:'sarah.benrehouma@vinci-construction.fr',li:''},
+    {p:'S1b',pr:'Julie',n:'Langlais',co:'Eiffage Génie Civil',po:'Directrice des ressources humaines',t:'33761713906',e:'julie.langlais@eiffage.com',li:'https://www.linkedin.com/in/julielanglais'},
+    {p:'S1b',pr:'Candice',n:'Aubry',co:'VINCI Construction',po:'DRH Déléguée IDF Normandie',t:'33627400019',e:'candice.aubry@vinci-construction.com',li:''},
+    {p:'S1b',pr:'Laure',n:'Boutinet',co:'VINCI Construction',po:'Directrice des Ressources Humaines',t:'33628436889',e:'',li:''},
+    {p:'S1b',pr:'Juliette',n:'Lenci',co:'Le Groupe La Poste',po:'Directrice des ressources humaines',t:'33607104575',e:'juliette.lenci@laposte.fr',li:''},
+    {p:'S1b',pr:'Jean Pascal',n:'Dusart',co:'VINCI Construction',po:'DRH Génie Civil IDF-Nord',t:'33141147000',e:'jean-pascal.dusart@vinci-construction.fr',li:''},
+    {p:'S1b',pr:'Claire',n:'Auboin',co:'Eiffage Construction',po:'Directrice des ressources humaines',t:'33661322512',e:'claire.auboin@eiffage.com',li:''},
+    {p:'S1b',pr:'Sylvie',n:'SOVIS',co:'FM Logistic',po:'DRH siège',t:'33689133728',e:'ssovis@fmlogistic.com',li:''},
+    {p:'S1b',pr:'Nicolas',n:'Faist',co:'Le Groupe La Poste',po:'DRH Grand Est',t:'33686123477',e:'nicolas.faist@laposte.fr',li:'https://www.linkedin.com/in/nicolas-faist'},
+    {p:'S1b',pr:'Didier',n:'Malamas',co:'XPO Logistics Europe',po:'DRH',t:'33627130104',e:'didier.malamas@xpo.com',li:''},
+    {p:'S1b',pr:'Francois',n:'Leroux',co:'Lidl France',po:'DRH exécutif',t:'33626188713',e:'francois.leroux@lidl.fr',li:''},
+    {p:'S1b',pr:'Stéphanie',n:'FELDMAN',co:'Fnac Darty',po:'DRH exploitation',t:'33609046961',e:'stephanie.feldman@fnacdarty.com',li:''},
+    {p:'S1b',pr:'Guillaume',n:'SUXE',co:'Fnac Darty',po:'DRH Fnac Paris',t:'33626531538',e:'guillaume.suxe@fnacdarty.com',li:''},
+    {p:'S1b',pr:'Véronique',n:'Ducher',co:'Le Groupe La Poste',po:'DRH opérationnelle Auvergne Sud',t:'33664640609',e:'veronique.ducher@laposte.fr',li:''},
+    {p:'S1b',pr:'Pierre',n:'BRIAND',co:'Le Groupe La Poste',po:'DRH opérationnel',t:'33685838031',e:'pierre.briand@laposte.fr',li:''},
+    {p:'S1b',pr:'Sébastien',n:'JACQUEMOND',co:'La Poste Groupe',po:'DRH opérationnel',t:'33477524586',e:'sebastien.jacquemond@laposte.fr',li:''},
+    {p:'S1b',pr:'Nadège',n:'Catherine',co:'Eiffage Route',po:'DRH',t:'33661009805',e:'nadege.catherine@eiffage.com',li:''},
+    {p:'S1b',pr:'Aurélie',n:'Barthélémy',co:'Eiffage Construction',po:'DRH Région Nord-Ouest',t:'33156585120',e:'aurelie.barthelemy@eiffage.com',li:''},
+    {p:'S1b',pr:'Jeremy',n:'Carmona',co:'Carrefour',po:'DRH Services Financiers et Marchands',t:'33768578205',e:'jeremy_carmona@carrefour.com',li:'https://www.linkedin.com/in/jeremy-carmona-970bb9137'},
+    {p:'S1b',pr:'Amanda',n:'PEIGNART',co:'E.Leclerc',po:'Directrice des ressources humaines',t:'33603505391',e:'amanda@e.leclerc',li:''},
+    {p:'S1b',pr:'Paul',n:'REVILLET',co:'Fnac Darty',po:'Directeur des ressources humaines',t:'33633836937',e:'paul.revillet@fnacdarty.com',li:''},
+    {p:'S1b',pr:'Jessica',n:'DESTALMINIL',co:'La Poste',po:'Human Resources Director',t:'33776374821',e:'jessica.destalminil@laposte.fr',li:''},
+    {p:'S1b',pr:'Sophie',n:'Gonzalez',co:'Le Groupe La Poste',po:'DRH opérationnelle',t:'33672900603',e:'sophie.gonzalez@laposte.fr',li:''},
+    {p:'S1b',pr:'Malika',n:'Bouchehioua',co:'Elior Group',po:'Directrice des ressources humaines',t:'33155445544',e:'malika.bouchehioua@eliorgroup.com',li:''},
+    {p:'S1b',pr:'Thomas',n:'Darras',co:'INTERSPORT FRANCE',po:'Responsable formation',t:'33680443703',e:'tdarras@intersport.fr',li:''},
+    {p:'S1b',pr:'Laurent',n:'Matha',co:'Le Groupe La Poste',po:'DRH opérationnel',t:'33682221989',e:'laurent.matha@laposte.fr',li:''},
+    {p:'S1b',pr:'Béatrice',n:'Paris',co:'Le Groupe La Poste',po:'DRH',t:'33683297174',e:'beatrice.paris@laposte.fr',li:''},
+    {p:'S1b',pr:'Sophie',n:'Ressot',co:'Le Groupe La Poste',po:'DRH',t:'33388240631',e:'sophie.ressot@laposte.fr',li:''},
+    {p:'S1b',pr:'Fabrice',n:'Martel',co:'Le Groupe La Poste',po:'DRH opérationnel',t:'33685115556',e:'fabrice.martel@laposte.fr',li:''},
+    {p:'S1b',pr:'Alain',n:'Simon',co:'Auchan Retail',po:'DRH',t:'33622940543',e:'a.simon@auchan.pl',li:''},
+    {p:'S1b',pr:'Philippe',n:'Saudo',co:'Auchan Retail',po:'DRH',t:'33320816959',e:'philippe.saudo@auchan-retail.com',li:''},
+    {p:'S1b',pr:'Philippe',n:'Jonnaert',co:'Castorama France',po:'DRH exécutif',t:'33320327468',e:'p.jonnaert@castorama.fr',li:''},
+    {p:'S1b',pr:'Fabrice',n:'Henry',co:'GROUPE LA POSTE',po:'DRH',t:'33671533810',e:'fabrice.henry@laposte.fr',li:''},
+    {p:'S1b',pr:'Angela',n:'Alcindor',co:'La Poste Groupe',po:'DRH opérationnelle',t:'33615473752',e:'angela.alcindor@laposte.fr',li:''},
+    {p:'S1b',pr:'Jean-Louis',n:'Da Costa',co:'STEF',po:'Responsable formation métier',t:'33641353440',e:'jean-louis.dacosta@stef.com',li:''},
+    {p:'S1b',pr:'Valerie',n:'DECAUX',co:'Le Groupe La Poste',po:'DRH Groupe',t:'33670101289',e:'valerie.decaux@laposte.fr',li:''},
+    {p:'S1b',pr:'Fabrice',n:'RENAULT',co:'DIMOTRANS Group',po:'Directeur de site',t:'33607569052',e:'frenault@dimotrans-group.com',li:''},
+    {p:'S1b',pr:'Sylvie',n:'Le Bellec',co:'Le Groupe La Poste',po:'DRH et RSE',t:'33762658424',e:'sylvie.lebellec@laposte.fr',li:''},
+    {p:'S1b',pr:'Sandra',n:'Dumoulin Vareille',co:'Le Groupe La Poste',po:'DRH',t:'33155440706',e:'sandra.dumoulin@laposte.fr',li:''},
+    {p:'S1b',pr:'Marie Bernard',n:'Desfarges',co:'Auchan',po:'DRH',t:'33762846522',e:'marie.bernard@auchan-retail.com',li:''},
+    {p:'S1b',pr:'Thierry',n:'VAN DOORNE',co:'Auchan Retail',po:'DRH',t:'33668800793',e:'thierry.vandoorne@auchan-retail.com',li:''}
+  ],
+  S2a:[
+    {p:'S2a',pr:'Baudouin',n:'Vuillermet',co:'Michelin',po:'Directeur de site',t:'33667159283',e:'',li:''},
+    {p:'S2a',pr:'Laurent',n:'Remuzon',co:'Safran Landing Systems',po:'Directeur Industriel Division LGI',t:'+33670897408',e:'laurent.remuzon@aubertduval.com',li:'https://linkedin.com/in/laurent-remuzon-3b848724'},
+    {p:'S2a',pr:'Olivier',n:'GOURBESVILL',co:'Safran',po:'Directeur Industriel, Achat et Support',t:'33678553857',e:'g.olivier@safrangroup.com',li:''},
+    {p:'S2a',pr:'Eric',n:'Labreze',co:'Legrand',po:'Directeur Industriel France',t:'33637081915',e:'',li:''}
+  ],
+  S2b:[
+    {p:'S2b',pr:'Nathalie',n:'GODARD',co:'Daher',po:'Responsable Ressources Humaines',t:'33678208010',e:'n.godard@daher.com',li:''},
+    {p:'S2b',pr:'Samir',n:'Bensaadi',co:'Agrial',po:'DRH',t:'33642113599',e:'s.bensaadi@agrial.com',li:''},
+    {p:'S2b',pr:'Julie',n:'BAUDIN',co:'Daher',po:'DRH Daher Aircraft',t:'33662058403',e:'baudin.julie@daher.com',li:''},
+    {p:'S2b',pr:'Jeremy',n:'B.',co:'Safran',po:'Head of HR',t:'33621823929',e:'jeremy.b@safrangroup.com',li:''},
+    {p:'S2b',pr:'Florence',n:'CORDIER',co:'EDF',po:'DRH DTEO',t:'33661372251',e:'florence.cordier@edf.fr',li:''},
+    {p:'S2b',pr:'Chloe',n:'Ghesquieres',co:'EDF',po:'Directrice des ressources humaines',t:'33664680565',e:'chloe.ghesquieres@edf.fr',li:''},
+    {p:'S2b',pr:'Anahit',n:'Nersisyan',co:'Daher',po:'RRH',t:'33664557538',e:'a.nersisyan@daher.com',li:''},
+    {p:'S2b',pr:'Lucie',n:'Auger Lafourcade',co:'ENGIE',po:'DRH Corporate et Activités Nouvelles',t:'33664709740',e:'lucie.lafourcade@engie.com',li:''},
+    {p:'S2b',pr:'Elsa',n:'ALLO',co:'Daher',po:'Directrice des Ressources Humaines',t:'33670166169',e:'e.allo@daher.com',li:''},
+    {p:'S2b',pr:'Sandrine',n:'Poirier',co:'Alstom',po:'HR Manager',t:'33663152737',e:'sandrine.poirier@alstomgroup.com',li:''},
+    {p:'S2b',pr:'Eva',n:'AUBERTIN',co:'Daher',po:'RRH Toulouse',t:'33769032032',e:'e.aubertin@daher.com',li:''},
+    {p:'S2b',pr:'Sarah',n:'Deschilder',co:'Daher',po:'DRH Zone Nord',t:'33685910261',e:'s.deschilder@daher.com',li:''},
+    {p:'S2b',pr:'Lisa',n:'David',co:'Daher',po:'RRH Fonctions Transverses',t:'33642881382',e:'l.david@daher.com',li:''},
+    {p:'S2b',pr:'Selin',n:'DURSUN',co:'Alstom',po:'HR Manager',t:'33670110538',e:'selin.dursun@alstomgroup.com',li:''},
+    {p:'S2b',pr:'Isabelle',n:'Bonhomme',co:'Saint-Gobain',po:'DRH / Directrice Développement RH',t:'33622229209',e:'isabelle.bonhomme@saint-gobain.com',li:''},
+    {p:'S2b',pr:'Corinne',n:'VERDIE',co:'Daher',po:'DRH région sud',t:'33561781767',e:'c.verdie@daher.com',li:''},
+    {p:'S2b',pr:'Clara',n:'Nowicki',co:'Equans',po:'Responsable RH',t:'33674942300',e:'clara.nowicki@equans.com',li:''},
+    {p:'S2b',pr:'Domitille',n:'BOVIER-RICHARD',co:'Equans',po:'RRH',t:'33661219516',e:'domitille.bovier@equans.com',li:''},
+    {p:'S2b',pr:'Michael',n:'Encaoua',co:'Daher',po:'DRH & HSE - Division Industrie',t:'33144915257',e:'m.encaoua@daher.com',li:''},
+    {p:'S2b',pr:'Vincent',n:'Rousson',co:'Daher',po:'DRH',t:'33665051877',e:'v.rousson@daher.com',li:''},
+    {p:'S2b',pr:'Louis-Jean',n:'CHAMPIE',co:'Daher',po:'DRH Relations Sociales',t:'33646304597',e:'l.champie@daher.com',li:''},
+    {p:'S2b',pr:'Sebastien',n:'RONCO',co:'Daher',po:'Division VP HR Director',t:'33666516388',e:'s.ronco@daher.com',li:'https://www.linkedin.com/in/sebastienronco'},
+    {p:'S2b',pr:'Aurelie',n:'C.',co:'ENGIE',po:'DRH',t:'33660368292',e:'ac@engie.com',li:''},
+    {p:'S2b',pr:'Clothilde',n:'Poplineau',co:'ENGIE',po:'DRH développement collaborateurs',t:'33671622225',e:'clothilde.poplineau@engie.com',li:''},
+    {p:'S2b',pr:'Emilie',n:'Tuffeau Sadarnac',co:'ENGIE',po:'HR Director HQ France Renewables',t:'33661313799',e:'emilie.sadarnac@engie.com',li:''},
+    {p:'S2b',pr:'Hélène',n:'GAYET',co:'Daher',po:'DRH Industrie Site de Tarbes',t:'33562417316',e:'h.gayet@daher.com',li:''},
+    {p:'S2b',pr:'Sylvie',n:'Vincent Guisnel',co:'ENGIE',po:'DRH Gestion Opérationnelle RH',t:'33669696031',e:'sylvie-v.vincent@engie.com',li:''},
+    {p:'S2b',pr:'Léo',n:'R.',co:'ENGIE',po:'DRH',t:'33781707710',e:'leo.raut@engie.com',li:''},
+    {p:'S2b',pr:'Muriel',n:'Morin',co:'ENGIE',po:'DRH',t:'33140066568',e:'mmorin@engie.com',li:''},
+    {p:'S2b',pr:'Claire',n:'SCHNOERING',co:'Equans France',po:'DRH - Division Transport',t:'33629138279',e:'claire.schnoering@equans.com',li:''},
+    {p:'S2b',pr:'Sylvie',n:'Credot',co:'Storengy - ENGIE',po:'DRH et Directeur Juridique',t:'33620438517',e:'sylvie.credot@engie.com',li:''}
+  ],
+  S2c:[
+    {p:'S2c',pr:'Sabrina',n:'Larapidie',co:'Airbus Aircraft',po:'Head of HR - HR Academy',t:'33668647370',e:'sabrina.larapidie@airbus.com',li:''},
+    {p:'S2c',pr:'Benjamin',n:'MERABTI',co:'EDF',po:'DRH EDF Martinique',t:'33664567144',e:'benjamin.merabti@edf.fr',li:''},
+    {p:'S2c',pr:'Nicolas',n:'Le Port',co:'Airbus Aircraft',po:'HR Leader Technology and Engineering France',t:'33660763682',e:'nicolas.le-port@airbus.com',li:''},
+    {p:'S2c',pr:'Estelle',n:'Gougeul',co:'EDF',po:'DRH',t:'33662565468',e:'estelle.gougeul@edf.fr',li:''},
+    {p:'S2c',pr:'Jacques',n:'Bouvier',co:'Sanofi',po:'DRH Usines Sanofi France - 15 sites',t:'33603346364',e:'jacques.bouvier@sanofi.com',li:''},
+    {p:'S2c',pr:'Emmanuelle',n:'TOULOUSE',co:'EDF',po:'DRH Direction Commerce Ouest',t:'33630567123',e:'emmanuelle.toulouse@edf.fr',li:''},
+    {p:'S2c',pr:'Guillaume',n:'Renaud',co:'Orano',po:'DRH Nuclear Packages & Services',t:'33685937330',e:'guillaume.renaud@areva.com',li:''},
+    {p:'S2c',pr:'Guillaume',n:'Meurillon',co:'EDF',po:'DRH Direction Commerce Sud-Ouest',t:'33674815871',e:'guillaume.meurillon@edf.fr',li:''}
+  ],
+  S2d:[
+    {p:'S2d',pr:'Angélique',n:'DAVID',co:'Safran',po:'Responsable formation',t:'33673510702',e:'angelique.david@safrangroup.com',li:''},
+    {p:'S2d',pr:'Diane',n:'DEWASME',co:'EQUANS France',po:'Responsable formation',t:'33669091550',e:'dianedewasme@cofely-gdfsuez.com',li:''},
+    {p:'S2d',pr:'Sebastien',n:'Ledez',co:'EDF solutions solaires',po:'Responsable formation',t:'33666428838',e:'sebastien.ledez@edfenr.com',li:''},
+    {p:'S2d',pr:'Sabrina',n:'Gottlieb',co:'Safran',po:'Responsable Formation et Développement Compétences HRBP',t:'33607839002',e:'sabrina.gottlieb@safrangroup.com',li:''},
+    {p:'S2d',pr:'Rebecca',n:'Limberger',co:'Stellantis',po:'RRH usine et responsable formation',t:'33685227339',e:'r.limberger@stellantis.com',li:''},
+    {p:'S2d',pr:'Nelson',n:'VAZ',co:'Eramet',po:'Responsable Formation',t:'33642289566',e:'nelson.vaz@eramet.com',li:''},
+    {p:'S2d',pr:'Sylvain',n:'Francou',co:'SFR',po:'Chef de projet formation',t:'33683358873',e:'sylvain.francou@sfr.com',li:''},
+    {p:'S2d',pr:'Nadia',n:'Hannan',co:'SFR',po:'Responsable formation télévente',t:'33619174857',e:'nadia.hannan@sfr.com',li:''},
+    {p:'S2d',pr:'Eve',n:'BIZET',co:'SFR',po:'Responsable formation opérationnelle',t:'33660620672',e:'eve.bizet@sfr.com',li:''},
+    {p:'S2d',pr:'Marie Christine',n:'Oliveira',co:'SFR',po:'Chef de Projet Formation',t:'33610026733',e:'moliveira@sfr.fr',li:''},
+    {p:'S2d',pr:'Marine',n:'Jammes',co:'Airbus',po:'Responsable formation',t:'33642655478',e:'marine.jammes@airbus.com',li:''}
+  ],
+  S3b:[
+    {p:'S3b',pr:'David',n:'Glogovic',co:'KLESIA',po:'Responsable formation',t:'+33140028054',e:'david.glogovic@klesia.fr',li:'https://www.linkedin.com/in/david-glogovic-078274145'},
+    {p:'S3b',pr:'Justine',n:'Delaspre',co:'GROUPE MACSF',po:'RRH Formation et développement des compétences',t:'+33647924617',e:'justine.delaspre@macsf.fr',li:''},
+    {p:'S3b',pr:'Frédéric',n:'BERGE',co:'MACIF',po:'DRH Macif Finance Epargne',t:'33610957774',e:'fberge@macif.fr',li:''},
+    {p:'S3b',pr:'Loïc',n:'HERVE',co:'Harmonie Mutuelle',po:'DRH et Transformation Grand Ouest',t:'+33608848086',e:'loic.herve@harmonie-mutuelle.fr',li:''},
+    {p:'S3b',pr:'Leslie',n:'MAILLARD',co:'BPCE Assurances',po:'DRH & Expérience Collaborateur',t:'+33660658743',e:'leslie.maillard@bpce.fr',li:''},
+    {p:'S3b',pr:'Aurore',n:'van der Werf',co:'CNP Assurances',po:'Head of Human Resources',t:'+33684742097',e:'aurore.vanderwerf@cnp.fr',li:''},
+    {p:'S3b',pr:'Christine',n:'VIGNALS',co:'Groupama d\'Oc',po:'DRH',t:'+33684804918',e:'christine.vignals@groupama.fr',li:''},
+    {p:'S3b',pr:'Manuela',n:'CARDOSO',co:'GROUPAMA - G2S',po:'Responsable Formation',t:'+33170944030',e:'manuela.cardoso@groupama-gan-recrute.com',li:''},
+    {p:'S3b',pr:'Aurélie',n:'Charasch',co:'Caisse d\'Epargne IDF',po:'Responsable RH',t:'33625752378',e:'aurelie.charasch@ceidf.caisse-epargne.fr',li:''},
+    {p:'S3b',pr:'Nina',n:'BRICMONT',co:'GROUPE MACIF',po:'DRH',t:'+33627577907',e:'nbricmont@macif.fr',li:''},
+    {p:'S3b',pr:'Béatrice',n:'LE TERREC',co:'BNP Paribas Leasing Solutions',po:'Head of HR',t:'+33665473198',e:'beatrice.leterrec@bnpparibas.com',li:''},
+    {p:'S3b',pr:'Emmanuel',n:'CÉLÉRIER',co:'Crédit Agricole Normandie',po:'DRH',t:'+33612454070',e:'emmanuel.celerier@ca-alpesprovence.fr',li:''},
+    {p:'S3b',pr:'Marion',n:'PROTANO',co:'Crédit Agricole Normandie',po:'DRH et Transformation',t:'33689783103',e:'marion.protano@ca-norddefrance.fr',li:''},
+    {p:'S3b',pr:'Sebastien',n:'MENORET',co:'Banque Populaire du Sud',po:'Directeur Réseau Retail',t:'33665135900',e:'sebastien.menoret@bpaca.banquepopulaire.fr',li:''},
+    {p:'S3b',pr:'Frank',n:'GIRARDEAU',co:'MGEN - Pôle Soins',po:'Directeur Réseau et Distribution',t:'33632530259',e:'fgirardeau@mgen.fr',li:''},
+    {p:'S3b',pr:'Emmanuel',n:'ROUDIL',co:'GROUPE MACSF',po:'Directeur réseau hospitalier',t:'33685370436',e:'',li:''},
+    {p:'S3b',pr:'Jean-Pierre',n:'Miquelis',co:'Banque Populaire du Sud',po:'Directeur réseau agences spécialisées',t:'33760651610',e:'jean-pierre.miquelis@bpmed.fr',li:''},
+    {p:'S3b',pr:'Damien',n:'LOUISGRAND',co:'Groupe AGPM KLESIA',po:'Directeur Réseau Commercial et Distribution',t:'33621465508',e:'damien.louisgrand@groupe-agpm.fr',li:''},
+    {p:'S3b',pr:'Vincent',n:'ALBONICO',co:'Banque Populaire du Sud',po:'Directeur Formation et Académie BPVF',t:'+33612947324',e:'vincent@bpvf.banquepopulaire.fr',li:''},
+    {p:'S3b',pr:'Herve',n:'Delpiroux',co:'Allianz France',po:'Responsable formation DATA, Pilotage et Outils',t:'+33624672230',e:'herve.delpiroux@agf.fr',li:''},
+    {p:'S3b',pr:'Patrick',n:'POUTRET',co:'Crédit Agricole Normandie',po:'DRH et Transformation',t:'33609566297',e:'patrick.poutret@ca-sudmed.fr',li:''},
+    {p:'S3b',pr:'Laurence',n:'PAYET',co:'MACIF',po:'Manager QVCT - DRH MACIF',t:'33663808249',e:'lpayet@macif.fr',li:''},
+    {p:'S3b',pr:'Bruno',n:'LOUISON',co:'Banque Populaire Auvergne Rhône Alpes',po:'Responsable formation',t:'+33682593621',e:'bruno.louison@bp2l.banquepopulaire.fr',li:''},
+    {p:'S3b',pr:'Marina',n:'Gravigny',co:'Crédit Agricole Charente-Périgord',po:'Responsable formation et développement des compétences',t:'+33687357324',e:'marina.gravigny@ca-charente-perigord.fr',li:''},
+    {p:'S3b',pr:'Deborah',n:'Di Gennaro',co:'Groupama Méditerranée',po:'Responsable Formation et Dynamique managériale',t:'33603024998',e:'deborah.di@groupama.fr',li:''},
+    {p:'S3b',pr:'Fabrice',n:'Stephan',co:'Assurances du Crédit Mutuel',po:'RRH',t:'+33617114129',e:'fabrice.stephan@acm.fr',li:''},
+    {p:'S3b',pr:'Alain',n:'LEVY',co:'Renault Retail Group',po:'DRH',t:'+33607581015',e:'',li:'https://www.linkedin.com/in/alain-levy-26538642'},
+    {p:'S3b',pr:'Antoine',n:'MARTIN',co:'MGEN - Pôle Soins',po:'DRH',t:'+33675868114',e:'',li:''},
+    {p:'S3b',pr:'Jean-Christophe',n:'Biotti',co:'Groupama Paris Val de Loire',po:'DRH',t:'+33675096334',e:'',li:''},
+    {p:'S3b',pr:'Christophe',n:'Danglehant',co:'AXA',po:'Responsable Formation',t:'+33668745610',e:'',li:''},
+    {p:'S3b',pr:'Sandra',n:'BERNARD',co:'La Banque Postale',po:'DRH et Expérience collaborateurs',t:'+33658901685',e:'',li:''},
+    {p:'S3b',pr:'Anne Sophie',n:'Legrand',co:'CIC Lyonnaise de Banque',po:'DRH',t:'+33615166941',e:'',li:''},
+    {p:'S3b',pr:'Nathalie',n:'Cabaret',co:'Société Générale',po:'Responsable formation groupe',t:'+33663867822',e:'',li:''},
+    {p:'S3b',pr:'Sylvain',n:'Langlois',co:'Groupe Covéa',po:'Responsable formation Terrain GMF',t:'33610542313',e:'',li:''},
+    {p:'S3b',pr:'Catarina',n:'Alves',co:'Caisse d\'Epargne IDF',po:'RRH',t:'33612216677',e:'catarina.alves@caisse-epargne.fr',li:''},
+    {p:'S3b',pr:'Camille',n:'Graux',co:'Caisse d\'Epargne IDF',po:'Responsable Ressources Humaines',t:'33660507923',e:'',li:''},
+    {p:'S3b',pr:'Vincent',n:'Kempf',co:'Crédit Agricole d\'Aquitaine',po:'DRH',t:'33670755630',e:'vincent.kempf@ca-aquitaine.fr',li:''},
+    {p:'S3b',pr:'Aridja',n:'PENNES',co:'AXA',po:'Responsable formation',t:'33664328599',e:'',li:''},
+    {p:'S3b',pr:'Fabrice',n:'Langlois',co:'Groupama Assurances Mutuelles',po:'Responsable Formation Groupe',t:'33627787528',e:'fabrice.langlois@groupama.com',li:''},
+    {p:'S3b',pr:'Laurence',n:'Lusson',co:'Crédit Agricole Normandie',po:'DRH et Transformation',t:'33635164613',e:'laurence.lusson@ca-nmp.fr',li:''},
+    {p:'S3b',pr:'Annelise',n:'LEQUEUX',co:'Crédit Agricole Normandie',po:'DRH',t:'33157727507',e:'annelise.lequeux@ca-valdefrance.fr',li:''}
+  ]
+};
+
+// ═══════════════════════════════════════════════
+// STATE — qualif stockée en mémoire (session)
+// ═══════════════════════════════════════════════
+// callData[pitch][index] = {statut:'', note:'', ts:''}
+const callData = {};
+Object.keys(CONTACTS_RAW).forEach(k => {
+  callData[k] = CONTACTS_RAW[k].map(() => ({statut:'', note:'', ts:''}));
+});
+
+let currentPitch = null;
+let currentFilter = 'tous';
+
+// ═══════════════════════════════════════════════
+// STATUT HELPERS
+// ═══════════════════════════════════════════════
+const STATUTS = {
+  '':      {cls:'none', label:'À appeler'},
+  'rdv':   {cls:'rdv',  label:'✅ RDV obtenu'},
+  'appele':{cls:'appele',label:'📞 Appelé'},
+  'nrep':  {cls:'nrep', label:'❌ Sans réponse'},
+  'rappel':{cls:'encours',label:'🔄 Rappel'},
+};
+
+function updateGlobalStats() {
+  let rdv=0,app=0,nrp=0;
+  Object.keys(callData).forEach(k=>{
+    callData[k].forEach(d=>{
+      if(d.statut==='rdv') rdv++;
+      else if(d.statut==='appele') app++;
+      else if(d.statut==='nrep') nrp++;
+    });
+  });
+  document.getElementById('st-rdv').textContent=rdv;
+  document.getElementById('st-app').textContent=app;
+  document.getElementById('st-nrp').textContent=nrp;
+  document.getElementById('hdr-rdv').textContent='✅ '+rdv+' RDV';
+  document.getElementById('hdr-appele').textContent='📞 '+app+' appelés';
+}
+
+// ═══════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════
+function showOverview() {
+  currentPitch=null;
+  document.getElementById('view-overview').style.display='block';
+  document.getElementById('view-detail').style.display='none';
+  document.querySelectorAll('.pitch-btn').forEach(b=>b.classList.remove('active'));
+}
+
+function showPitch(code) {
+  currentPitch=code; currentFilter='tous';
+  const p=PITCHES[code];
+  document.querySelectorAll('.pitch-btn').forEach(b=>b.classList.remove('active'));
+  const btn=document.getElementById('btn-'+code);
+  if(btn) btn.classList.add('active');
+  document.getElementById('view-overview').style.display='none';
+  const detail=document.getElementById('view-detail');
+  detail.style.display='block';
+  const contacts=CONTACTS_RAW[code]||[];
+
+  detail.innerHTML=`
+  <style>#view-detail{--pitch-active-color:${p.color}}</style>
+  <div class="detail-hdr">
+    <div class="breadcrumb">
+      <button onclick="showOverview()">← Vue globale</button>
+      <span>|</span><span>${p.seg}</span>
+    </div>
+    <div class="detail-top">
+      <div class="d-badge">${p.code}</div>
+      <div>
+        <div class="d-title">${p.name}</div>
+        <div class="d-interlo">Interlocuteur cible : ${p.interlo}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-lbl">Pain points ciblés</div>
+  <div class="pain-grid">${p.pains.map(x=>`<div class="pain-item">${x}</div>`).join('')}</div>
+
+  <div class="sec-lbl">Script cold call</div>
+  <div class="script-block">${fmtScript(p.script)}</div>
+  ${p.scriptNote?`<div class="script-note">${p.scriptNote}</div>`:''}
+
+  <div class="ref-block"><div class="ref-lbl">Références</div><div class="ref-val">${p.ref}</div></div>
+
+  <div class="filter-bar">
+    <div style="display:flex;align-items:baseline;gap:8px">
+      <div class="cnt-big" id="cnt-big">${contacts.length}</div>
+      <div class="cnt-sub">contacts · pitch ${code}</div>
+    </div>
+    <div class="filter-left">
+      <div class="filter-tabs" id="filter-tabs">
+        <button class="ftab on" onclick="setFilter('tous',this)">Tous</button>
+        <button class="ftab" onclick="setFilter('',this)">À appeler</button>
+        <button class="ftab" onclick="setFilter('appele',this)">📞 Appelé</button>
+        <button class="ftab" onclick="setFilter('rdv',this)">✅ RDV</button>
+        <button class="ftab" onclick="setFilter('nrep',this)">❌ Sans réponse</button>
+        <button class="ftab" onclick="setFilter('rappel',this)">🔄 Rappel</button>
+      </div>
+      <div class="search-box"><span>⌕</span><input type="text" placeholder="Chercher…" oninput="filterSearch(this.value)"/></div>
+    </div>
+  </div>
+
+  <table class="ctable">
+    <thead><tr>
+      <th>#</th><th>Contact</th><th>Entreprise</th><th>Téléphone</th>
+      <th>Statut appel</th><th>Note</th><th>Actions</th>
+    </tr></thead>
+    <tbody id="ctbody">${renderRows(contacts,code)}</tbody>
+  </table>`;
+}
+
+// ═══════════════════════════════════════════════
+// RENDER ROWS
+// ═══════════════════════════════════════════════
+function renderRows(contacts, code, filter='tous', q='') {
+  const pitchCode = code||currentPitch;
+  let html=''; let shown=0;
+  contacts.forEach((c,i)=>{
+    const d = callData[pitchCode][i];
+    if(filter!=='tous' && d.statut!==filter) return;
+    if(q){
+      const txt=`${c.pr} ${c.n} ${c.co} ${c.po}`.toLowerCase();
+      if(!txt.includes(q.toLowerCase())) return;
+    }
+    shown++;
+    const p=PITCHES[pitchCode];
+    html+=`<tr id="row-${pitchCode}-${i}">
+      <td><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted)">${i+1}</span></td>
+      <td><div class="cname" style="cursor:pointer;text-decoration:underline;text-decoration-color:rgba(255,255,255,.2);text-underline-offset:3px" onclick="openModal('${pitchCode}',${i})">${c.pr} ${c.n}</div><div class="crole">${c.po}</div></td>
+      <td><div class="cco">${c.co}</div></td>
+      <td><div class="ctel">${c.t}</div></td>
+      <td>
+        <select class="stat-sel" onchange="setStatut('${pitchCode}',${i},this.value)" style="border-color:${getStatColor(d.statut,p.color)}">
+          <option value="" ${d.statut===''?'selected':''}>À appeler</option>
+          <option value="appele" ${d.statut==='appele'?'selected':''}>📞 Appelé</option>
+          <option value="rdv" ${d.statut==='rdv'?'selected':''}>✅ RDV obtenu</option>
+          <option value="nrep" ${d.statut==='nrep'?'selected':''}>❌ Sans réponse</option>
+          <option value="rappel" ${d.statut==='rappel'?'selected':''}>🔄 Rappel</option>
+        </select>
+      </td>
+      <td class="note-cell">
+        <textarea rows="2" placeholder="Note appel…" onchange="setNote('${pitchCode}',${i},this.value)" onblur="saveNote('${pitchCode}',${i},this)">${d.note||''}</textarea>
+      </td>
+      <td>
+        <div class="act-btns">
+          <button class="abtn" onclick="openModal('${pitchCode}',${i})">Script ↗</button>
+          ${c.e?`<a class="abtn" href="mailto:${c.e}" target="_blank">✉</a>`:''}
+          ${c.li?`<a class="abtn" href="${c.li}" target="_blank">in</a>`:''}
+        </div>
+      </td>
+    </tr>`;
+  });
+  if(!shown) html=`<tr><td colspan="7" class="no-res">Aucun contact pour ce filtre.</td></tr>`;
+  // update counter
+  const cb=document.getElementById('cnt-big');
+  if(cb) cb.textContent=shown;
+  return html;
+}
+
+function getStatColor(s,fallback){
+  const m={rdv:'#22c55e',appele:'#60a5fa',nrep:'#f87171',rappel:'#f59e0b'};
+  return m[s]||fallback||'#444';
+}
+
+// ═══════════════════════════════════════════════
+// FILTER & SEARCH
+// ═══════════════════════════════════════════════
+let searchQ='';
+function setFilter(val, btn) {
+  currentFilter=val;
+  document.querySelectorAll('#filter-tabs .ftab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  refreshTable();
+}
+function filterSearch(v){ searchQ=v; refreshTable(); }
+function refreshTable(){
+  const contacts=CONTACTS_RAW[currentPitch]||[];
+  document.getElementById('ctbody').innerHTML=renderRows(contacts,currentPitch,currentFilter,searchQ);
+}
+
+// ═══════════════════════════════════════════════
+// SAVE STATUT / NOTE
+// ═══════════════════════════════════════════════
+function setStatut(code,idx,val){
+  callData[code][idx].statut=val;
+  callData[code][idx].ts=new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  updateGlobalStats();
+  // update select border color
+  const sel=document.querySelector(`#row-${code}-${idx} select`);
+  if(sel){const p=PITCHES[code]; sel.style.borderColor=getStatColor(val,p.color);}
+}
+function setNote(code,idx,val){ callData[code][idx].note=val; }
+function saveNote(code,idx,ta){
+  callData[code][idx].note=ta.value;
+  ta.style.borderBottomColor='var(--rdv)';
+  setTimeout(()=>ta.style.borderBottomColor='var(--border-soft)',1200);
+}
+
+// ═══════════════════════════════════════════════
+// MODAL SCRIPT
+// ═══════════════════════════════════════════════
+function fmtScript(text){
+  text=text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+  text=text.replace(/^(PHASE \d+[^\n]*|VARIANTE [AB][^\n]*)/gm,'<span class="phase-title">$1</span>');
+  text=text.replace(/^---$/gm,'<span style="display:block;border-top:1px solid rgba(255,255,255,.08);margin:10px 0"></span>');
+  return text;
+}
+
+function openModal(code,idx){
+  const c=CONTACTS_RAW[code][idx];
+  const p=PITCHES[code];
+  let script=p.script.replace(/\[Prénom\]/g,`<strong style="color:${p.color}">${c.pr}</strong>`);
+  script=fmtScript(script);
+  const modal=document.getElementById('modal-content');
+  modal.style.setProperty('--pitch-active-color',p.color);
+  modal.innerHTML=`
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="mname">${c.pr} ${c.n}</div>
+    <div class="mrole">${c.po} · ${c.co}</div>
+    <div class="mcontacts">
+      ${c.t?`<div class="mci"><label>Téléphone</label><span>${c.t}</span></div>`:''}
+      ${c.e?`<div class="mci"><label>Email</label><a href="mailto:${c.e}">${c.e}</a></div>`:''}
+      ${c.li?`<div class="mci"><label>LinkedIn</label><a href="${c.li}" target="_blank">Voir profil ↗</a></div>`:''}
+      <div class="mci"><label>Pitch</label><span style="font-family:'DM Mono',monospace;font-size:10px;padding:2px 7px;border-radius:3px;border:1px solid ${p.color};color:${p.color}">${p.code}</span></div>
+    </div>
+    <div class="mscript-lbl">Script personnalisé · ${p.name}</div>
+    <div class="mscript">${script}</div>
+  `;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal(e){
+  if(!e||e.target===document.getElementById('modal-overlay'))
+    document.getElementById('modal-overlay').classList.remove('open');
+}
+
+// ═══════════════════════════════════════════════
+// RECAP JOURNÉE
+// ═══════════════════════════════════════════════
+function openRecap(){
+  const today=new Date().toLocaleDateString('fr-FR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  let rdvList=[],appList=[],nrpList=[],rappelList=[];
+  let totalAppeles=0;
+
+  Object.keys(callData).forEach(code=>{
+    callData[code].forEach((d,i)=>{
+      if(!d.statut) return;
+      const c=CONTACTS_RAW[code][i];
+      const p=PITCHES[code];
+      const item={c,p,d,code,i};
+      totalAppeles++;
+      if(d.statut==='rdv') rdvList.push(item);
+      else if(d.statut==='appele') appList.push(item);
+      else if(d.statut==='nrep') nrpList.push(item);
+      else if(d.statut==='rappel') rappelList.push(item);
+    });
+  });
+
+  function rowHtml(item){
+    const {c,p,d}=item;
+    return `<div class="recap-row">
+      <div class="recap-contact">
+        <div class="recap-cname">${c.pr} ${c.n}</div>
+        <div class="recap-crole">${c.po} · ${c.co}</div>
+        ${d.note?`<div class="recap-cnote">💬 ${d.note}</div>`:''}
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+        <span class="recap-pitch" style="color:${p.color};border-color:${p.color}">${p.code}</span>
+        ${d.t?`<span class="recap-tel">${c.t}</span>`:''}
+        ${d.ts?`<span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text-muted)">${d.ts}</span>`:''}
+      </div>
+    </div>`;
+  }
+
+  function section(title, color, items){
+    if(!items.length) return '';
+    return `<div class="recap-section">
+      <div class="recap-section-title" style="color:${color}">${title} (${items.length})</div>
+      ${items.map(rowHtml).join('')}
+    </div>`;
+  }
+
+  const isEmpty = totalAppeles===0;
+
+  const content=document.getElementById('recap-content');
+  content.innerHTML=`
+    <button class="modal-close" onclick="closeRecap()">✕</button>
+    <div class="recap-title">Récap journée</div>
+    <div class="recap-sub">${today} · Jérémy</div>
+
+    ${isEmpty ? `<div class="empty-recap">Aucun appel qualifié pour l'instant.<br>Commence à appeler et qualifie chaque contact !</div>` : `
+    <div class="recap-stats">
+      <div class="rstat"><div class="rstat-num" style="color:var(--text)">${totalAppeles}</div><div class="rstat-lbl">Total contactés</div></div>
+      <div class="rstat"><div class="rstat-num" style="color:var(--rdv)">${rdvList.length}</div><div class="rstat-lbl">RDV obtenus</div></div>
+      <div class="rstat"><div class="rstat-num" style="color:var(--appele)">${appList.length}</div><div class="rstat-lbl">Appelés</div></div>
+      <div class="rstat"><div class="rstat-num" style="color:var(--nrep)">${nrpList.length}</div><div class="rstat-lbl">Sans réponse</div></div>
+    </div>
+
+    ${section('✅ RDV obtenus','#22c55e',rdvList)}
+    ${section('📞 Appelés','#60a5fa',appList)}
+    ${section('🔄 À rappeler','#f59e0b',rappelList)}
+    ${section('❌ Sans réponse','#f87171',nrpList)}
+
+    <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+      <button class="copy-recap-btn" onclick="copyRecap()" style="margin-top:0">📋 Copier le récap texte</button>
+      <button class="copy-recap-btn" onclick="sendRecapMail()" style="margin-top:0;border-color:var(--rdv);color:var(--rdv)">📧 Envoyer à miora@daylindo.com</button>
+    </div>
+    `}
+  `;
+  document.getElementById('recap-overlay').classList.add('open');
+}
+
+function closeRecap(e){
+  if(!e||e.target===document.getElementById('recap-overlay'))
+    document.getElementById('recap-overlay').classList.remove('open');
+}
+
+function copyRecap(){
+  const today=new Date().toLocaleDateString('fr-FR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  let lines=[`📊 RÉCAP COLD CALLS — ${today.toUpperCase()}`,`Jérémy · Daylindo`,''];
+
+  const groups={rdv:[],appele:[],rappel:[],nrep:[]};
+  Object.keys(callData).forEach(code=>{
+    callData[code].forEach((d,i)=>{
+      if(!d.statut) return;
+      groups[d.statut]?.push({c:CONTACTS_RAW[code][i],p:PITCHES[code],d});
+    });
+  });
+
+  const total=Object.values(groups).flat().length;
+  lines.push(`Total contactés : ${total}`);
+  lines.push(`RDV obtenus : ${groups.rdv.length}`);
+  lines.push(`Appelés : ${groups.appele.length}`);
+  lines.push(`Sans réponse : ${groups.nrep.length}`);
+  lines.push('');
+
+  function addSection(title, items){
+    if(!items.length) return;
+    lines.push(`— ${title} (${items.length}) —`);
+    items.forEach(({c,p,d})=>{
+      lines.push(`  ${c.pr} ${c.n} | ${c.co} | ${p.code}`);
+      lines.push(`  📞 ${c.t}`);
+      if(d.note) lines.push(`  💬 ${d.note}`);
+    });
+    lines.push('');
+  }
+
+  addSection('✅ RDV obtenus', groups.rdv);
+  addSection('📞 Appelés', groups.appele);
+  addSection('🔄 À rappeler', groups.rappel);
+  addSection('❌ Sans réponse', groups.nrep);
+
+  navigator.clipboard.writeText(lines.join('\n')).then(()=>{
+    const btns=document.querySelectorAll('.copy-recap-btn');
+    btns.forEach(b=>{ if(b.textContent.includes('Copier')){b.textContent='✅ Copié !';setTimeout(()=>b.textContent='📋 Copier le récap texte',2000);} });
+  });
+}
+
+function sendRecapMail(){
+  const today=new Date().toLocaleDateString('fr-FR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const groups={rdv:[],appele:[],rappel:[],nrep:[]};
+  Object.keys(callData).forEach(code=>{
+    callData[code].forEach((d,i)=>{
+      if(!d.statut) return;
+      groups[d.statut]?.push({c:CONTACTS_RAW[code][i],p:PITCHES[code],d});
+    });
+  });
+  const total=Object.values(groups).flat().length;
+
+  let body=`RÉCAP COLD CALLS — ${today.toUpperCase()}\nJérémy · Daylindo\n\n`;
+  body+=`Total contactés : ${total}\n`;
+  body+=`RDV obtenus : ${groups.rdv.length}\n`;
+  body+=`Appelés : ${groups.appele.length}\n`;
+  body+=`Sans réponse : ${groups.nrep.length}\n`;
+
+  function addSection(title,items){
+    if(!items.length) return;
+    body+=`\n— ${title} (${items.length}) —\n`;
+    items.forEach(({c,p,d})=>{
+      body+=`  ${c.pr} ${c.n} | ${c.co} | [${p.code}]\n`;
+      body+=`  Tel : ${c.t}\n`;
+      if(d.note) body+=`  Note : ${d.note}\n`;
+      if(d.ts) body+=`  Heure : ${d.ts}\n`;
+    });
+  }
+  addSection('✅ RDV obtenus',groups.rdv);
+  addSection('📞 Appelés',groups.appele);
+  addSection('🔄 À rappeler',groups.rappel);
+  addSection('❌ Sans réponse',groups.nrep);
+
+  const subject=encodeURIComponent(`Récap Cold Calls Jérémy — ${today}`);
+  const bodyEnc=encodeURIComponent(body);
+  window.location.href=`mailto:miora@daylindo.com?subject=${subject}&body=${bodyEnc}`;
+}
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    closeModal(); closeRecap();
+  }
+});
+updateGlobalStats();
+</script>
+</body>
+</html>
