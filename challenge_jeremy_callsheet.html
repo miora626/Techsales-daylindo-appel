@@ -2,417 +2,472 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>🏆 Challenge Jérémy — Call Sheet</title>
+<title>Challenge Jérémy — Call Sheet Daylindo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Karla:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--navy:#0d1f3c;--navy2:#162d54;--orange:#f06423;--orng2:#ff813f;--cream:#faf7f2;--muted:#8a95a8;--border:#d8dde7;--shadow:0 4px 24px rgba(13,31,60,.10);--s1:#f06423;--s2:#3a7ec9;--s3:#8b4fc9;--ok:#1a9e6f;--ko:#d94040;--warn:#e6a817}
-html{scroll-behavior:smooth}body{font-family:'Karla',sans-serif;background:var(--cream);color:var(--navy);min-height:100vh}
-.hdr{background:var(--navy);color:#fff;position:relative;overflow:hidden}
-.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 120% at 110% -10%,rgba(240,100,35,.35) 0%,transparent 60%);pointer-events:none}
-.hdr-inner{position:relative;max-width:1200px;margin:0 auto;padding:20px 28px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.hdr-logo{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:#fff}
-.hdr-logo span{color:var(--orng2)}
-.hdr-title{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;flex:1}
-.chips{display:flex;gap:8px;flex-wrap:wrap}
-.chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:7px;padding:4px 11px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,.65)}
+:root{--n:#0d1f3c;--n2:#162d54;--or:#f06423;--o2:#ff813f;--cr:#faf7f2;--mu:#8a95a8;--bd:#d8dde7;--sh:0 4px 24px rgba(13,31,60,.10);--s1:#f06423;--s2:#3a7ec9;--s3:#8b4fc9;--ok:#1a9e6f;--ko:#d94040;--wa:#e6a817}
+html{scroll-behavior:smooth}body{font-family:'Karla',sans-serif;background:var(--cr);color:var(--n);min-height:100vh}
+.hd{background:var(--n);color:#fff;position:relative;overflow:hidden}
+.hd::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 120% at 110% -10%,rgba(240,100,35,.35) 0%,transparent 60%);pointer-events:none}
+.hdi{position:relative;max-width:1200px;margin:0 auto;padding:18px 28px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.logo{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900}
+.logo span{color:var(--o2)}
+.htitle{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;flex:1}
+.chips{display:flex;gap:7px;flex-wrap:wrap}
+.chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:7px;padding:4px 10px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,.65)}
 .chip span{color:#fff}
-.tabs{max-width:1200px;margin:18px auto 0;padding:0 28px;display:flex;gap:8px;flex-wrap:wrap}
-.tab{padding:10px 20px;border-radius:10px;border:2px solid var(--border);background:#fff;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;transition:all .2s;box-shadow:var(--shadow)}
-.tab.t1{color:var(--s1)}.tab.t2{color:var(--s2)}.tab.t3{color:var(--s3)}.tab.ti{color:#0a66c2}
-.tab.active.t1{background:var(--s1);color:#fff;border-color:var(--s1)}
-.tab.active.t2{background:var(--s2);color:#fff;border-color:var(--s2)}
-.tab.active.t3{background:var(--s3);color:#fff;border-color:var(--s3)}
-.tab.active.ti{background:#0a66c2;color:#fff;border-color:#0a66c2}
+.tabs{max-width:1200px;margin:16px auto 0;padding:0 28px;display:flex;gap:8px;flex-wrap:wrap}
+.tab{padding:10px 20px;border-radius:10px;border:2px solid var(--bd);background:#fff;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;transition:all .2s;box-shadow:var(--sh)}
+.tab.t1{color:var(--s1)}.tab.t2{color:var(--s2)}.tab.t3{color:var(--s3)}
+.tab.t1.active{background:var(--s1);color:#fff;border-color:var(--s1)}
+.tab.t2.active{background:var(--s2);color:#fff;border-color:var(--s2)}
+.tab.t3.active{background:var(--s3);color:#fff;border-color:var(--s3)}
 main{max-width:1200px;margin:16px auto 60px;padding:0 28px;display:flex;flex-direction:column;gap:14px}
 .panel{display:none;flex-direction:column;gap:14px}.panel.active{display:flex}
-.ctx{background:#fff;border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
-.ctx-grid{display:grid;grid-template-columns:1fr 1fr}
-@media(max-width:680px){.ctx-grid{grid-template-columns:1fr}}
-.ctx-col{padding:16px 20px;border-right:1px solid var(--border)}.ctx-col:last-child{border:none}
-.ctx-lbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-.ctx-item{display:flex;align-items:flex-start;gap:7px;font-size:13.5px;line-height:1.5;margin-bottom:5px}
-.pitch-box{background:var(--navy);padding:18px 20px;position:relative;overflow:hidden}
-.pitch-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 100% at 100% 0%,rgba(240,100,35,.2) 0%,transparent 60%);pointer-events:none}
+.ctx{background:#fff;border-radius:14px;box-shadow:var(--sh);overflow:hidden}
+.ctx-g{display:grid;grid-template-columns:1fr 1fr}
+@media(max-width:680px){.ctx-g{grid-template-columns:1fr}}
+.ctx-c{padding:16px 20px;border-right:1px solid var(--bd)}.ctx-c:last-child{border:none}
+.lbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:var(--mu);margin-bottom:8px}
+.ci{display:flex;align-items:flex-start;gap:7px;font-size:13.5px;line-height:1.5;margin-bottom:6px}
+.pb{background:var(--n);padding:18px 20px;position:relative;overflow:hidden}
+.pb::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 100% at 100% 0%,rgba(240,100,35,.2) 0%,transparent 60%);pointer-events:none}
 .ptabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;position:relative}
 .ptab{padding:4px 11px;border-radius:6px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:rgba(255,255,255,.45);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .18s}
-.ptab.active,.ptab:hover{background:rgba(240,100,35,.25);border-color:rgba(240,100,35,.5);color:var(--orng2)}
+.ptab.active,.ptab:hover{background:rgba(240,100,35,.25);border-color:rgba(240,100,35,.5);color:var(--o2)}
 .ptop{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;position:relative}
-.plbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:var(--orng2)}
-.pcopy{display:flex;align-items:center;gap:5px;background:rgba(240,100,35,.2);border:1px solid rgba(240,100,35,.4);color:var(--orng2);padding:4px 10px;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;cursor:pointer}
+.plbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:var(--o2)}
+.pcopy{display:flex;align-items:center;gap:5px;background:rgba(240,100,35,.2);border:1px solid rgba(240,100,35,.4);color:var(--o2);padding:4px 10px;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;cursor:pointer}
 .pcopy:hover{background:rgba(240,100,35,.4)}
-.ptext{font-size:13px;line-height:1.75;color:rgba(255,255,255,.85);white-space:pre-line;position:relative}
+.ptext{font-size:13px;line-height:1.75;color:rgba(255,255,255,.85);white-space:pre-wrap;position:relative;font-family:'Karla',sans-serif}
 .rules{background:rgba(255,255,255,.04);border-top:1px solid rgba(255,255,255,.08);padding:10px 20px;display:flex;gap:14px;flex-wrap:wrap;position:relative}
 .rule{display:flex;align-items:center;gap:6px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:rgba(255,255,255,.4)}
-.rn{width:17px;height:17px;border-radius:5px;display:grid;place-items:center;font-size:10px;font-weight:900;background:rgba(240,100,35,.3);color:var(--orng2);flex-shrink:0}
-.ctable{background:#fff;border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
-.ctop{padding:12px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.rn{width:17px;height:17px;border-radius:5px;display:grid;place-items:center;font-size:10px;font-weight:900;background:rgba(240,100,35,.3);color:var(--o2);flex-shrink:0}
+.ct{background:#fff;border-radius:14px;box-shadow:var(--sh);overflow:hidden}
+.ctop{padding:12px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .ctitle{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800}
-.sbox{flex:1;min-width:150px;max-width:240px;position:relative}
-.sbox input{width:100%;padding:7px 12px 7px 30px;border:2px solid var(--border);border-radius:8px;font-family:'Karla',sans-serif;font-size:13px;outline:none;background:#fafbfc;transition:border-color .2s}
-.sbox input:focus{border-color:var(--orange)}
-.si{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:12px}
-.fbts{display:flex;gap:5px;flex-wrap:wrap}
-.fb{padding:4px 9px;border-radius:6px;border:2px solid var(--border);background:var(--cream);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s}
-.fb.active,.fb:hover{border-color:var(--navy);background:var(--navy);color:#fff}
-.cnt{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--muted);margin-left:auto}
-.twrap{overflow-x:auto}
+.sb{flex:1;min-width:150px;max-width:240px;position:relative}
+.sb input{width:100%;padding:7px 12px 7px 30px;border:2px solid var(--bd);border-radius:8px;font-family:'Karla',sans-serif;font-size:13px;outline:none;background:#fafbfc;transition:border-color .2s}
+.sb input:focus{border-color:var(--or)}
+.si{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--mu);font-size:12px}
+.fbs{display:flex;gap:5px;flex-wrap:wrap}
+.fb{padding:4px 9px;border-radius:6px;border:2px solid var(--bd);background:var(--cr);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--mu);cursor:pointer;transition:all .15s}
+.fb.active,.fb:hover{border-color:var(--n);background:var(--n);color:#fff}
+.cnt{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--mu);margin-left:auto}
+.tw{overflow-x:auto}
 table{width:100%;border-collapse:collapse}
-thead tr{background:#f4f6fb;border-bottom:2px solid var(--border)}
-th{padding:8px 12px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;white-space:nowrap}
-tbody tr{border-bottom:1px solid var(--border);transition:background .12s;cursor:pointer}
+thead tr{background:#f4f6fb;border-bottom:2px solid var(--bd)}
+th{padding:9px 12px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);text-align:left;white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--bd);cursor:pointer;transition:background .12s}
 tbody tr:hover{background:#f7f9fc}
-tbody tr.called{background:rgba(230,168,23,.05)}tbody tr.rdv{background:rgba(26,158,111,.07)}
-td{padding:9px 12px;font-size:13px;vertical-align:middle}
-.tname{font-weight:600;white-space:nowrap}.tco{font-weight:500}.tposte{color:var(--muted);font-size:12px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ttel a{color:var(--s2);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px}
-.ttel a:hover{text-decoration:underline}
-.tact{display:flex;gap:4px}
+tbody tr.called{background:rgba(230,168,23,.05)}
+tbody tr.rdv{background:rgba(26,158,111,.07)}
+td{padding:10px 12px;font-size:13px;vertical-align:middle}
+.tn{font-weight:600;white-space:nowrap}.tc{font-weight:500}
+.tp{color:var(--mu);font-size:12px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tt a{color:var(--s2);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px}
+.tt a:hover{text-decoration:underline}
+.ta{display:flex;gap:4px}
 .ab{width:26px;height:26px;border-radius:6px;border:none;cursor:pointer;display:grid;place-items:center;font-size:12px;transition:all .15s}
-.ab.mail{background:rgba(58,126,201,.1);color:var(--s2)}.ab.mail:hover{background:var(--s2);color:#fff}
-.ab.li{background:rgba(10,102,194,.1);color:#0a66c2}.ab.li:hover{background:#0a66c2;color:#fff}
-.ab.noli{opacity:.2;cursor:default}
-.pbadge{display:inline-flex;padding:2px 7px;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;white-space:nowrap}
-.pbadge.s1a{background:rgba(240,100,35,.15);color:#c04010}.pbadge.s1b{background:rgba(240,100,35,.08);color:#c04010}
-.pbadge.s2a{background:rgba(58,126,201,.15);color:#1a4a90}.pbadge.s2b{background:rgba(58,126,201,.1);color:#1a4a90}
-.pbadge.s2c{background:rgba(58,126,201,.2);color:#1a4a90}.pbadge.s2d{background:rgba(58,126,201,.08);color:#1a4a90}
-.pbadge.s3a{background:rgba(139,79,201,.15);color:#5a1aa0}.pbadge.s3b{background:rgba(139,79,201,.1);color:#5a1aa0}
-.sb{display:inline-flex;align-items:center;padding:2px 7px;border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;cursor:pointer}
-.sb.idle{background:var(--cream);color:var(--muted);border:1px solid var(--border)}
-.sb.called{background:rgba(230,168,23,.15);color:#a07010;border:1px solid rgba(230,168,23,.4)}
-.sb.rdv{background:rgba(26,158,111,.12);color:#136f4d;border:1px solid rgba(26,158,111,.35)}
-.sb.noreply{background:rgba(217,64,64,.1);color:#a02828;border:1px solid rgba(217,64,64,.3)}
-.noR{padding:32px;text-align:center;color:var(--muted);font-size:14px;display:none}
-.mov{display:none;position:fixed;inset:0;background:rgba(13,31,60,.6);z-index:1000;align-items:center;justify-content:center;padding:14px;backdrop-filter:blur(3px)}
-.mov.open{display:flex}
-.mbox{background:#fff;border-radius:16px;max-width:680px;width:100%;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(13,31,60,.3)}
-.mhead{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:12px;position:sticky;top:0;background:#fff;z-index:10}
+.ab.m{background:rgba(58,126,201,.1);color:var(--s2)}.ab.m:hover{background:var(--s2);color:#fff}
+.ab.l{background:rgba(10,102,194,.1);color:#0a66c2}.ab.l:hover{background:#0a66c2;color:#fff}
+.ab.nl{opacity:.2;cursor:default;pointer-events:none}
+.pb2{display:inline-flex;padding:2px 7px;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;white-space:nowrap}
+.pb2.s1a{background:rgba(240,100,35,.15);color:#c04010}.pb2.s1b{background:rgba(240,100,35,.08);color:#c04010}
+.pb2.s2a{background:rgba(58,126,201,.15);color:#1a4a90}.pb2.s2b{background:rgba(58,126,201,.1);color:#1a4a90}
+.pb2.s2c{background:rgba(58,126,201,.2);color:#1a4a90}.pb2.s2d{background:rgba(58,126,201,.08);color:#1a4a90}
+.pb2.s3a{background:rgba(139,79,201,.15);color:#5a1aa0}.pb2.s3b{background:rgba(139,79,201,.1);color:#5a1aa0}
+.stb{display:inline-flex;align-items:center;padding:2px 7px;border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;cursor:pointer}
+.stb.idle{background:var(--cr);color:var(--mu);border:1px solid var(--bd)}
+.stb.called{background:rgba(230,168,23,.15);color:#a07010;border:1px solid rgba(230,168,23,.4)}
+.stb.rdv{background:rgba(26,158,111,.12);color:#136f4d;border:1px solid rgba(26,158,111,.35)}
+.stb.noreply{background:rgba(217,64,64,.1);color:#a02828;border:1px solid rgba(217,64,64,.3)}
+.noR{padding:32px;text-align:center;color:var(--mu);font-size:14px;display:none}
+.ov{display:none;position:fixed;inset:0;background:rgba(13,31,60,.6);z-index:1000;align-items:center;justify-content:center;padding:14px;backdrop-filter:blur(3px)}
+.ov.open{display:flex}
+.mb{background:#fff;border-radius:16px;max-width:680px;width:100%;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(13,31,60,.3)}
+.mh{padding:18px 22px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:flex-start;gap:12px;position:sticky;top:0;background:#fff;z-index:10}
 .mav{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:900;color:#fff;flex-shrink:0}
-.minfo{flex:1}.mname{font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:800}
-.mposte{font-size:12.5px;color:var(--muted);margin-top:1px;line-height:1.4}
+.mi{flex:1}
+.mn{font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:800}
+.mpo{font-size:12.5px;color:var(--mu);margin-top:1px;line-height:1.4}
 .mco{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;margin-top:3px}
-.mcls{width:30px;height:30px;border-radius:7px;border:2px solid var(--border);background:var(--cream);cursor:pointer;display:grid;place-items:center;font-size:14px;flex-shrink:0}
-.mcls:hover{background:var(--ko);border-color:var(--ko);color:#fff}
-.mbody{padding:18px 24px}
-.mcgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
-@media(max-width:480px){.mcgrid{grid-template-columns:1fr}}
-.mci{background:var(--cream);border-radius:8px;padding:10px 12px}
-.mcl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.mx{width:30px;height:30px;border-radius:7px;border:2px solid var(--bd);background:var(--cr);cursor:pointer;display:grid;place-items:center;font-size:14px;flex-shrink:0}
+.mx:hover{background:var(--ko);border-color:var(--ko);color:#fff}
+.mbd{padding:18px 22px}
+.mg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+@media(max-width:480px){.mg{grid-template-columns:1fr}}
+.mci{background:var(--cr);border-radius:8px;padding:10px 12px}
+.mcl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);margin-bottom:3px}
 .mcv{font-size:13px;font-weight:500;word-break:break-all}
 .mcv a{color:var(--s2);text-decoration:none}.mcv a:hover{text-decoration:underline}
-.mbtns{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
-.mbtn{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;cursor:pointer;border:none;text-decoration:none;transition:filter .18s}
-.mbtn.call{background:var(--ok);color:#fff}.mbtn.email{background:var(--s2);color:#fff}.mbtn.linkedin{background:#0a66c2;color:#fff}
-.mbtn:hover{filter:brightness(1.1)}.mbtn.dis{opacity:.35;cursor:default;pointer-events:none}
-.div{height:1px;background:var(--border);margin:14px 0}
-.psel{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}
-.popt{padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:var(--cream);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s}
-.popt.active{background:var(--navy);border-color:var(--navy);color:#fff}
-.popt:hover:not(.active){border-color:var(--navy);color:var(--navy)}
-.pm{background:var(--navy);border-radius:10px;padding:16px}
-.pmt{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:var(--orng2);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
-.pmcp{display:flex;align-items:center;gap:4px;background:rgba(240,100,35,.2);border:1px solid rgba(240,100,35,.4);color:var(--orng2);padding:3px 9px;border-radius:5px;font-size:11px;cursor:pointer}
-.pmcp:hover{background:rgba(240,100,35,.4)}
-.pmtxt{font-size:13px;line-height:1.75;color:rgba(255,255,255,.85);white-space:pre-line}
-.stlbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.sopts{display:flex;gap:6px;flex-wrap:wrap}
-.sopt{padding:6px 12px;border-radius:7px;border:2px solid var(--border);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s}
-.sopt.s-idle{color:var(--muted)}.sopt.s-idle.active,.sopt.s-idle:hover{border-color:var(--muted);background:var(--muted);color:#fff}
-.sopt.s-called{color:var(--warn)}.sopt.s-called.active,.sopt.s-called:hover{border-color:var(--warn);background:var(--warn);color:#fff}
-.sopt.s-rdv{color:var(--ok)}.sopt.s-rdv.active,.sopt.s-rdv:hover{border-color:var(--ok);background:var(--ok);color:#fff}
-.sopt.s-noreply{color:var(--ko)}.sopt.s-noreply.active,.sopt.s-noreply:hover{border-color:var(--ko);background:var(--ko);color:#fff}
-.nota textarea{width:100%;border:2px solid var(--border);border-radius:8px;padding:9px 12px;font-family:'Karla',sans-serif;font-size:13px;min-height:68px;resize:vertical;outline:none;background:#fafbfc;transition:border-color .2s}
-.nota textarea:focus{border-color:var(--orange)}
+.mbt{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.mbn{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;cursor:pointer;border:none;text-decoration:none;transition:filter .18s}
+.mbn.call{background:var(--ok);color:#fff}.mbn.em{background:var(--s2);color:#fff}.mbn.li{background:#0a66c2;color:#fff}
+.mbn:hover{filter:brightness(1.1)}.mbn.dis{opacity:.35;cursor:default;pointer-events:none}
+.dv{height:1px;background:var(--bd);margin:12px 0}
+.ps{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}
+.po{padding:4px 10px;border-radius:6px;border:1px solid var(--bd);background:var(--cr);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--mu);cursor:pointer;transition:all .15s}
+.po.active{background:var(--n);border-color:var(--n);color:#fff}
+.po:hover:not(.active){border-color:var(--n);color:var(--n)}
+.pm{background:var(--n);border-radius:10px;padding:16px}
+.pmt{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:var(--o2);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.pmc{display:flex;align-items:center;gap:4px;background:rgba(240,100,35,.2);border:1px solid rgba(240,100,35,.4);color:var(--o2);padding:3px 9px;border-radius:5px;font-size:11px;cursor:pointer}
+.pmc:hover{background:rgba(240,100,35,.4)}
+.pmx{font-size:13px;line-height:1.75;color:rgba(255,255,255,.85);white-space:pre-wrap;font-family:'Karla',sans-serif}
+.sl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);margin-bottom:6px}
+.so{display:flex;gap:6px;flex-wrap:wrap}
+.sop{padding:6px 12px;border-radius:7px;border:2px solid var(--bd);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s}
+.sop.si2{color:var(--mu)}.sop.si2.active,.sop.si2:hover{border-color:var(--mu);background:var(--mu);color:#fff}
+.sop.sc{color:var(--wa)}.sop.sc.active,.sop.sc:hover{border-color:var(--wa);background:var(--wa);color:#fff}
+.sop.sr{color:var(--ok)}.sop.sr.active,.sop.sr:hover{border-color:var(--ok);background:var(--ok);color:#fff}
+.sop.sn{color:var(--ko)}.sop.sn.active,.sop.sn:hover{border-color:var(--ko);background:var(--ko);color:#fff}
+.nota textarea{width:100%;border:2px solid var(--bd);border-radius:8px;padding:9px 12px;font-family:'Karla',sans-serif;font-size:13px;min-height:68px;resize:vertical;outline:none;background:#fafbfc;transition:border-color .2s}
+.nota textarea:focus{border-color:var(--or)}
 .nota textarea::placeholder{color:#b8c0cf;font-style:italic}
-.nsave{margin-top:6px;display:inline-flex;align-items:center;gap:5px;padding:7px 14px;background:var(--orange);color:#fff;border:none;border-radius:7px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;cursor:pointer}
-.nsave:hover{filter:brightness(1.08)}
-.toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:#fff;padding:10px 16px;border-radius:9px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;z-index:2000;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none}
+.nsv{margin-top:6px;display:inline-flex;align-items:center;gap:5px;padding:7px 14px;background:var(--or);color:#fff;border:none;border-radius:7px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;cursor:pointer}
+.nsv:hover{filter:brightness(1.08)}
+.toast{position:fixed;bottom:20px;right:20px;background:var(--n);color:#fff;padding:10px 16px;border-radius:9px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;z-index:2000;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none}
 .toast.show{opacity:1;transform:translateY(0)}
-footer{text-align:center;padding:16px;font-size:12px;color:var(--muted);border-top:1px solid var(--border)}
-@media(max-width:600px){.hdr-inner,.tabs,main{padding:0 12px}.hdr-inner{padding:14px 12px}}
+footer{text-align:center;padding:16px;font-size:12px;color:var(--mu);border-top:1px solid var(--bd)}
+@media(max-width:600px){.hdi,.tabs,main{padding:0 12px}.hdi{padding:14px 12px}}
 </style>
 </head>
 <body>
-<header class="hdr">
-  <div class="hdr-inner">
-    <div class="hdr-logo">DAY<span>LIN</span>DO</div>
-    <div class="hdr-title">🏆 Challenge Jérémy — Call Sheet</div>
-    <div class="chips"><div class="chip">💰 S1 <span>47</span></div><div class="chip">🔧 S2 <span>54</span></div><div class="chip">🏦 S3 <span>41</span></div><div class="chip">✅ RDV <span id="cnt-rdv">0</span></div></div>
+<header class="hd">
+  <div class="hdi">
+    <div class="logo">DAY<span>LIN</span>DO</div>
+    <div class="htitle">&#127942; Challenge J&eacute;r&eacute;my &mdash; Call Sheet</div>
+    <div class="chips">
+      <div class="chip">&#128176; S1 <span id="c1">47</span></div>
+      <div class="chip">&#128295; S2 <span id="c2">54</span></div>
+      <div class="chip">&#127974; S3 <span id="c3">41</span></div>
+      <div class="chip">&#9989; RDV <span id="cnt-rdv">0</span></div>
+    </div>
   </div>
 </header>
-<div class="tabs"><button class="tab t1 active" onclick="switchTab('s1',this)">💰 SEG 1 — 47 contacts</button>
-<button class="tab t2 " onclick="switchTab('s2',this)">🔧 SEG 2 — 54 contacts</button>
-<button class="tab t3 " onclick="switchTab('s3',this)">🏦 SEG 3 — 41 contacts</button></div>
+<div class="tabs">
+  <button class="tab t1 active" onclick="swTab('s1',this)">&#128176; SEG 1 &mdash; 47 contacts</button>
+  <button class="tab t2" onclick="swTab('s2',this)">&#128295; SEG 2 &mdash; 54 contacts</button>
+  <button class="tab t3" onclick="swTab('s3',this)">&#127974; SEG 3 &mdash; 41 contacts</button>
+</div>
 <main>
 <div class="panel active" id="panel-s1">
   <div class="ctx">
-    <div class="ctx-grid">
-      <div class="ctx-col"><div class="ctx-lbl">⚠️ Pain points</div><div class="ctx-item"><span>🔴</span>Fort turnover → coût élevé intégration</div><div class="ctx-item"><span>🔴</span>OPCO non valorisés</div><div class="ctx-item"><span>🔴</span>Intégration non structurée</div></div>
-      <div class="ctx-col"><div class="ctx-lbl">✅ Ce que Daylindo apporte</div><div class="ctx-item"><span>💰</span>1 000€–2 500€ / collaborateur via OPCO</div><div class="ctx-item"><span>⚡</span>−40% temps intégration</div><div class="ctx-item"><span>🎯</span>Réf : grands acteurs logistique, BTP, Retail</div></div>
+    <div class="ctx-g">
+      <div class="ctx-c"><div class="lbl">&#9888;&#65039; Pain points</div><div class="ci"><span>&#128308;</span>Fort turnover → coût élevé intégration</div><div class="ci"><span>&#128308;</span>OPCO non valorisés — argent laissé sur la table</div><div class="ci"><span>&#128308;</span>Intégration non structurée → erreurs et lenteur</div></div>
+      <div class="ctx-c"><div class="lbl">&#9989; Ce que Daylindo apporte</div><div class="ci"><span>&#9989;</span>1 000€–2 500€ / collaborateur via OPCO/AFEST</div><div class="ci"><span>&#9989;</span>-40% du temps d'intégration</div><div class="ci"><span>&#9989;</span>Réf : logistique, BTP, Retail, La Poste</div></div>
     </div>
-    <div class="pitch-box">
+    <div class="pb">
       <div class="ptabs"><button class="ptab active" onclick="swPitch('s1','s1b')">S1b</button></div>
-      <div class="ptop">
-        <div class="plbl" id="plbl-s1">🎤 S1b — Saisonnalité</div>
-        <button class="pcopy" onclick="copySegPitch('s1')">📋 Copier</button>
-      </div>
-      <div class="ptext" id="ptxt-s1"></div>
-      <div class="rules"><div class="rule"><div class="rn">1</div>Accroche 1 phrase</div><div class="rule"><div class="rn">2</div>Question + Pause</div><div class="rule"><div class="rn">3</div>Solution 1 phrase</div><div class="rule"><div class="rn">4</div>CTA 20–30 min</div></div>
+      <div class="ptop"><div class="plbl" id="plbl-s1">&#127908; S1b — Saisonnalité</div><button class="pcopy" onclick="copyPitch('s1')">&#128203; Copier</button></div>
+      <pre class="ptext" id="ptxt-s1"></pre>
+      <div class="rules"><div class="rule"><span class="rn">1</span>Accroche 1 phrase</div><div class="rule"><span class="rn">2</span>Question + Pause</div><div class="rule"><span class="rn">3</span>Solution 1 phrase</div><div class="rule"><span class="rn">4</span>CTA 20–30 min</div></div>
     </div>
   </div>
-  <div class="ctable">
+  <div class="ct">
     <div class="ctop">
-      <div class="ctitle">47 contacts</div>
-      <div class="sbox"><span class="si">🔍</span><input type="text" placeholder="Rechercher..." oninput="filterTable('s1')" id="search-s1"/></div>
-      <div class="fbts">
-        <button class="fb active" onclick="setFilter('s1','all',this)">Tous</button>
-        <button class="fb" onclick="setFilter('s1','idle',this)">À appeler</button>
-        <button class="fb" onclick="setFilter('s1','called',this)">Appelé</button>
-        <button class="fb" onclick="setFilter('s1','rdv',this)">✅ RDV</button>
-        <button class="fb" onclick="setFilter('s1','noreply',this)">❌ Sans réponse</button>
+      <div class="ctitle">&#128176; SEG 1 — 47 contacts</div>
+      <div class="sb"><span class="si">&#128269;</span><input type="text" placeholder="Rechercher..." oninput="ft('s1')" id="srch-s1"/></div>
+      <div class="fbs">
+        <button class="fb active" onclick="sf('s1','all',this)">Tous</button>
+        <button class="fb" onclick="sf('s1','idle',this)">À appeler</button>
+        <button class="fb" onclick="sf('s1','called',this)">Appelé</button>
+        <button class="fb" onclick="sf('s1','rdv',this)">&#9989; RDV</button>
+        <button class="fb" onclick="sf('s1','noreply',this)">&#10060; Sans réponse</button>
       </div>
       <div class="cnt" id="cnt-s1">47 contacts</div>
     </div>
-    <div class="twrap"><table><thead><tr><th>#</th><th>Pitch</th><th>Nom</th><th>Entreprise</th><th>Poste</th><th>Téléphone</th><th>Actions</th><th>Statut</th></tr></thead><tbody id="tb-s1"></tbody></table>
-    <div class="noR" id="no-s1">Aucun contact trouvé</div></div>
+    <div class="tw"><table><thead><tr><th>#</th><th>Pitch</th><th>Nom</th><th>Entreprise</th><th>Poste</th><th>Téléphone</th><th>Actions</th><th>Statut</th></tr></thead><tbody id="tb-s1"></tbody></table><div class="noR" id="no-s1">Aucun résultat</div></div>
   </div>
 </div>
-<div class="panel " id="panel-s2">
+<div class="panel" id="panel-s2">
   <div class="ctx">
-    <div class="ctx-grid">
-      <div class="ctx-col"><div class="ctx-lbl">⚠️ Pain points</div><div class="ctx-item"><span>🔴</span>Perte savoir-faire critique</div><div class="ctx-item"><span>🔴</span>Gestes non traçables</div><div class="ctx-item"><span>🔴</span>Conformité réglementaire</div></div>
-      <div class="ctx-col"><div class="ctx-lbl">✅ Ce que Daylindo apporte</div><div class="ctx-item"><span>🔒</span>Gestes capturés et traçables</div><div class="ctx-item"><span>📋</span>Compétences opposables aux audits</div><div class="ctx-item"><span>🎯</span>Réf : Orange, EDF, Airbus, Dekra</div></div>
+    <div class="ctx-g">
+      <div class="ctx-c"><div class="lbl">&#9888;&#65039; Pain points</div><div class="ci"><span>&#128308;</span>Perte de savoir-faire critique lors des départs seniors</div><div class="ci"><span>&#128308;</span>Gestes techniques non traçables, transmis informellement</div><div class="ci"><span>&#128308;</span>Conformité réglementaire difficile à prouver (audits)</div></div>
+      <div class="ctx-c"><div class="lbl">&#9989; Ce que Daylindo apporte</div><div class="ci"><span>&#9989;</span>380k€ évités sur un cas industriel réel</div><div class="ci"><span>&#9989;</span>Gestes capturés, validés, traçables et opposables</div><div class="ci"><span>&#9989;</span>Réf : Orange, EDF, Airbus, Safran, Dekra</div></div>
     </div>
-    <div class="pitch-box">
+    <div class="pb">
       <div class="ptabs"><button class="ptab active" onclick="swPitch('s2','s2a')">S2a</button><button class="ptab " onclick="swPitch('s2','s2b')">S2b</button><button class="ptab " onclick="swPitch('s2','s2c')">S2c</button><button class="ptab " onclick="swPitch('s2','s2d')">S2d</button></div>
-      <div class="ptop">
-        <div class="plbl" id="plbl-s2">🎤 S2a — Coût caché</div>
-        <button class="pcopy" onclick="copySegPitch('s2')">📋 Copier</button>
-      </div>
-      <div class="ptext" id="ptxt-s2"></div>
-      <div class="rules"><div class="rule"><div class="rn">1</div>Accroche 1 phrase</div><div class="rule"><div class="rn">2</div>Question + Pause</div><div class="rule"><div class="rn">3</div>Solution 1 phrase</div><div class="rule"><div class="rn">4</div>CTA 20–30 min</div></div>
+      <div class="ptop"><div class="plbl" id="plbl-s2">&#127908; S2a — Coût caché</div><button class="pcopy" onclick="copyPitch('s2')">&#128203; Copier</button></div>
+      <pre class="ptext" id="ptxt-s2"></pre>
+      <div class="rules"><div class="rule"><span class="rn">1</span>Accroche 1 phrase</div><div class="rule"><span class="rn">2</span>Question + Pause</div><div class="rule"><span class="rn">3</span>Solution 1 phrase</div><div class="rule"><span class="rn">4</span>CTA 20–30 min</div></div>
     </div>
   </div>
-  <div class="ctable">
+  <div class="ct">
     <div class="ctop">
-      <div class="ctitle">54 contacts</div>
-      <div class="sbox"><span class="si">🔍</span><input type="text" placeholder="Rechercher..." oninput="filterTable('s2')" id="search-s2"/></div>
-      <div class="fbts">
-        <button class="fb active" onclick="setFilter('s2','all',this)">Tous</button>
-        <button class="fb" onclick="setFilter('s2','idle',this)">À appeler</button>
-        <button class="fb" onclick="setFilter('s2','called',this)">Appelé</button>
-        <button class="fb" onclick="setFilter('s2','rdv',this)">✅ RDV</button>
-        <button class="fb" onclick="setFilter('s2','noreply',this)">❌ Sans réponse</button>
+      <div class="ctitle">&#128295; SEG 2 — 54 contacts</div>
+      <div class="sb"><span class="si">&#128269;</span><input type="text" placeholder="Rechercher..." oninput="ft('s2')" id="srch-s2"/></div>
+      <div class="fbs">
+        <button class="fb active" onclick="sf('s2','all',this)">Tous</button>
+        <button class="fb" onclick="sf('s2','idle',this)">À appeler</button>
+        <button class="fb" onclick="sf('s2','called',this)">Appelé</button>
+        <button class="fb" onclick="sf('s2','rdv',this)">&#9989; RDV</button>
+        <button class="fb" onclick="sf('s2','noreply',this)">&#10060; Sans réponse</button>
       </div>
       <div class="cnt" id="cnt-s2">54 contacts</div>
     </div>
-    <div class="twrap"><table><thead><tr><th>#</th><th>Pitch</th><th>Nom</th><th>Entreprise</th><th>Poste</th><th>Téléphone</th><th>Actions</th><th>Statut</th></tr></thead><tbody id="tb-s2"></tbody></table>
-    <div class="noR" id="no-s2">Aucun contact trouvé</div></div>
+    <div class="tw"><table><thead><tr><th>#</th><th>Pitch</th><th>Nom</th><th>Entreprise</th><th>Poste</th><th>Téléphone</th><th>Actions</th><th>Statut</th></tr></thead><tbody id="tb-s2"></tbody></table><div class="noR" id="no-s2">Aucun résultat</div></div>
   </div>
 </div>
-<div class="panel " id="panel-s3">
+<div class="panel" id="panel-s3">
   <div class="ctx">
-    <div class="ctx-grid">
-      <div class="ctx-col"><div class="ctx-lbl">⚠️ Pain points</div><div class="ctx-item"><span>🔴</span>Hétérogénéité d'un site à l'autre</div><div class="ctx-item"><span>🔴</span>Aucune visibilité centrale</div><div class="ctx-item"><span>🔴</span>OPCO permanents sous-exploité</div></div>
-      <div class="ctx-col"><div class="ctx-lbl">✅ Ce que Daylindo apporte</div><div class="ctx-item"><span>📊</span>Visibilité temps réel par site</div><div class="ctx-item"><span>🔗</span>Référentiel commun sur tout le réseau</div><div class="ctx-item"><span>🎯</span>Réf : Supplay, Adéquat, Bancaire, Assurance</div></div>
+    <div class="ctx-g">
+      <div class="ctx-c"><div class="lbl">&#9888;&#65039; Pain points</div><div class="ci"><span>&#128308;</span>Hétérogénéité des pratiques d'un site à l'autre</div><div class="ci"><span>&#128308;</span>Aucune visibilité centrale sur les compétences</div><div class="ci"><span>&#128308;</span>OPCO permanents sous-exploité</div></div>
+      <div class="ctx-c"><div class="lbl">&#9989; Ce que Daylindo apporte</div><div class="ci"><span>&#9989;</span>Visibilité temps réel des compétences par site</div><div class="ci"><span>&#9989;</span>Référentiel commun sur tout le réseau</div><div class="ci"><span>&#9989;</span>Réf : Supplay, Adéquat, Bancaire, Assurance</div></div>
     </div>
-    <div class="pitch-box">
+    <div class="pb">
       <div class="ptabs"><button class="ptab active" onclick="swPitch('s3','s3b')">S3b</button></div>
-      <div class="ptop">
-        <div class="plbl" id="plbl-s3">🎤 S3b — Franchise / Bancaire / Assurance</div>
-        <button class="pcopy" onclick="copySegPitch('s3')">📋 Copier</button>
-      </div>
-      <div class="ptext" id="ptxt-s3"></div>
-      <div class="rules"><div class="rule"><div class="rn">1</div>Accroche 1 phrase</div><div class="rule"><div class="rn">2</div>Question + Pause</div><div class="rule"><div class="rn">3</div>Solution 1 phrase</div><div class="rule"><div class="rn">4</div>CTA 20–30 min</div></div>
+      <div class="ptop"><div class="plbl" id="plbl-s3">&#127908; S3b — Franchise / Bancaire / Assurance</div><button class="pcopy" onclick="copyPitch('s3')">&#128203; Copier</button></div>
+      <pre class="ptext" id="ptxt-s3"></pre>
+      <div class="rules"><div class="rule"><span class="rn">1</span>Accroche 1 phrase</div><div class="rule"><span class="rn">2</span>Question + Pause</div><div class="rule"><span class="rn">3</span>Solution 1 phrase</div><div class="rule"><span class="rn">4</span>CTA 20–30 min</div></div>
     </div>
   </div>
-  <div class="ctable">
+  <div class="ct">
     <div class="ctop">
-      <div class="ctitle">41 contacts</div>
-      <div class="sbox"><span class="si">🔍</span><input type="text" placeholder="Rechercher..." oninput="filterTable('s3')" id="search-s3"/></div>
-      <div class="fbts">
-        <button class="fb active" onclick="setFilter('s3','all',this)">Tous</button>
-        <button class="fb" onclick="setFilter('s3','idle',this)">À appeler</button>
-        <button class="fb" onclick="setFilter('s3','called',this)">Appelé</button>
-        <button class="fb" onclick="setFilter('s3','rdv',this)">✅ RDV</button>
-        <button class="fb" onclick="setFilter('s3','noreply',this)">❌ Sans réponse</button>
+      <div class="ctitle">&#127974; SEG 3 — 41 contacts</div>
+      <div class="sb"><span class="si">&#128269;</span><input type="text" placeholder="Rechercher..." oninput="ft('s3')" id="srch-s3"/></div>
+      <div class="fbs">
+        <button class="fb active" onclick="sf('s3','all',this)">Tous</button>
+        <button class="fb" onclick="sf('s3','idle',this)">À appeler</button>
+        <button class="fb" onclick="sf('s3','called',this)">Appelé</button>
+        <button class="fb" onclick="sf('s3','rdv',this)">&#9989; RDV</button>
+        <button class="fb" onclick="sf('s3','noreply',this)">&#10060; Sans réponse</button>
       </div>
       <div class="cnt" id="cnt-s3">41 contacts</div>
     </div>
-    <div class="twrap"><table><thead><tr><th>#</th><th>Pitch</th><th>Nom</th><th>Entreprise</th><th>Poste</th><th>Téléphone</th><th>Actions</th><th>Statut</th></tr></thead><tbody id="tb-s3"></tbody></table>
-    <div class="noR" id="no-s3">Aucun contact trouvé</div></div>
+    <div class="tw"><table><thead><tr><th>#</th><th>Pitch</th><th>Nom</th><th>Entreprise</th><th>Poste</th><th>Téléphone</th><th>Actions</th><th>Statut</th></tr></thead><tbody id="tb-s3"></tbody></table><div class="noR" id="no-s3">Aucun résultat</div></div>
   </div>
-</div></main>
-
-<div class="mov" id="modal" onclick="closeOut(event)">
-  <div class="mbox">
-    <div class="mhead">
+</div>
+</main>
+<!-- MODAL -->
+<div class="ov" id="modal" onclick="clo(event)">
+  <div class="mb">
+    <div class="mh">
       <div class="mav" id="m-av"></div>
-      <div class="minfo"><div class="mname" id="m-name"></div><div class="mposte" id="m-poste"></div><div class="mco" id="m-co"></div></div>
-      <button class="mcls" onclick="closeModal()">✕</button>
+      <div class="mi">
+        <div class="mn" id="m-nm"></div>
+        <div class="mpo" id="m-po"></div>
+        <div class="mco" id="m-co"></div>
+      </div>
+      <button class="mx" onclick="cm()">&#10005;</button>
     </div>
-    <div class="mbody">
-      <div class="mcgrid">
-        <div class="mci"><div class="mcl">📞 Téléphone</div><div class="mcv" id="m-tel"></div></div>
-        <div class="mci"><div class="mcl">📧 Email</div><div class="mcv" id="m-email"></div></div>
+    <div class="mbd">
+      <div class="mg">
+        <div class="mci"><div class="mcl">&#128222; T&eacute;l&eacute;phone</div><div class="mcv" id="m-tel"></div></div>
+        <div class="mci"><div class="mcl">&#128231; Email</div><div class="mcv" id="m-em"></div></div>
       </div>
-      <div class="mbtns">
-        <a class="mbtn call" id="m-call" href="#">📞 Appeler</a>
-        <a class="mbtn email" id="m-email-btn" href="#">📧 Email</a>
-        <a class="mbtn linkedin" id="m-li" href="#" target="_blank">💼 LinkedIn</a>
+      <div class="mbt">
+        <a class="mbn call" id="m-ca" href="#">&#128222; Appeler</a>
+        <a class="mbn em" id="m-eb" href="#">&#128231; Email</a>
+        <a class="mbn li" id="m-li" href="#">&#128188; LinkedIn</a>
       </div>
-      <div class="div"></div>
-      <div class="psel" id="m-psel"></div>
+      <div class="dv"></div>
+      <div class="ps" id="m-ps"></div>
       <div class="pm">
-        <div class="pmt"><span id="m-plbl">🎤 Script</span><button class="pmcp" onclick="copyModal()">📋 Copier</button></div>
-        <div class="pmtxt" id="m-ptxt"></div>
+        <div class="pmt"><span id="m-pl">&#127908; Script</span><button class="pmc" onclick="cpM()">&#128203; Copier</button></div>
+        <pre class="pmx" id="m-pt"></pre>
       </div>
-      <div class="div"></div>
-      <div class="stlbl">Statut de l'appel</div>
-      <div class="sopts">
-        <button class="sopt s-idle" onclick="setSt('idle',this)">À appeler</button>
-        <button class="sopt s-called" onclick="setSt('called',this)">📞 Appelé</button>
-        <button class="sopt s-rdv" onclick="setSt('rdv',this)">✅ RDV obtenu</button>
-        <button class="sopt s-noreply" onclick="setSt('noreply',this)">❌ Pas de réponse</button>
+      <div class="dv"></div>
+      <div class="sl">Statut de l&#39;appel</div>
+      <div class="so">
+        <button class="sop si2" onclick="stS('idle',this)">&Agrave; appeler</button>
+        <button class="sop sc" onclick="stS('called',this)">&#128222; Appel&eacute;</button>
+        <button class="sop sr" onclick="stS('rdv',this)">&#9989; RDV obtenu</button>
+        <button class="sop sn" onclick="stS('noreply',this)">&#10060; Pas de r&eacute;ponse</button>
       </div>
-      <div class="div"></div>
+      <div class="dv"></div>
       <div class="nota">
-        <div class="stlbl">Notes</div>
-        <textarea id="m-notes" placeholder="Notes sur l'appel..."></textarea>
-        <button class="nsave" onclick="saveNote()">💾 Sauvegarder</button>
+        <div class="sl">Notes</div>
+        <textarea id="m-no" placeholder="Notes sur l&#39;appel..."></textarea>
+        <button class="nsv" onclick="svN()">&#128190; Sauvegarder</button>
       </div>
     </div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
-<footer><strong>Daylindo</strong> — Challenge Jérémy · <a href="https://andrianalymioratiana-dotcom.github.io/Pitch-techsales-daylindo/daylindo_pitchs_cold_call.html" target="_blank" style="color:var(--orange)">Pitchs Cold Call v4 →</a></footer>
+<footer><strong>Daylindo</strong> &mdash; Challenge J&eacute;r&eacute;my &nbsp;&middot;&nbsp; <a href="https://andrianalymioratiana-dotcom.github.io/Pitch-techsales-daylindo/daylindo_pitchs_cold_call.html" target="_blank" style="color:var(--or)">Pitchs Cold Call v4 &rarr;</a></footer>
 <script>
-const DATA={"s1": [{"pitch": "S1b", "prenom": "Stephanie", "nom": "DUCATEZ", "entreprise": "Le Groupe La Poste", "poste": "directrice des ressources humaines", "tel": "+33631566984", "email": "stephanie.ducatez@laposte.fr", "linkedin": "https://www.linkedin.com/in/stephanie-ducatez-98228a139"}, {"pitch": "S1b", "prenom": "Paul", "nom": "REVILLET", "entreprise": "Fnac Darty", "poste": "directeur des ressources humaines - relais fnac & fnac périphérie", "tel": "+33633836937", "email": "paul.revillet@fnacdarty.com", "linkedin": "https://www.linkedin.com/in/paul-revillet-0b7243b6"}, {"pitch": "S1b", "prenom": "Jessica", "nom": "DESTALMINIL", "entreprise": "La Poste", "poste": "human resources director", "tel": "+33776374821", "email": "jessica.destalminil@laposte.fr", "linkedin": "https://www.linkedin.com/in/jessica-destalminil-03a7a275"}, {"pitch": "S1b", "prenom": "Sophie", "nom": "GONZALEZ", "entreprise": "Le Groupe La Poste", "poste": "directrice des ressources humaines opérationnelle", "tel": "+33672900603", "email": "sophie.gonzalez@laposte.fr", "linkedin": "https://www.linkedin.com/in/sophie-gonzalez-b893b537"}, {"pitch": "S1b", "prenom": "Malika", "nom": "BOUCHEHIOUA", "entreprise": "Elior Group", "poste": "Directrice des ressources humaines", "tel": "+33155445544", "email": "malika.bouchehioua@eliorgroup.com", "linkedin": "https://www.linkedin.com/in/malika-bouchehioua-0488ab86"}, {"pitch": "S1b", "prenom": "Thomas", "nom": "DARRAS", "entreprise": "INTERSPORT FRANCE", "poste": "Responsable formation", "tel": "+33680443703", "email": "tdarras@intersport.fr", "linkedin": "https://www.linkedin.com/in/thomas-darras-9a6a0412b"}, {"pitch": "S1b", "prenom": "Jeremy", "nom": "CARMONA 🚀", "entreprise": "Carrefour", "poste": "Directeur des Ressources Humaines Services Financiers et Marchands France et Groupe", "tel": "+33768578205", "email": "jeremy_carmona@carrefour.com", "linkedin": "https://www.linkedin.com/in/jeremy-carmona-%F0%9F%9A%80-970bb9137"}, {"pitch": "S1b", "prenom": "Laurent", "nom": "MATHA", "entreprise": "Le Groupe La Poste", "poste": "directeur des ressources humaines opérationnel est hérault - gard & lozère  - dex occitanie", "tel": "+33682221989", "email": "laurent.matha@laposte.fr", "linkedin": "https://www.linkedin.com/in/laurent-matha-15b30a125"}, {"pitch": "S1b", "prenom": "Béatrice", "nom": "PARIS", "entreprise": "Le Groupe La Poste", "poste": "directeur des ressources humaines", "tel": "+33683297174", "email": "beatrice.paris@laposte.fr", "linkedin": "https://www.linkedin.com/in/beatriceparis"}, {"pitch": "S1b", "prenom": "Ressot", "nom": "SOPHIE", "entreprise": "Le Groupe La Poste", "poste": "directeur des ressources humaines", "tel": "+33388240631", "email": "sophie.ressot@laposte.fr", "linkedin": "https://www.linkedin.com/in/ressot-sophie-ab1a3bb3"}, {"pitch": "S1b", "prenom": "Alain", "nom": "SIMON", "entreprise": "Auchan Retail", "poste": "drh", "tel": "+33622940543", "email": "a.simon@auchan.pl", "linkedin": "https://www.linkedin.com/in/alain-simon-50959286"}, {"pitch": "S1b", "prenom": "Marie Bernard", "nom": "DESFARGES", "entreprise": "Auchan", "poste": "drh", "tel": "+33762846522", "email": "marie.bernard@auchan-retail.com", "linkedin": "https://www.linkedin.com/in/marie-bernard-desfarges-830a21101"}, {"pitch": "S1b", "prenom": "Philippe", "nom": "SAUDO", "entreprise": "Auchan Retail", "poste": "drh", "tel": "+33320816959", "email": "philippe.saudo@auchan-retail.com", "linkedin": "https://www.linkedin.com/in/philippe-saudo-b77ba913a"}, {"pitch": "S1b", "prenom": "Philippe", "nom": "JONNAERT", "entreprise": "Castorama France", "poste": "drh exécutif", "tel": "+33320327468", "email": "p.jonnaert@castorama.fr", "linkedin": "https://www.linkedin.com/in/philippe-jonnaert-36a34b144"}, {"pitch": "S1b", "prenom": "Fabrice", "nom": "HENRY", "entreprise": "GROUPE LA POSTE", "poste": "drh", "tel": "+33671533810", "email": "fabrice.henry@laposte.fr", "linkedin": "https://www.linkedin.com/in/fabrice-henry-034716185"}, {"pitch": "S1b", "prenom": "Angela", "nom": "ALCINDOR", "entreprise": "La Poste Groupe", "poste": "directrice des ressources humaines opérationnelle", "tel": "+33615473752", "email": "angela.alcindor@laposte.fr", "linkedin": "https://www.linkedin.com/in/angela-alcindor-a275b345"}, {"pitch": "S1b", "prenom": "Jean-Louis", "nom": "DA COSTA", "entreprise": "STEF", "poste": "responsable formation métier stef transport bu flux frais", "tel": "+33641353440", "email": "jean-louis.dacosta@stef.com", "linkedin": "https://www.linkedin.com/in/jean-louis-da-costa-404619a2"}, {"pitch": "S1b", "prenom": "Valerie", "nom": "DECAUX", "entreprise": "Le Groupe La Poste", "poste": "DRH Groupe", "tel": "+33670101289", "email": "valerie.decaux@laposte.fr", "linkedin": "https://www.linkedin.com/in/valeriedecaux"}, {"pitch": "S1b", "prenom": "Fabrice", "nom": "RENAULT", "entreprise": "DIMOTRANS Group", "poste": "Directeur de site", "tel": "+33607569052", "email": "frenault@dimotrans-group.com", "linkedin": "https://www.linkedin.com/in/fabrice-renault-4a4441204"}, {"pitch": "S1b", "prenom": "Sylvie", "nom": "LE BELLEC", "entreprise": "Le Groupe La Poste", "poste": "directrice des ressources humaines et rse", "tel": "+33762658424", "email": "sylvie.lebellec@laposte.fr", "linkedin": "https://www.linkedin.com/in/sylvie-le-bellec-02a34541"}, {"pitch": "S1b", "prenom": "Sandra", "nom": "DUMOULIN VAREILLE", "entreprise": "Le Groupe La Poste", "poste": "drh", "tel": "+33155440706", "email": "sandra.dumoulin@laposte.fr", "linkedin": "https://www.linkedin.com/in/sandra-dumoulin-vareille-4943b12b"}, {"pitch": "S1b", "prenom": "Amanda", "nom": "PEIGNART", "entreprise": "E.Leclerc", "poste": "Directrice des ressources humaines", "tel": "+33603505391", "email": "amanda@e.leclerc", "linkedin": "https://www.linkedin.com/in/amanda-peignart-b2633993"}, {"pitch": "S1b", "prenom": "Fabrice", "nom": "MARTEL", "entreprise": "Le Groupe La Poste", "poste": "drh opérationnel", "tel": "+33685115556", "email": "fabrice.martel@laposte.fr", "linkedin": "https://www.linkedin.com/in/fabrice-martel-94b799b2"}, {"pitch": "S1b", "prenom": "Jeremy", "nom": "CARMONA", "entreprise": "Carrefour", "poste": "Directeur des Ressources Humaines Services Financiers et Marchands France et Groupe", "tel": "+33768578205", "email": "jeremy_carmona@carrefour.com", "linkedin": "https://www.linkedin.com/in/jeremy-carmona-🚀-970bb9137"}, {"pitch": "S1b", "prenom": "Jean Pascal", "nom": "DUSART", "entreprise": "VINCI Construction en France", "poste": "Directeur des ressources humaines Génie Civil IDF-Nord", "tel": "+33141147000", "email": "jean-pascal.dusart@vinci-construction.fr", "linkedin": "https://www.linkedin.com/in/jean-pascal-dusart-81020323"}, {"pitch": "S1b", "prenom": "Didier", "nom": "LALLEMAND", "entreprise": "VINCI Construction en France", "poste": "Directeur des ressources humaines", "tel": "+33618693434", "email": "didier.lallemand@vinci-construction.fr", "linkedin": "https://www.linkedin.com/in/didier-lallemand-0627a8106"}, {"pitch": "S1b", "prenom": "Charles", "nom": "GOUMENT", "entreprise": "Bouygues Bâtiment Ile-de-France", "poste": "Directeur des ressources humaines", "tel": "+33659547337", "email": "cgoument@bouygues-batiment-ile-de-france.com", "linkedin": "https://www.linkedin.com/in/charles-goument"}, {"pitch": "S1b", "prenom": "Marion", "nom": "VIGUIER", "entreprise": "VINCI Construction en France", "poste": "Directrice des ressources humaines", "tel": "+33777606374", "email": "marion.valla@vinci-construction.fr", "linkedin": "https://www.linkedin.com/in/marion-viguier-64960687"}, {"pitch": "S1b", "prenom": "Aurélie", "nom": "MOTTIER", "entreprise": "VINCI Construction", "poste": "Directrice des ressources humaines déléguée", "tel": "+33147164522", "email": "aurelie.mottier@vinci-construction.com", "linkedin": "https://www.linkedin.com/in/aurélie-mottier-a865b192"}, {"pitch": "S1b", "prenom": "Sarah", "nom": "BEN REHOUMA", "entreprise": "VINCI Construction", "poste": "Directrice des ressources humaines", "tel": "+33779495348", "email": "sarah.benrehouma@vinci-construction.fr", "linkedin": "https://www.linkedin.com/in/sarah-ben-rehouma-106408167"}, {"pitch": "S1b", "prenom": "Julie", "nom": "LANGLAIS", "entreprise": "Eiffage Génie Civil", "poste": "Directrice des ressources humaines", "tel": "+33761713906", "email": "julie.langlais@eiffage.com", "linkedin": "https://www.linkedin.com/in/julielanglais"}, {"pitch": "S1b", "prenom": "Candice", "nom": "AUBRY", "entreprise": "VINCI Construction", "poste": "Directrice des ressources humaines Déléguée ILE DE FRANCE NORMANDIE", "tel": "+33627400019", "email": "candice.aubry@vinci-construction.com", "linkedin": "https://www.linkedin.com/in/candice-aubry-51765aa4"}, {"pitch": "S1b", "prenom": "Laure", "nom": "BOUTINET", "entreprise": "VINCI Construction", "poste": "Directrice des Ressources Humaines", "tel": "+33628436889", "email": "annie.letourniant@ca-normandie.fr", "linkedin": "https://www.linkedin.com/in/laure-boutinet-098550b7"}, {"pitch": "S1b", "prenom": "Juliette", "nom": "LENCI", "entreprise": "Le Groupe La Poste", "poste": "directrice des ressources humaines", "tel": "+33607104575", "email": "juliette.lenci@laposte.fr", "linkedin": "https://www.linkedin.com/in/juliette-lenci-2537b692"}, {"pitch": "S1b", "prenom": "Claire", "nom": "AUBOIN", "entreprise": "Eiffage Construction", "poste": "Directrice des ressources humaines", "tel": "+33661322512", "email": "claire.auboin@eiffage.com", "linkedin": "https://www.linkedin.com/in/claire-auboin-3a809856"}, {"pitch": "S1b", "prenom": "Nadège", "nom": "CATHERINE", "entreprise": "Eiffage Route", "poste": "DRH", "tel": "+33661009805", "email": "nadege.catherine@eiffage.com", "linkedin": "https://www.linkedin.com/in/nadège-catherine-0b596225"}, {"pitch": "S1b", "prenom": "Sylvie", "nom": "SOVIS", "entreprise": "FM Logistic", "poste": "drh siège", "tel": "+33689133728", "email": "ssovis@fmlogistic.com", "linkedin": "https://www.linkedin.com/in/sylvie-sovis-0745a329"}, {"pitch": "S1b", "prenom": "Nicolas", "nom": "FAIST", "entreprise": "Le Groupe La Poste", "poste": "directeur des ressources humaines et directeur exécutif délégué du grand est", "tel": "+33686123477", "email": "nicolas.faist@laposte.fr", "linkedin": "https://www.linkedin.com/in/nicolas-faist"}, {"pitch": "S1b", "prenom": "Didier", "nom": "MALAMAS", "entreprise": "XPO Logistics Europe", "poste": "drh", "tel": "+33627130104", "email": "didier.malamas@xpo.com", "linkedin": "https://www.linkedin.com/in/didier-malamas-496b7a159"}, {"pitch": "S1b", "prenom": "Francois", "nom": "LEROUX", "entreprise": "Lidl France", "poste": "drh exécutif", "tel": "+33626188713", "email": "francois.leroux@lidl.fr", "linkedin": "https://www.linkedin.com/in/francois-leroux-3812351a1"}, {"pitch": "S1b", "prenom": "Stéphanie", "nom": "FELDMAN", "entreprise": "Fnac Darty", "poste": "directrice des ressources humaines exploitation fnac darty", "tel": "+33609046961", "email": "stephanie.feldman@fnacdarty.com", "linkedin": "https://www.linkedin.com/in/stéphanie-feldman-65040b53"}, {"pitch": "S1b", "prenom": "Guillaume", "nom": "SUXE", "entreprise": "Fnac Darty", "poste": "drh fnac paris", "tel": "+33626531538", "email": "guillaume.suxe@fnacdarty.com", "linkedin": "https://www.linkedin.com/in/guillaume-suxe-a49476106"}, {"pitch": "S1b", "prenom": "Véronique", "nom": "DUCHER", "entreprise": "Le Groupe La Poste", "poste": "drh opérationnelle auvergne sud", "tel": "+33664640609", "email": "veronique.ducher@laposte.fr", "linkedin": "https://www.linkedin.com/in/véronique-ducher-34a63b164"}, {"pitch": "S1b", "prenom": "Pierre", "nom": "BRIAND", "entreprise": "Le Groupe La Poste", "poste": "directeur des ressources humaines opérationnel, expérience postier et rse", "tel": "+33685838031", "email": "pierre.briand@laposte.fr", "linkedin": "https://www.linkedin.com/in/pierre-briand-05713745"}, {"pitch": "S1b", "prenom": "Sébastien", "nom": "JACQUEMOND", "entreprise": "La Poste Groupe", "poste": "directeur des ressources humaines opérationnel", "tel": "+33477524586", "email": "sebastien.jacquemond@laposte.fr", "linkedin": "https://www.linkedin.com/in/sébastien-jacquemond-directeur-ressources-humaines-opérationnel-laposte-loire-ouest-rhone"}, {"pitch": "S1b", "prenom": "Aurélie", "nom": "BARTHÉLÉMY", "entreprise": "Eiffage Construction", "poste": "Directrice des Ressources Humaines Région Nord-Ouest", "tel": "+33156585120", "email": "aurelie.barthelemy@eiffage.com", "linkedin": "https://www.linkedin.com/in/aurélie-barthélémy"}, {"pitch": "S1b", "prenom": "Thierry", "nom": "VAN DOORNE", "entreprise": "Auchan Retail", "poste": "directeur des ressources humaines", "tel": "+33668800793", "email": "thierry.vandoorne@auchan-retail.com", "linkedin": "https://www.linkedin.com/in/tvd-drh"}], "s2": [{"pitch": "S2a", "prenom": "Baudouin", "nom": "VUILLERMET", "entreprise": "Michelin", "poste": "Directeur de site", "tel": "+33667159283", "email": "", "linkedin": ""}, {"pitch": "S2a", "prenom": "Laurent", "nom": "REMUZON", "entreprise": "Safran Landing Systems", "poste": "Directeur Industriel Division LGI", "tel": "+33670897408", "email": "laurent.remuzon@aubertduval.com", "linkedin": "https://linkedin.com/in/laurent-remuzon-3b848724"}, {"pitch": "S2a", "prenom": "Olivier", "nom": "GOURBESVILLE", "entreprise": "Safran", "poste": "Directeur Industriel, Achat et Support Safran Power Unit", "tel": "+33678553857", "email": "g.olivier@safrangroup.com", "linkedin": ""}, {"pitch": "S2a", "prenom": "Eric", "nom": "LABREZE", "entreprise": "Legrand", "poste": "Directeur Industriel France", "tel": "+33637081915", "email": "", "linkedin": ""}, {"pitch": "S2b", "prenom": "Michael", "nom": "ENCAOUA", "entreprise": "Daher", "poste": "DRH & HSE - Division Industrie Daher", "tel": "+33144915257", "email": "m.encaoua@daher.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Vincent", "nom": "ROUSSON", "entreprise": "Daher", "poste": "DRH", "tel": "+33665051877", "email": "v.rousson@daher.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Louis-Jean", "nom": "CHAMPIE", "entreprise": "Daher", "poste": "DRH Relations Sociales", "tel": "+33646304597", "email": "l.champie@daher.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Sebastien", "nom": "RONCO", "entreprise": "Daher", "poste": "Division VP HR Director", "tel": "+33666516388", "email": "s.ronco@daher.com", "linkedin": "https://www.linkedin.com/in/sebastienronco"}, {"pitch": "S2b", "prenom": "Aurelie", "nom": "C.", "entreprise": "ENGIE", "poste": "drh", "tel": "+33660368292", "email": "ac@engie.com", "linkedin": "https://www.linkedin.com/in/aurelie-c-ba98b8113"}, {"pitch": "S2b", "prenom": "Emilie", "nom": "TUFFEAU SADARNAC", "entreprise": "ENGIE", "poste": "human resources director hq france renewables gbu", "tel": "+33661313799", "email": "emilie.sadarnac@engie.com", "linkedin": "https://www.linkedin.com/in/emilie-tuffeau-sadarnac-57842b6b"}, {"pitch": "S2b", "prenom": "Clothilde", "nom": "POPLINEAU", "entreprise": "ENGIE", "poste": "directrice des ressources humaines, en charge du développement des collaborateurs engie en france", "tel": "+33671622225", "email": "clothilde.poplineau@engie.com", "linkedin": "https://www.linkedin.com/in/clothilde-poplineau-31441540"}, {"pitch": "S2b", "prenom": "Sylvie", "nom": "CREDOT", "entreprise": "Storengy - ENGIE", "poste": "Directeur des Ressources Humaines et Directeur Juridique / Head of HR and General Counsel", "tel": "+33620438517", "email": "sylvie.credot@engie.com", "linkedin": "https://www.linkedin.com/in/sylvie-credot-5139b4107"}, {"pitch": "S2b", "prenom": "Hélène", "nom": "GAYET", "entreprise": "Daher", "poste": "Directrice des Ressources Humaines Industrie Site de Tarbes", "tel": "+33562417316", "email": "h.gayet@daher.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Sylvie", "nom": "VINCENT GUISNEL", "entreprise": "ENGIE", "poste": "drh gestion operationnelle rh engie", "tel": "+33669696031", "email": "sylvie-v.vincent@engie.com", "linkedin": "https://www.linkedin.com/in/sylvie-vincent-guisnel-881281134"}, {"pitch": "S2b", "prenom": "R", "nom": "LEO", "entreprise": "ENGIE", "poste": "directeur des ressources humaines", "tel": "+33781707710", "email": "leo.raut@engie.com", "linkedin": "https://www.linkedin.com/in/leoraut"}, {"pitch": "S2b", "prenom": "Muriel", "nom": "MORIN", "entreprise": "ENGIE", "poste": "drh", "tel": "+33140066568", "email": "mmorin@engie.com", "linkedin": "https://www.linkedin.com/in/muriel-morin-1a4a2baa"}, {"pitch": "S2b", "prenom": "Claire", "nom": "SCHNOERING", "entreprise": "Equans France", "poste": "Directrice des Ressources Humaines - Division Transport", "tel": "+33629138279", "email": "claire.schnoering@equans.com", "linkedin": "https://www.linkedin.com/in/claireschnoering"}, {"pitch": "S2b", "prenom": "Clara", "nom": "NOWICKI", "entreprise": "Equans", "poste": "Responsable RH", "tel": "+33674942300", "email": "clara.nowicki@equans.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Domitille", "nom": "BOVIER-RICHARD", "entreprise": "Equans", "poste": "Responsable des ressources humaines", "tel": "+33661219516", "email": "domitille.bovier@equans.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Isabelle", "nom": "BONHOMME", "entreprise": "Saint-Gobain", "poste": "DRH Saint Gobain Expertise et Service / Directrice du Développement RH et du recrutement France", "tel": "+33622229209", "email": "isabelle.bonhomme@saint-gobain.com", "linkedin": "https://www.linkedin.com/in/isabellebonhommedeveloppementrh"}, {"pitch": "S2b", "prenom": "Lucie", "nom": "AUGER LAFOURCADE", "entreprise": "ENGIE", "poste": "drh corporate et activites nouvelles france retail", "tel": "+33664709740", "email": "lucie.lafourcade@engie.com", "linkedin": "https://www.linkedin.com/in/lucie-auger-lafourcade-35a530127"}, {"pitch": "S2b", "prenom": "Nathalie", "nom": "GODARD", "entreprise": "Daher", "poste": "Responsable Ressources Humaines", "tel": "+33678208010", "email": "n.godard@daher.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Samir", "nom": "BENSAADI", "entreprise": "Agrial", "poste": "Directeur des ressources humaines", "tel": "+33642113599", "email": "s.bensaadi@agrial.com", "linkedin": "https://www.linkedin.com/in/samir-bensaadi-28b179100"}, {"pitch": "S2b", "prenom": "Julie", "nom": "BAUDIN", "entreprise": "Daher", "poste": "DRH Daher Aircraft", "tel": "+33662058403", "email": "baudin.julie@daher.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Jeremy", "nom": "B.", "entreprise": "Safran", "poste": "Head of HR", "tel": "+33621823929", "email": "jeremy.b@safrangroup.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Florence", "nom": "CORDIER", "entreprise": "EDF", "poste": "directrice des ressources humaines - dteo", "tel": "+33661372251", "email": "florence.cordier@edf.fr", "linkedin": "https://www.linkedin.com/in/florence-cordier-00623250"}, {"pitch": "S2b", "prenom": "Corinne", "nom": "VERDIE", "entreprise": "Daher", "poste": "DRH région sud", "tel": "+33561781767", "email": "c.verdie@daher.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Chloe", "nom": "GHESQUIERES", "entreprise": "EDF", "poste": "directrice des ressources humaines", "tel": "+33664680565", "email": "chloe.ghesquieres@edf.fr", "linkedin": "https://www.linkedin.com/in/chloeghesquieres"}, {"pitch": "S2b", "prenom": "Selin", "nom": "DURSUN", "entreprise": "Alstom", "poste": "HR Manager", "tel": "+33670110538", "email": "selin.dursun@alstomgroup.com", "linkedin": "https://www.linkedin.com/in/selin-dursun-138609121"}, {"pitch": "S2b", "prenom": "Anahit", "nom": "NERSISYAN", "entreprise": "Daher", "poste": "Responsable des ressources humaines", "tel": "+33664557538", "email": "a.nersisyan@daher.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Elsa", "nom": "ALLO", "entreprise": "Daher", "poste": "Directrice des Ressources Humaines", "tel": "+33670166169", "email": "e.allo@daher.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Sandrine", "nom": "POIRIER", "entreprise": "Alstom", "poste": "HR Manager", "tel": "+33663152737", "email": "sandrine.poirier@alstomgroup.com", "linkedin": "https://www.linkedin.com/in/sandrine-poirier-43383312"}, {"pitch": "S2b", "prenom": "Eva", "nom": "AUBERTIN", "entreprise": "Daher", "poste": "Responsable des ressources humaines Toulouse", "tel": "+33769032032", "email": "e.aubertin@daher.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Sarah", "nom": "DESCHILDER", "entreprise": "Daher", "poste": "DRH Zone Nord", "tel": "+33685910261", "email": "s.deschilder@daher.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Lisa", "nom": "DAVID", "entreprise": "Daher", "poste": "Responsable Ressources Humaines Fonctions Transverses", "tel": "+33642881382", "email": "l.david@daher.com", "linkedin": ""}, {"pitch": "S2c", "prenom": "Guillaume", "nom": "RENAUD", "entreprise": "Orano", "poste": "Directeur des ressources humaines - Orano Nuclear Packages & Services", "tel": "+33685937330", "email": "guillaume.renaud@areva.com", "linkedin": ""}, {"pitch": "S2c", "prenom": "Jacques", "nom": "BOUVIER", "entreprise": "Sanofi", "poste": "DRH Usines Sanofi France 15 Sites - 12000 Salariés-Rattachement N-2 Comex groupe - Paris", "tel": "+33603346364", "email": "jacques.bouvier@sanofi.com", "linkedin": "https://www.linkedin.com/in/jacques-bouvier-01020063"}, {"pitch": "S2c", "prenom": "Emmanuelle", "nom": "TOULOUSE", "entreprise": "EDF", "poste": "drh direction commerce ouest", "tel": "+33630567123", "email": "emmanuelle.toulouse@edf.fr", "linkedin": "https://www.linkedin.com/in/emmanuelle-toulouse-5ab87714a"}, {"pitch": "S2c", "prenom": "Guillaume", "nom": "MEURILLON", "entreprise": "EDF", "poste": "directeur des ressources humaines - direction commerce sud-ouest", "tel": "+33674815871", "email": "guillaume.meurillon@edf.fr", "linkedin": "https://www.linkedin.com/in/guillaume-meurillon-879225a4"}, {"pitch": "S2c", "prenom": "Estelle", "nom": "GOUGEUL", "entreprise": "EDF", "poste": "drh", "tel": "+33662565468", "email": "estelle.gougeul@edf.fr", "linkedin": "https://www.linkedin.com/in/estelle-gougeul-78390a100"}, {"pitch": "S2c", "prenom": "Sabrina", "nom": "LARAPIDIE", "entreprise": "Airbus Aircraft", "poste": "Head of HR for HR - HR Academy - HR communication and Change", "tel": "+33668647370", "email": "sabrina.larapidie@airbus.com", "linkedin": "https://www.linkedin.com/in/sabrinalarapidie-aa4b647b"}, {"pitch": "S2c", "prenom": "Nicolas", "nom": "LE PORT", "entreprise": "Airbus Aircraft", "poste": "HR Leader Technology and Engineering France  / SHRBP Flight Test", "tel": "+33660763682", "email": "nicolas.le-port@airbus.com", "linkedin": "https://www.linkedin.com/in/nicolas-le-port-a2b50157"}, {"pitch": "S2c", "prenom": "Benjamin", "nom": "MERABTI", "entreprise": "EDF", "poste": "drh edf martinique", "tel": "+33664567144", "email": "benjamin.merabti@edf.fr", "linkedin": "https://www.linkedin.com/in/benjamin-merabti-6159a11a5"}, {"pitch": "S2d", "prenom": "Diane", "nom": "DEWASME", "entreprise": "EQUANS France", "poste": "Responsable formation", "tel": "+33669091550", "email": "dianedewasme@cofely-gdfsuez.com", "linkedin": "https://www.linkedin.com/in/diane-dewasme"}, {"pitch": "S2d", "prenom": "Sebastien", "nom": "LEDEZ", "entreprise": "EDF solutions solaires", "poste": "Responsable formation", "tel": "+33666428838", "email": "sebastien.ledez@edfenr.com", "linkedin": "https://www.linkedin.com/in/sébastien-ledez"}, {"pitch": "S2d", "prenom": "Sabrina", "nom": "GOTTLIEB", "entreprise": "Safran", "poste": "Responsable Formation et Developpement des Competences HRBP Safran", "tel": "+33607839002", "email": "sabrina.gottlieb@safrangroup.com", "linkedin": ""}, {"pitch": "S2d", "prenom": "Rebecca", "nom": "LIMBERGER", "entreprise": "Stellantis", "poste": "Responsable RH usine QCP et responsable formation", "tel": "+33685227339", "email": "r.limberger@stellantis.com", "linkedin": "https://www.linkedin.com/in/rébecca-limberger-44b884146"}, {"pitch": "S2d", "prenom": "Nelson", "nom": "VAZ", "entreprise": "Eramet", "poste": "Responsable Formation", "tel": "+33642289566", "email": "nelson.vaz@eramet.com", "linkedin": "https://www.linkedin.com/in/nelson-vaz-6b47a326"}, {"pitch": "S2d", "prenom": "Sylvain", "nom": "FRANCOU", "entreprise": "SFR", "poste": "Chef de projet formation", "tel": "+33683358873", "email": "sylvain.francou@sfr.com", "linkedin": "https://www.linkedin.com/in/sylvain-francou-95428199"}, {"pitch": "S2d", "prenom": "Nadia", "nom": "HANNAN", "entreprise": "SFR", "poste": "Responsable formation télévente", "tel": "+33619174857", "email": "nadia.hannan@sfr.com", "linkedin": "https://www.linkedin.com/in/nadia-hannan-43aba518"}, {"pitch": "S2d", "prenom": "Eve", "nom": "BIZET", "entreprise": "SFR", "poste": "Responsable formation opérationnelle", "tel": "+33660620672", "email": "eve.bizet@sfr.com", "linkedin": "https://www.linkedin.com/in/evebizet"}, {"pitch": "S2d", "prenom": "Marie Christine", "nom": "OLIVEIRA", "entreprise": "SFR", "poste": "Chef de Projet Formation", "tel": "+33610026733", "email": "moliveira@sfr.fr", "linkedin": ""}, {"pitch": "S2d", "prenom": "Angélique", "nom": "DAVID", "entreprise": "Safran", "poste": "Responsable formation", "tel": "+33673510702", "email": "angelique.david@safrangroup.com", "linkedin": ""}, {"pitch": "S2d", "prenom": "Marine", "nom": "JAMMES", "entreprise": "Airbus", "poste": "Responsable formation", "tel": "+33642655478", "email": "marine.jammes@airbus.com", "linkedin": "https://www.linkedin.com/in/marine-jammes-801656104"}], "s3": [{"pitch": "S3b", "prenom": "David", "nom": "GLOGOVIC", "entreprise": "KLESIA", "poste": "Responsable formation", "tel": "+33140028054", "email": "david.glogovic@klesia.fr", "linkedin": "https://www.linkedin.com/in/david-glogovic-078274145"}, {"pitch": "S3b", "prenom": "Bruno", "nom": "LOUISON", "entreprise": "Banque Populaire Auvergne Rhône Alpes", "poste": "Responsable formation Banque Populaire Auvergne Rhône Alpes", "tel": "+33682593621", "email": "bruno.louison@bp2l.banquepopulaire.fr", "linkedin": "https://www.linkedin.com/in/bruno-louison-25681495"}, {"pitch": "S3b", "prenom": "Marina", "nom": "GRAVIGNY", "entreprise": "Crédit Agricole Charente-Périgord", "poste": "Responsable formation et développement des compétences", "tel": "+33687357324", "email": "marina.gravigny@ca-charente-perigord.fr", "linkedin": "https://www.linkedin.com/in/marina-gravigny-882419123"}, {"pitch": "S3b", "prenom": "Deborah", "nom": "DI GENNARO", "entreprise": "Groupama Méditerranée", "poste": "Responsable Formation et Dynamique managériale", "tel": "+33603024998", "email": "deborah.di@groupama.fr", "linkedin": "https://www.linkedin.com/in/deborah-di-gennaro-60992817b"}, {"pitch": "S3b", "prenom": "Fabrice", "nom": "STEPHAN", "entreprise": "Assurances du Crédit Mutuel", "poste": "Responsable des ressources humaines", "tel": "+33617114129", "email": "fabrice.stephan@acm.fr", "linkedin": "https://www.linkedin.com/in/fabrice-stephan-4907ab5"}, {"pitch": "S3b", "prenom": "Alain", "nom": "LEVY", "entreprise": "Renault Retail Group", "poste": "Directeur des Ressources Humaines", "tel": "+33607581015", "email": "", "linkedin": "https://www.linkedin.com/in/alain-levy-26538642"}, {"pitch": "S3b", "prenom": "Antoine", "nom": "MARTIN", "entreprise": "MGEN - Pôle Soins", "poste": "Directeur des ressources humaines", "tel": "+33675868114", "email": "", "linkedin": "https://www.linkedin.com/in/antoine-martin-23287261"}, {"pitch": "S3b", "prenom": "Jean-Christophe", "nom": "BIOTTI", "entreprise": "Groupama Paris Val de Loire", "poste": "Directeur des ressources humaines", "tel": "+33675096334", "email": "", "linkedin": "https://www.linkedin.com/in/jean-christophe-biotti-0651335a"}, {"pitch": "S3b", "prenom": "Christophe", "nom": "DANGLEHANT", "entreprise": "AXA", "poste": "Responsable Formation", "tel": "+33668745610", "email": "", "linkedin": "https://www.linkedin.com/in/christophe-danglehant-77764887"}, {"pitch": "S3b", "prenom": "Sandra", "nom": "BERNARD", "entreprise": "La Banque Postale", "poste": "Directrice des Ressources Humaines et de l'Expérience collaborateurs", "tel": "+33658901685", "email": "", "linkedin": "https://www.linkedin.com/in/sandra-bernard-53436567"}, {"pitch": "S3b", "prenom": "Anne Sophie", "nom": "LEGRAND", "entreprise": "CIC Lyonnaise de Banque", "poste": "Directrice des ressources humaines", "tel": "+33615166941", "email": "", "linkedin": "https://www.linkedin.com/in/anne-sophie-legrand-67446b172"}, {"pitch": "S3b", "prenom": "Nathalie", "nom": "CABARET", "entreprise": "Société Générale", "poste": "Product manager - Responsable formation groupe", "tel": "+33663867822", "email": "", "linkedin": "https://www.linkedin.com/in/nathalie-cabaret-085795151"}, {"pitch": "S3b", "prenom": "Sylvain", "nom": "LANGLOIS", "entreprise": "Groupe Covéa", "poste": "Responsable de la formation Terrain GMF", "tel": "+33610542313", "email": "", "linkedin": "https://www.linkedin.com/in/sylvain-langlois-489475a3"}, {"pitch": "S3b", "prenom": "Catarina", "nom": "ALVES", "entreprise": "Caisse d'Epargne Ile-de-France", "poste": "Responsable des ressources humaines", "tel": "+33612216677", "email": "catarina.alves@caisse-epargne.fr", "linkedin": "https://www.linkedin.com/in/catarina-alves-ceidf"}, {"pitch": "S3b", "prenom": "Camille", "nom": "GRAUX", "entreprise": "Caisse d'Epargne Ile-de-France", "poste": "Responsable Ressources Humaines", "tel": "+33660507923", "email": "", "linkedin": "https://www.linkedin.com/in/camillegrauxlkd"}, {"pitch": "S3b", "prenom": "Vincent", "nom": "KEMPF", "entreprise": "Crédit Agricole d'Aquitaine", "poste": "Directeur des ressources humaines", "tel": "+33670755630", "email": "vincent.kempf@ca-aquitaine.fr", "linkedin": "https://www.linkedin.com/in/vincent-kempf-6423a183"}, {"pitch": "S3b", "prenom": "Aridja.", "nom": "PENNES", "entreprise": "AXA", "poste": "Responsable formation", "tel": "+33664328599", "email": "", "linkedin": "https://www.linkedin.com/in/aridja-pennes-6b511a15a"}, {"pitch": "S3b", "prenom": "Fabrice", "nom": "LANGLOIS", "entreprise": "Groupama Assurances Mutuelles", "poste": "Responsable Formation Groupe", "tel": "+33627787528", "email": "fabrice.langlois@groupama.com", "linkedin": "https://www.linkedin.com/in/fabrice-langlois-732326a8"}, {"pitch": "S3b", "prenom": "Laurence", "nom": "PAYET", "entreprise": "MACIF", "poste": "Manager de domaine - QVCT de proximité- DRH MACIF", "tel": "+33663808249", "email": "lpayet@macif.fr", "linkedin": "https://www.linkedin.com/in/laurence-payet-48983137"}, {"pitch": "S3b", "prenom": "Laurence", "nom": "LUSSON", "entreprise": "Crédit Agricole Normandie", "poste": "Directrice des Ressources Humaines et de la Transformation", "tel": "+33635164613", "email": "laurence.lusson@ca-nmp.fr", "linkedin": "https://www.linkedin.com/in/laurence-lusson-1831b573"}, {"pitch": "S3b", "prenom": "Patrick", "nom": "POUTRET", "entreprise": "Crédit Agricole Normandie", "poste": "Directeur des Ressources Humaines et de la Transformation", "tel": "+33609566297", "email": "patrick.poutret@ca-sudmed.fr", "linkedin": "https://www.linkedin.com/in/patrick-poutret-41ab4a134"}, {"pitch": "S3b", "prenom": "Vincent", "nom": "ALBONICO", "entreprise": "Banque Populaire du Sud", "poste": "Directeur Formation et Académie BPVF", "tel": "+33612947324", "email": "vincent@bpvf.banquepopulaire.fr", "linkedin": "https://www.linkedin.com/in/vincent-albonico-a63931114"}, {"pitch": "S3b", "prenom": "Justine", "nom": "DELASPRE", "entreprise": "GROUPE MACSF", "poste": "Responsable RH Formation et développement des compétences", "tel": "+33647924617", "email": "justine.delaspre@macsf.fr", "linkedin": "https://www.linkedin.com/in/justine-delaspre"}, {"pitch": "S3b", "prenom": "Frédéric", "nom": "BERGE", "entreprise": "MACIF", "poste": "Directeur des Ressources Humaines Macif Finance Epargne", "tel": "+33610957774", "email": "fberge@macif.fr", "linkedin": "https://www.linkedin.com/in/frédéric-berge-85763750"}, {"pitch": "S3b", "prenom": "Loïc", "nom": "HERVE", "entreprise": "Harmonie Mutuelle", "poste": "Directeur des Ressources Humaines et Transformation Grand Ouest", "tel": "+33608848086", "email": "loic.herve@harmonie-mutuelle.fr", "linkedin": "https://www.linkedin.com/in/loïc-herve"}, {"pitch": "S3b", "prenom": "Leslie", "nom": "MAILLARD", "entreprise": "BPCE Assurances", "poste": "Directrice des Ressources Humaines & Expérience Collaborateur de BPCE Assurances IARD", "tel": "+33660658743", "email": "leslie.maillard@bpce.fr", "linkedin": "https://www.linkedin.com/in/leslie-maillard-bpce-assurances"}, {"pitch": "S3b", "prenom": "Aurore", "nom": "VAN DER WERF", "entreprise": "CNP Assurances", "poste": "Head of Human Resources", "tel": "+33684742097", "email": "aurore.vanderwerf@cnp.fr", "linkedin": "https://www.linkedin.com/in/van-der-werf-hrdirector"}, {"pitch": "S3b", "prenom": "Christine", "nom": "VIGNALS", "entreprise": "Groupama d'Oc", "poste": "Directrice des ressources humaines", "tel": "+33684804918", "email": "christine.vignals@groupama.fr", "linkedin": "https://www.linkedin.com/in/christine-vignals-89091144"}, {"pitch": "S3b", "prenom": "Manuela", "nom": "CARDOSO", "entreprise": "GROUPAMA - G2S", "poste": "Responsable Formation", "tel": "+33170944030", "email": "manuela.cardoso@groupama-gan-recrute.com", "linkedin": "https://www.linkedin.com/in/profillinkedin"}, {"pitch": "S3b", "prenom": "Aurélie", "nom": "CHARASCH", "entreprise": "Caisse d'Epargne Ile-de-France", "poste": "Responsable RH", "tel": "+33625752378", "email": "aurelie.charasch@ceidf.caisse-epargne.fr", "linkedin": "https://www.linkedin.com/in/aur%C3%A9lie-charasch-8235933b"}, {"pitch": "S3b", "prenom": "Nina", "nom": "BRICMONT", "entreprise": "GROUPE MACIF", "poste": "Directrice des ressources humaines", "tel": "+33627577907", "email": "nbricmont@macif.fr", "linkedin": "https://www.linkedin.com/in/nina-bricmont-7b35815b"}, {"pitch": "S3b", "prenom": "Béatrice", "nom": "LE TERREC", "entreprise": "BNP Paribas Leasing Solutions", "poste": "Head of HR for BNP Paribas Leasing Solutions", "tel": "+33665473198,+33142980030", "email": "beatrice.leterrec@bnpparibas.com", "linkedin": "https://www.linkedin.com/in/beatrice-le-terrec"}, {"pitch": "S3b", "prenom": "Emmanuel", "nom": "CÉLÉRIER", "entreprise": "Crédit Agricole Normandie", "poste": "Directeur des ressources humaines", "tel": "+33612454070", "email": "emmanuel.celerier@ca-alpesprovence.fr", "linkedin": "https://www.linkedin.com/in/emmanuel-célérier-467b7a5"}, {"pitch": "S3b", "prenom": "Marion", "nom": "PROTANO", "entreprise": "Crédit Agricole Normandie", "poste": "Directrice des Ressources Humaines et de la Transformation", "tel": "+33689783103", "email": "marion.protano@ca-norddefrance.fr", "linkedin": "https://www.linkedin.com/in/marion-protano-ba3a0031"}, {"pitch": "S3b", "prenom": "Sebastien", "nom": "MENORET", "entreprise": "Banque Populaire du Sud", "poste": "Directeur Réseau Retail", "tel": "+33665135900", "email": "sebastien.menoret@bpaca.banquepopulaire.fr", "linkedin": "https://www.linkedin.com/in/sebastien-menoret-5b3b97137"}, {"pitch": "S3b", "prenom": "Frank", "nom": "GIRARDEAU", "entreprise": "MGEN - Pôle Soins", "poste": "Directeur Réseau et Distribution", "tel": "+33632530259", "email": "fgirardeau@mgen.fr", "linkedin": "https://www.linkedin.com/in/frank-girardeau-3a2374a7"}, {"pitch": "S3b", "prenom": "Emmanuel", "nom": "ROUDIL", "entreprise": "GROUPE MACSF", "poste": "Directeur réseau hospitalier", "tel": "+33685370436", "email": "christel.nguyen@harmonie-mutuelle.fr", "linkedin": "https://www.linkedin.com/in/emmanuel-roudil"}, {"pitch": "S3b", "prenom": "Jean-Pierre", "nom": "MIQUELIS", "entreprise": "Banque Populaire du Sud", "poste": "Directeur reseau agences spécialisées", "tel": "+33760651610", "email": "jean-pierre.miquelis@bpmed.fr", "linkedin": "https://www.linkedin.com/in/jean-pierre-miquelis-9673358b"}, {"pitch": "S3b", "prenom": "Damien", "nom": "LOUISGRAND", "entreprise": "Groupe AGPM KLESIA", "poste": "Directeur Réseau Commercial et Distribution", "tel": "+33621465508", "email": "damien.louisgrand@groupe-agpm.fr", "linkedin": "https://www.linkedin.com/in/damien-louisgrand-73708aa0"}, {"pitch": "S3b", "prenom": "Herve", "nom": "DELPIROUX", "entreprise": "Allianz France", "poste": "Responsable formation Département DATA, Pilotage et Outils chez Allianz France", "tel": "+33624672230,+33158859550", "email": "herve.delpiroux@agf.fr", "linkedin": "https://www.linkedin.com/in/herve-delpiroux-74206645"}, {"pitch": "S3b", "prenom": "Annelise", "nom": "LEQUEUX", "entreprise": "Crédit Agricole Normandie", "poste": "Directrice des Ressources Humaines", "tel": "+33157727507", "email": "annelise.lequeux@ca-valdefrance.fr", "linkedin": "https://www.linkedin.com/in/annelise-lequeux-009926b4"}]};
-const PITCHES={"s1a": "Bonjour [PRENOM], chez Daylindo on aide les entreprises de travail temporaire à consolider leur relation avec leurs clients grands comptes. On travaille avec Supplay qui grâce à notre solution a gagné des appels d'offres — notamment dans l'industrie pharmaceutique — en apportant à ses clients une formation au poste financée par AKTO, donc sans surcoût pour eux. Je vous précise qu'on ne peut pas travailler avec tout le monde — c'est un levier de différenciation, ça perd son sens si tous les acteurs l'ont. J'ai choisi de vous appeler parce que je pense qu'on pourrait nouer un partenariat intéressant. Est-ce que vous avez 20 à 30 minutes cette semaine ou la suivante pour qu'on en parle ?", "s1b": "Bonjour [PRENOM], je vous appelle parce que je pense que vous êtes confronté à une double contrainte que l'on voit partout dans les secteurs saisonniers : former vite des collaborateurs qui arrivent en masse, et maîtriser le coût de cette intégration qui se répète à chaque cycle. On travaille justement avec les grands acteurs de la logistique — un secteur soumis à une très forte saisonnalité. On optimise le parcours d'intégration directement au poste de travail et on fait financer ces parcours par les OPCO — ce qui réduit significativement le coût net pour l'entreprise. Est-ce que vous avez 20 à 30 minutes cette semaine ou la suivante pour voir comment on fait et ce que ça donnerait chez vous ?", "s2a": "Bonjour [PRENOM], je vous appelle parce que je pense que vous êtes confronté à un enjeu que l'on voit partout dans l'industrie : sécuriser la maîtrise des gestes métiers sur vos lignes.\n\nOn vient justement de mesurer chez un industriel 380 000€ de pertes annuelles directement liées au manque de visibilité sur les compétences terrain — 200 000€ de lignes fermées faute de personnel qualifié disponible, et 180 000€ de rebuts générés par des opérateurs sur des postes qu'ils ne maîtrisaient pas encore.\n\nVous avez ce sujet chez vous ?\n\n→ Pause. Laisser le prospect répondre.\n\nDaylindo permet justement de sécuriser la transmission des gestes métiers et de savoir en temps réel qui peut tenir quel poste, à quel niveau. Je vous propose 20 minutes pour vous montrer comment on fait et ce que ça donnerait chez vous ?", "s2b": "Bonjour [PRENOM], je vous contacte parce qu'on travaille avec des industriels qui font face à deux réalités simultanées : un turnover qui s'accélère et une difficulté croissante à trouver les bons profils opérationnels.\n\nVous avez ce sujet chez vous ?\n\n→ Pause. Laisser le prospect répondre.\n\nChez Daylindo on aide les industriels à former leurs nouveaux collaborateurs directement au poste de travail et à valoriser les parcours internes pour limiter le turnover. On fait ça par exemple avec les intérimaires de Supplay pour leurs entreprises utilisatrices, et pour les techniciens d'Orange.\n\nEst-ce que vous avez 20 minutes cette semaine pour voir ce que ça donne concrètement chez vous ?", "s2c": "Bonjour [PRENOM], je vous appelle parce que je pense que vous êtes soumis à une réglementation assez forte sur les compétences de vos opérateurs.\n\nOn a justement travaillé avec Orange et Dekra sur la formation aux habilitations électriques — directement au poste de travail, avec la traçabilité complète pour prouver à tout moment que l'opérateur était dûment formé et évalué.\n\nPour toute formation réglementaire où vous devez faire cette preuve, c'est exactement ce qu'on adresse.\n\nEst-ce que vous avez 20 minutes cette semaine pour voir ce qu'on a fait et si ça s'applique chez vous ?", "s2d": "Bonjour [PRENOM], je vous appelle parce qu'on travaille avec des industriels qui font face à une réalité qu'on voit s'accélérer : dans les 5 prochaines années, près de 60% de vos collaborateurs les plus expérimentés vont partir à la retraite — et avec eux, des années de savoir-faire qui ne sont nulle part documentés.\n\nVous avez ce sujet chez vous ?\n\n→ Pause. Laisser le prospect répondre.\n\nC'est exactement ce qu'on a traité avec Orange — capturer les gestes métiers des experts directement au poste de travail, avant qu'ils partent, pour les rendre transmissibles et évaluables pour les suivants.\n\nEst-ce que vous avez 20 minutes cette semaine pour voir comment on fait concrètement ?", "s3a": "Bonjour [PRENOM], je vous appelle parce que je pense que vous avez un défi que l'on voit chez tous les réseaux d'agences : des dizaines d'agences, des centaines de collaborateurs — et très peu de visibilité sur l'homogénéité des pratiques et des compétences d'une agence à l'autre.\n\nVous avez ce sujet chez vous ?\n\n→ Pause. Laisser le prospect répondre.\n\nOn travaille avec Supplay et Adéquat sur exactement ce sujet — standardiser les parcours, avoir une visibilité centrale sur les compétences terrain, financé par les OPCO. Faire plus avec moins.\n\nEst-ce que vous avez 20 à 30 minutes cette semaine ou la suivante pour voir comment on fait ?", "s3b": "Bonjour [PRENOM], je vous appelle parce que dans les réseaux comme le vôtre, on observe souvent le même écart : les meilleures agences performent très bien, et les autres peinent à atteindre le même niveau — non pas par manque de volonté, mais parce que les pratiques et les compétences ne sont pas homogènes d'un site à l'autre.\n\nC'est un sujet que vous reconnaissez ?\n\n→ Pause. Laisser le prospect répondre.\n\nDaylindo permet à l'équipe centrale d'avoir une visibilité en temps réel sur la maîtrise des compétences dans chaque site, de standardiser les parcours de montée en compétence, et de piloter l'homogénéisation des pratiques à l'échelle du réseau. Et nous pouvons faire financer la démarche par l'OPCO.\n\nEst-ce que vous avez 20 à 30 minutes cette semaine pour voir ce que ça donnerait chez vous ?"};
-const LABELS={"s1a": "S1a — Travail temporaire", "s1b": "S1b — Saisonnalité", "s2a": "S2a — Coût caché", "s2b": "S2b — Turnover & Onboarding", "s2c": "S2c — Conformité réglementaire", "s2d": "S2d — Transmission des savoirs", "s3a": "S3a — Réseau agences intérim", "s3b": "S3b — Franchise / Bancaire / Assurance"};
-const SEG_OPTS={s1:['s1a','s1b'],s2:['s2a','s2b','s2c','s2d'],s3:['s3a','s3b'],interim:['s1a','s3a']};
-const SEG_COL={s1:'#f06423',s2:'#3a7ec9',s3:'#8b4fc9',interim:'#0a66c2'};
-const SEG_ICO={s1:'💰',s2:'🔧',s3:'🏦',interim:'🏢'};
-let segPitch={s1:'s1b',s2:'s2d',s3:'s3b',interim:'s1a'};
-let cSeg=Object.keys(DATA)[0],cKey=null,cPitch='s1a';
-let filters={};
-Object.keys(DATA).forEach(s=>filters[s]='all');
+const D={"s1": [{"pitch": "S1b", "prenom": "Stephanie", "nom": "DUCATEZ", "entreprise": "Le Groupe La Poste", "poste": "directrice des ressources humaines", "tel": "+33631566984", "email": "stephanie.ducatez@laposte.fr", "linkedin": "https://www.linkedin.com/in/stephanie-ducatez-98228a139"}, {"pitch": "S1b", "prenom": "Paul", "nom": "REVILLET", "entreprise": "Fnac Darty", "poste": "directeur des ressources humaines - relais fnac & fnac périphérie", "tel": "+33633836937", "email": "paul.revillet@fnacdarty.com", "linkedin": "https://www.linkedin.com/in/paul-revillet-0b7243b6"}, {"pitch": "S1b", "prenom": "Jessica", "nom": "DESTALMINIL", "entreprise": "La Poste", "poste": "human resources director", "tel": "+33776374821", "email": "jessica.destalminil@laposte.fr", "linkedin": "https://www.linkedin.com/in/jessica-destalminil-03a7a275"}, {"pitch": "S1b", "prenom": "Sophie", "nom": "GONZALEZ", "entreprise": "Le Groupe La Poste", "poste": "directrice des ressources humaines opérationnelle", "tel": "+33672900603", "email": "sophie.gonzalez@laposte.fr", "linkedin": "https://www.linkedin.com/in/sophie-gonzalez-b893b537"}, {"pitch": "S1b", "prenom": "Malika", "nom": "BOUCHEHIOUA", "entreprise": "Elior Group", "poste": "Directrice des ressources humaines", "tel": "+33155445544", "email": "malika.bouchehioua@eliorgroup.com", "linkedin": "https://www.linkedin.com/in/malika-bouchehioua-0488ab86"}, {"pitch": "S1b", "prenom": "Thomas", "nom": "DARRAS", "entreprise": "INTERSPORT FRANCE", "poste": "Responsable formation", "tel": "+33680443703", "email": "tdarras@intersport.fr", "linkedin": "https://www.linkedin.com/in/thomas-darras-9a6a0412b"}, {"pitch": "S1b", "prenom": "Jeremy", "nom": "CARMONA 🚀", "entreprise": "Carrefour", "poste": "Directeur des Ressources Humaines Services Financiers et Marchands France et Groupe", "tel": "+33768578205", "email": "jeremy_carmona@carrefour.com", "linkedin": "https://www.linkedin.com/in/jeremy-carmona-%F0%9F%9A%80-970bb9137"}, {"pitch": "S1b", "prenom": "Laurent", "nom": "MATHA", "entreprise": "Le Groupe La Poste", "poste": "directeur des ressources humaines opérationnel est hérault - gard & lozère  - dex occitanie", "tel": "+33682221989", "email": "laurent.matha@laposte.fr", "linkedin": "https://www.linkedin.com/in/laurent-matha-15b30a125"}, {"pitch": "S1b", "prenom": "Béatrice", "nom": "PARIS", "entreprise": "Le Groupe La Poste", "poste": "directeur des ressources humaines", "tel": "+33683297174", "email": "beatrice.paris@laposte.fr", "linkedin": "https://www.linkedin.com/in/beatriceparis"}, {"pitch": "S1b", "prenom": "Ressot", "nom": "SOPHIE", "entreprise": "Le Groupe La Poste", "poste": "directeur des ressources humaines", "tel": "+33388240631", "email": "sophie.ressot@laposte.fr", "linkedin": "https://www.linkedin.com/in/ressot-sophie-ab1a3bb3"}, {"pitch": "S1b", "prenom": "Alain", "nom": "SIMON", "entreprise": "Auchan Retail", "poste": "drh", "tel": "+33622940543", "email": "a.simon@auchan.pl", "linkedin": "https://www.linkedin.com/in/alain-simon-50959286"}, {"pitch": "S1b", "prenom": "Marie Bernard", "nom": "DESFARGES", "entreprise": "Auchan", "poste": "drh", "tel": "+33762846522", "email": "marie.bernard@auchan-retail.com", "linkedin": "https://www.linkedin.com/in/marie-bernard-desfarges-830a21101"}, {"pitch": "S1b", "prenom": "Philippe", "nom": "SAUDO", "entreprise": "Auchan Retail", "poste": "drh", "tel": "+33320816959", "email": "philippe.saudo@auchan-retail.com", "linkedin": "https://www.linkedin.com/in/philippe-saudo-b77ba913a"}, {"pitch": "S1b", "prenom": "Philippe", "nom": "JONNAERT", "entreprise": "Castorama France", "poste": "drh exécutif", "tel": "+33320327468", "email": "p.jonnaert@castorama.fr", "linkedin": "https://www.linkedin.com/in/philippe-jonnaert-36a34b144"}, {"pitch": "S1b", "prenom": "Fabrice", "nom": "HENRY", "entreprise": "GROUPE LA POSTE", "poste": "drh", "tel": "+33671533810", "email": "fabrice.henry@laposte.fr", "linkedin": "https://www.linkedin.com/in/fabrice-henry-034716185"}, {"pitch": "S1b", "prenom": "Angela", "nom": "ALCINDOR", "entreprise": "La Poste Groupe", "poste": "directrice des ressources humaines opérationnelle", "tel": "+33615473752", "email": "angela.alcindor@laposte.fr", "linkedin": "https://www.linkedin.com/in/angela-alcindor-a275b345"}, {"pitch": "S1b", "prenom": "Jean-Louis", "nom": "DA COSTA", "entreprise": "STEF", "poste": "responsable formation métier stef transport bu flux frais", "tel": "+33641353440", "email": "jean-louis.dacosta@stef.com", "linkedin": "https://www.linkedin.com/in/jean-louis-da-costa-404619a2"}, {"pitch": "S1b", "prenom": "Valerie", "nom": "DECAUX", "entreprise": "Le Groupe La Poste", "poste": "DRH Groupe", "tel": "+33670101289", "email": "valerie.decaux@laposte.fr", "linkedin": "https://www.linkedin.com/in/valeriedecaux"}, {"pitch": "S1b", "prenom": "Fabrice", "nom": "RENAULT", "entreprise": "DIMOTRANS Group", "poste": "Directeur de site", "tel": "+33607569052", "email": "frenault@dimotrans-group.com", "linkedin": "https://www.linkedin.com/in/fabrice-renault-4a4441204"}, {"pitch": "S1b", "prenom": "Sylvie", "nom": "LE BELLEC", "entreprise": "Le Groupe La Poste", "poste": "directrice des ressources humaines et rse", "tel": "+33762658424", "email": "sylvie.lebellec@laposte.fr", "linkedin": "https://www.linkedin.com/in/sylvie-le-bellec-02a34541"}, {"pitch": "S1b", "prenom": "Sandra", "nom": "DUMOULIN VAREILLE", "entreprise": "Le Groupe La Poste", "poste": "drh", "tel": "+33155440706", "email": "sandra.dumoulin@laposte.fr", "linkedin": "https://www.linkedin.com/in/sandra-dumoulin-vareille-4943b12b"}, {"pitch": "S1b", "prenom": "Amanda", "nom": "PEIGNART", "entreprise": "E.Leclerc", "poste": "Directrice des ressources humaines", "tel": "+33603505391", "email": "amanda@e.leclerc", "linkedin": "https://www.linkedin.com/in/amanda-peignart-b2633993"}, {"pitch": "S1b", "prenom": "Fabrice", "nom": "MARTEL", "entreprise": "Le Groupe La Poste", "poste": "drh opérationnel", "tel": "+33685115556", "email": "fabrice.martel@laposte.fr", "linkedin": "https://www.linkedin.com/in/fabrice-martel-94b799b2"}, {"pitch": "S1b", "prenom": "Jeremy", "nom": "CARMONA", "entreprise": "Carrefour", "poste": "Directeur des Ressources Humaines Services Financiers et Marchands France et Groupe", "tel": "+33768578205", "email": "jeremy_carmona@carrefour.com", "linkedin": "https://www.linkedin.com/in/jeremy-carmona-🚀-970bb9137"}, {"pitch": "S1b", "prenom": "Jean Pascal", "nom": "DUSART", "entreprise": "VINCI Construction en France", "poste": "Directeur des ressources humaines Génie Civil IDF-Nord", "tel": "+33141147000", "email": "jean-pascal.dusart@vinci-construction.fr", "linkedin": "https://www.linkedin.com/in/jean-pascal-dusart-81020323"}, {"pitch": "S1b", "prenom": "Didier", "nom": "LALLEMAND", "entreprise": "VINCI Construction en France", "poste": "Directeur des ressources humaines", "tel": "+33618693434", "email": "didier.lallemand@vinci-construction.fr", "linkedin": "https://www.linkedin.com/in/didier-lallemand-0627a8106"}, {"pitch": "S1b", "prenom": "Charles", "nom": "GOUMENT", "entreprise": "Bouygues Bâtiment Ile-de-France", "poste": "Directeur des ressources humaines", "tel": "+33659547337", "email": "cgoument@bouygues-batiment-ile-de-france.com", "linkedin": "https://www.linkedin.com/in/charles-goument"}, {"pitch": "S1b", "prenom": "Marion", "nom": "VIGUIER", "entreprise": "VINCI Construction en France", "poste": "Directrice des ressources humaines", "tel": "+33777606374", "email": "marion.valla@vinci-construction.fr", "linkedin": "https://www.linkedin.com/in/marion-viguier-64960687"}, {"pitch": "S1b", "prenom": "Aurélie", "nom": "MOTTIER", "entreprise": "VINCI Construction", "poste": "Directrice des ressources humaines déléguée", "tel": "+33147164522", "email": "aurelie.mottier@vinci-construction.com", "linkedin": "https://www.linkedin.com/in/aurélie-mottier-a865b192"}, {"pitch": "S1b", "prenom": "Sarah", "nom": "BEN REHOUMA", "entreprise": "VINCI Construction", "poste": "Directrice des ressources humaines", "tel": "+33779495348", "email": "sarah.benrehouma@vinci-construction.fr", "linkedin": "https://www.linkedin.com/in/sarah-ben-rehouma-106408167"}, {"pitch": "S1b", "prenom": "Julie", "nom": "LANGLAIS", "entreprise": "Eiffage Génie Civil", "poste": "Directrice des ressources humaines", "tel": "+33761713906", "email": "julie.langlais@eiffage.com", "linkedin": "https://www.linkedin.com/in/julielanglais"}, {"pitch": "S1b", "prenom": "Candice", "nom": "AUBRY", "entreprise": "VINCI Construction", "poste": "Directrice des ressources humaines Déléguée ILE DE FRANCE NORMANDIE", "tel": "+33627400019", "email": "candice.aubry@vinci-construction.com", "linkedin": "https://www.linkedin.com/in/candice-aubry-51765aa4"}, {"pitch": "S1b", "prenom": "Laure", "nom": "BOUTINET", "entreprise": "VINCI Construction", "poste": "Directrice des Ressources Humaines", "tel": "+33628436889", "email": "annie.letourniant@ca-normandie.fr", "linkedin": "https://www.linkedin.com/in/laure-boutinet-098550b7"}, {"pitch": "S1b", "prenom": "Juliette", "nom": "LENCI", "entreprise": "Le Groupe La Poste", "poste": "directrice des ressources humaines", "tel": "+33607104575", "email": "juliette.lenci@laposte.fr", "linkedin": "https://www.linkedin.com/in/juliette-lenci-2537b692"}, {"pitch": "S1b", "prenom": "Claire", "nom": "AUBOIN", "entreprise": "Eiffage Construction", "poste": "Directrice des ressources humaines", "tel": "+33661322512", "email": "claire.auboin@eiffage.com", "linkedin": "https://www.linkedin.com/in/claire-auboin-3a809856"}, {"pitch": "S1b", "prenom": "Nadège", "nom": "CATHERINE", "entreprise": "Eiffage Route", "poste": "DRH", "tel": "+33661009805", "email": "nadege.catherine@eiffage.com", "linkedin": "https://www.linkedin.com/in/nadège-catherine-0b596225"}, {"pitch": "S1b", "prenom": "Sylvie", "nom": "SOVIS", "entreprise": "FM Logistic", "poste": "drh siège", "tel": "+33689133728", "email": "ssovis@fmlogistic.com", "linkedin": "https://www.linkedin.com/in/sylvie-sovis-0745a329"}, {"pitch": "S1b", "prenom": "Nicolas", "nom": "FAIST", "entreprise": "Le Groupe La Poste", "poste": "directeur des ressources humaines et directeur exécutif délégué du grand est", "tel": "+33686123477", "email": "nicolas.faist@laposte.fr", "linkedin": "https://www.linkedin.com/in/nicolas-faist"}, {"pitch": "S1b", "prenom": "Didier", "nom": "MALAMAS", "entreprise": "XPO Logistics Europe", "poste": "drh", "tel": "+33627130104", "email": "didier.malamas@xpo.com", "linkedin": "https://www.linkedin.com/in/didier-malamas-496b7a159"}, {"pitch": "S1b", "prenom": "Francois", "nom": "LEROUX", "entreprise": "Lidl France", "poste": "drh exécutif", "tel": "+33626188713", "email": "francois.leroux@lidl.fr", "linkedin": "https://www.linkedin.com/in/francois-leroux-3812351a1"}, {"pitch": "S1b", "prenom": "Stéphanie", "nom": "FELDMAN", "entreprise": "Fnac Darty", "poste": "directrice des ressources humaines exploitation fnac darty", "tel": "+33609046961", "email": "stephanie.feldman@fnacdarty.com", "linkedin": "https://www.linkedin.com/in/stéphanie-feldman-65040b53"}, {"pitch": "S1b", "prenom": "Guillaume", "nom": "SUXE", "entreprise": "Fnac Darty", "poste": "drh fnac paris", "tel": "+33626531538", "email": "guillaume.suxe@fnacdarty.com", "linkedin": "https://www.linkedin.com/in/guillaume-suxe-a49476106"}, {"pitch": "S1b", "prenom": "Véronique", "nom": "DUCHER", "entreprise": "Le Groupe La Poste", "poste": "drh opérationnelle auvergne sud", "tel": "+33664640609", "email": "veronique.ducher@laposte.fr", "linkedin": "https://www.linkedin.com/in/véronique-ducher-34a63b164"}, {"pitch": "S1b", "prenom": "Pierre", "nom": "BRIAND", "entreprise": "Le Groupe La Poste", "poste": "directeur des ressources humaines opérationnel, expérience postier et rse", "tel": "+33685838031", "email": "pierre.briand@laposte.fr", "linkedin": "https://www.linkedin.com/in/pierre-briand-05713745"}, {"pitch": "S1b", "prenom": "Sébastien", "nom": "JACQUEMOND", "entreprise": "La Poste Groupe", "poste": "directeur des ressources humaines opérationnel", "tel": "+33477524586", "email": "sebastien.jacquemond@laposte.fr", "linkedin": "https://www.linkedin.com/in/sébastien-jacquemond-directeur-ressources-humaines-opérationnel-laposte-loire-ouest-rhone"}, {"pitch": "S1b", "prenom": "Aurélie", "nom": "BARTHÉLÉMY", "entreprise": "Eiffage Construction", "poste": "Directrice des Ressources Humaines Région Nord-Ouest", "tel": "+33156585120", "email": "aurelie.barthelemy@eiffage.com", "linkedin": "https://www.linkedin.com/in/aurélie-barthélémy"}, {"pitch": "S1b", "prenom": "Thierry", "nom": "VAN DOORNE", "entreprise": "Auchan Retail", "poste": "directeur des ressources humaines", "tel": "+33668800793", "email": "thierry.vandoorne@auchan-retail.com", "linkedin": "https://www.linkedin.com/in/tvd-drh"}], "s2": [{"pitch": "S2a", "prenom": "Baudouin", "nom": "VUILLERMET", "entreprise": "Michelin", "poste": "Directeur de site", "tel": "+33667159283", "email": "", "linkedin": ""}, {"pitch": "S2a", "prenom": "Laurent", "nom": "REMUZON", "entreprise": "Safran Landing Systems", "poste": "Directeur Industriel Division LGI", "tel": "+33670897408", "email": "laurent.remuzon@aubertduval.com", "linkedin": "https://linkedin.com/in/laurent-remuzon-3b848724"}, {"pitch": "S2a", "prenom": "Olivier", "nom": "GOURBESVILLE", "entreprise": "Safran", "poste": "Directeur Industriel, Achat et Support Safran Power Unit", "tel": "+33678553857", "email": "g.olivier@safrangroup.com", "linkedin": ""}, {"pitch": "S2a", "prenom": "Eric", "nom": "LABREZE", "entreprise": "Legrand", "poste": "Directeur Industriel France", "tel": "+33637081915", "email": "", "linkedin": ""}, {"pitch": "S2b", "prenom": "Michael", "nom": "ENCAOUA", "entreprise": "Daher", "poste": "DRH & HSE - Division Industrie Daher", "tel": "+33144915257", "email": "m.encaoua@daher.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Vincent", "nom": "ROUSSON", "entreprise": "Daher", "poste": "DRH", "tel": "+33665051877", "email": "v.rousson@daher.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Louis-Jean", "nom": "CHAMPIE", "entreprise": "Daher", "poste": "DRH Relations Sociales", "tel": "+33646304597", "email": "l.champie@daher.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Sebastien", "nom": "RONCO", "entreprise": "Daher", "poste": "Division VP HR Director", "tel": "+33666516388", "email": "s.ronco@daher.com", "linkedin": "https://www.linkedin.com/in/sebastienronco"}, {"pitch": "S2b", "prenom": "Aurelie", "nom": "C.", "entreprise": "ENGIE", "poste": "drh", "tel": "+33660368292", "email": "ac@engie.com", "linkedin": "https://www.linkedin.com/in/aurelie-c-ba98b8113"}, {"pitch": "S2b", "prenom": "Emilie", "nom": "TUFFEAU SADARNAC", "entreprise": "ENGIE", "poste": "human resources director hq france renewables gbu", "tel": "+33661313799", "email": "emilie.sadarnac@engie.com", "linkedin": "https://www.linkedin.com/in/emilie-tuffeau-sadarnac-57842b6b"}, {"pitch": "S2b", "prenom": "Clothilde", "nom": "POPLINEAU", "entreprise": "ENGIE", "poste": "directrice des ressources humaines, en charge du développement des collaborateurs engie en france", "tel": "+33671622225", "email": "clothilde.poplineau@engie.com", "linkedin": "https://www.linkedin.com/in/clothilde-poplineau-31441540"}, {"pitch": "S2b", "prenom": "Sylvie", "nom": "CREDOT", "entreprise": "Storengy - ENGIE", "poste": "Directeur des Ressources Humaines et Directeur Juridique / Head of HR and General Counsel", "tel": "+33620438517", "email": "sylvie.credot@engie.com", "linkedin": "https://www.linkedin.com/in/sylvie-credot-5139b4107"}, {"pitch": "S2b", "prenom": "Hélène", "nom": "GAYET", "entreprise": "Daher", "poste": "Directrice des Ressources Humaines Industrie Site de Tarbes", "tel": "+33562417316", "email": "h.gayet@daher.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Sylvie", "nom": "VINCENT GUISNEL", "entreprise": "ENGIE", "poste": "drh gestion operationnelle rh engie", "tel": "+33669696031", "email": "sylvie-v.vincent@engie.com", "linkedin": "https://www.linkedin.com/in/sylvie-vincent-guisnel-881281134"}, {"pitch": "S2b", "prenom": "R", "nom": "LEO", "entreprise": "ENGIE", "poste": "directeur des ressources humaines", "tel": "+33781707710", "email": "leo.raut@engie.com", "linkedin": "https://www.linkedin.com/in/leoraut"}, {"pitch": "S2b", "prenom": "Muriel", "nom": "MORIN", "entreprise": "ENGIE", "poste": "drh", "tel": "+33140066568", "email": "mmorin@engie.com", "linkedin": "https://www.linkedin.com/in/muriel-morin-1a4a2baa"}, {"pitch": "S2b", "prenom": "Claire", "nom": "SCHNOERING", "entreprise": "Equans France", "poste": "Directrice des Ressources Humaines - Division Transport", "tel": "+33629138279", "email": "claire.schnoering@equans.com", "linkedin": "https://www.linkedin.com/in/claireschnoering"}, {"pitch": "S2b", "prenom": "Clara", "nom": "NOWICKI", "entreprise": "Equans", "poste": "Responsable RH", "tel": "+33674942300", "email": "clara.nowicki@equans.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Domitille", "nom": "BOVIER-RICHARD", "entreprise": "Equans", "poste": "Responsable des ressources humaines", "tel": "+33661219516", "email": "domitille.bovier@equans.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Isabelle", "nom": "BONHOMME", "entreprise": "Saint-Gobain", "poste": "DRH Saint Gobain Expertise et Service / Directrice du Développement RH et du recrutement France", "tel": "+33622229209", "email": "isabelle.bonhomme@saint-gobain.com", "linkedin": "https://www.linkedin.com/in/isabellebonhommedeveloppementrh"}, {"pitch": "S2b", "prenom": "Lucie", "nom": "AUGER LAFOURCADE", "entreprise": "ENGIE", "poste": "drh corporate et activites nouvelles france retail", "tel": "+33664709740", "email": "lucie.lafourcade@engie.com", "linkedin": "https://www.linkedin.com/in/lucie-auger-lafourcade-35a530127"}, {"pitch": "S2b", "prenom": "Nathalie", "nom": "GODARD", "entreprise": "Daher", "poste": "Responsable Ressources Humaines", "tel": "+33678208010", "email": "n.godard@daher.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Samir", "nom": "BENSAADI", "entreprise": "Agrial", "poste": "Directeur des ressources humaines", "tel": "+33642113599", "email": "s.bensaadi@agrial.com", "linkedin": "https://www.linkedin.com/in/samir-bensaadi-28b179100"}, {"pitch": "S2b", "prenom": "Julie", "nom": "BAUDIN", "entreprise": "Daher", "poste": "DRH Daher Aircraft", "tel": "+33662058403", "email": "baudin.julie@daher.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Jeremy", "nom": "B.", "entreprise": "Safran", "poste": "Head of HR", "tel": "+33621823929", "email": "jeremy.b@safrangroup.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Florence", "nom": "CORDIER", "entreprise": "EDF", "poste": "directrice des ressources humaines - dteo", "tel": "+33661372251", "email": "florence.cordier@edf.fr", "linkedin": "https://www.linkedin.com/in/florence-cordier-00623250"}, {"pitch": "S2b", "prenom": "Corinne", "nom": "VERDIE", "entreprise": "Daher", "poste": "DRH région sud", "tel": "+33561781767", "email": "c.verdie@daher.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Chloe", "nom": "GHESQUIERES", "entreprise": "EDF", "poste": "directrice des ressources humaines", "tel": "+33664680565", "email": "chloe.ghesquieres@edf.fr", "linkedin": "https://www.linkedin.com/in/chloeghesquieres"}, {"pitch": "S2b", "prenom": "Selin", "nom": "DURSUN", "entreprise": "Alstom", "poste": "HR Manager", "tel": "+33670110538", "email": "selin.dursun@alstomgroup.com", "linkedin": "https://www.linkedin.com/in/selin-dursun-138609121"}, {"pitch": "S2b", "prenom": "Anahit", "nom": "NERSISYAN", "entreprise": "Daher", "poste": "Responsable des ressources humaines", "tel": "+33664557538", "email": "a.nersisyan@daher.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Elsa", "nom": "ALLO", "entreprise": "Daher", "poste": "Directrice des Ressources Humaines", "tel": "+33670166169", "email": "e.allo@daher.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Sandrine", "nom": "POIRIER", "entreprise": "Alstom", "poste": "HR Manager", "tel": "+33663152737", "email": "sandrine.poirier@alstomgroup.com", "linkedin": "https://www.linkedin.com/in/sandrine-poirier-43383312"}, {"pitch": "S2b", "prenom": "Eva", "nom": "AUBERTIN", "entreprise": "Daher", "poste": "Responsable des ressources humaines Toulouse", "tel": "+33769032032", "email": "e.aubertin@daher.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Sarah", "nom": "DESCHILDER", "entreprise": "Daher", "poste": "DRH Zone Nord", "tel": "+33685910261", "email": "s.deschilder@daher.com", "linkedin": ""}, {"pitch": "S2b", "prenom": "Lisa", "nom": "DAVID", "entreprise": "Daher", "poste": "Responsable Ressources Humaines Fonctions Transverses", "tel": "+33642881382", "email": "l.david@daher.com", "linkedin": ""}, {"pitch": "S2c", "prenom": "Guillaume", "nom": "RENAUD", "entreprise": "Orano", "poste": "Directeur des ressources humaines - Orano Nuclear Packages & Services", "tel": "+33685937330", "email": "guillaume.renaud@areva.com", "linkedin": ""}, {"pitch": "S2c", "prenom": "Jacques", "nom": "BOUVIER", "entreprise": "Sanofi", "poste": "DRH Usines Sanofi France 15 Sites - 12000 Salariés-Rattachement N-2 Comex groupe - Paris", "tel": "+33603346364", "email": "jacques.bouvier@sanofi.com", "linkedin": "https://www.linkedin.com/in/jacques-bouvier-01020063"}, {"pitch": "S2c", "prenom": "Emmanuelle", "nom": "TOULOUSE", "entreprise": "EDF", "poste": "drh direction commerce ouest", "tel": "+33630567123", "email": "emmanuelle.toulouse@edf.fr", "linkedin": "https://www.linkedin.com/in/emmanuelle-toulouse-5ab87714a"}, {"pitch": "S2c", "prenom": "Guillaume", "nom": "MEURILLON", "entreprise": "EDF", "poste": "directeur des ressources humaines - direction commerce sud-ouest", "tel": "+33674815871", "email": "guillaume.meurillon@edf.fr", "linkedin": "https://www.linkedin.com/in/guillaume-meurillon-879225a4"}, {"pitch": "S2c", "prenom": "Estelle", "nom": "GOUGEUL", "entreprise": "EDF", "poste": "drh", "tel": "+33662565468", "email": "estelle.gougeul@edf.fr", "linkedin": "https://www.linkedin.com/in/estelle-gougeul-78390a100"}, {"pitch": "S2c", "prenom": "Sabrina", "nom": "LARAPIDIE", "entreprise": "Airbus Aircraft", "poste": "Head of HR for HR - HR Academy - HR communication and Change", "tel": "+33668647370", "email": "sabrina.larapidie@airbus.com", "linkedin": "https://www.linkedin.com/in/sabrinalarapidie-aa4b647b"}, {"pitch": "S2c", "prenom": "Nicolas", "nom": "LE PORT", "entreprise": "Airbus Aircraft", "poste": "HR Leader Technology and Engineering France  / SHRBP Flight Test", "tel": "+33660763682", "email": "nicolas.le-port@airbus.com", "linkedin": "https://www.linkedin.com/in/nicolas-le-port-a2b50157"}, {"pitch": "S2c", "prenom": "Benjamin", "nom": "MERABTI", "entreprise": "EDF", "poste": "drh edf martinique", "tel": "+33664567144", "email": "benjamin.merabti@edf.fr", "linkedin": "https://www.linkedin.com/in/benjamin-merabti-6159a11a5"}, {"pitch": "S2d", "prenom": "Diane", "nom": "DEWASME", "entreprise": "EQUANS France", "poste": "Responsable formation", "tel": "+33669091550", "email": "dianedewasme@cofely-gdfsuez.com", "linkedin": "https://www.linkedin.com/in/diane-dewasme"}, {"pitch": "S2d", "prenom": "Sebastien", "nom": "LEDEZ", "entreprise": "EDF solutions solaires", "poste": "Responsable formation", "tel": "+33666428838", "email": "sebastien.ledez@edfenr.com", "linkedin": "https://www.linkedin.com/in/sébastien-ledez"}, {"pitch": "S2d", "prenom": "Sabrina", "nom": "GOTTLIEB", "entreprise": "Safran", "poste": "Responsable Formation et Developpement des Competences HRBP Safran", "tel": "+33607839002", "email": "sabrina.gottlieb@safrangroup.com", "linkedin": ""}, {"pitch": "S2d", "prenom": "Rebecca", "nom": "LIMBERGER", "entreprise": "Stellantis", "poste": "Responsable RH usine QCP et responsable formation", "tel": "+33685227339", "email": "r.limberger@stellantis.com", "linkedin": "https://www.linkedin.com/in/rébecca-limberger-44b884146"}, {"pitch": "S2d", "prenom": "Nelson", "nom": "VAZ", "entreprise": "Eramet", "poste": "Responsable Formation", "tel": "+33642289566", "email": "nelson.vaz@eramet.com", "linkedin": "https://www.linkedin.com/in/nelson-vaz-6b47a326"}, {"pitch": "S2d", "prenom": "Sylvain", "nom": "FRANCOU", "entreprise": "SFR", "poste": "Chef de projet formation", "tel": "+33683358873", "email": "sylvain.francou@sfr.com", "linkedin": "https://www.linkedin.com/in/sylvain-francou-95428199"}, {"pitch": "S2d", "prenom": "Nadia", "nom": "HANNAN", "entreprise": "SFR", "poste": "Responsable formation télévente", "tel": "+33619174857", "email": "nadia.hannan@sfr.com", "linkedin": "https://www.linkedin.com/in/nadia-hannan-43aba518"}, {"pitch": "S2d", "prenom": "Eve", "nom": "BIZET", "entreprise": "SFR", "poste": "Responsable formation opérationnelle", "tel": "+33660620672", "email": "eve.bizet@sfr.com", "linkedin": "https://www.linkedin.com/in/evebizet"}, {"pitch": "S2d", "prenom": "Marie Christine", "nom": "OLIVEIRA", "entreprise": "SFR", "poste": "Chef de Projet Formation", "tel": "+33610026733", "email": "moliveira@sfr.fr", "linkedin": ""}, {"pitch": "S2d", "prenom": "Angélique", "nom": "DAVID", "entreprise": "Safran", "poste": "Responsable formation", "tel": "+33673510702", "email": "angelique.david@safrangroup.com", "linkedin": ""}, {"pitch": "S2d", "prenom": "Marine", "nom": "JAMMES", "entreprise": "Airbus", "poste": "Responsable formation", "tel": "+33642655478", "email": "marine.jammes@airbus.com", "linkedin": "https://www.linkedin.com/in/marine-jammes-801656104"}], "s3": [{"pitch": "S3b", "prenom": "David", "nom": "GLOGOVIC", "entreprise": "KLESIA", "poste": "Responsable formation", "tel": "+33140028054", "email": "david.glogovic@klesia.fr", "linkedin": "https://www.linkedin.com/in/david-glogovic-078274145"}, {"pitch": "S3b", "prenom": "Bruno", "nom": "LOUISON", "entreprise": "Banque Populaire Auvergne Rhône Alpes", "poste": "Responsable formation Banque Populaire Auvergne Rhône Alpes", "tel": "+33682593621", "email": "bruno.louison@bp2l.banquepopulaire.fr", "linkedin": "https://www.linkedin.com/in/bruno-louison-25681495"}, {"pitch": "S3b", "prenom": "Marina", "nom": "GRAVIGNY", "entreprise": "Crédit Agricole Charente-Périgord", "poste": "Responsable formation et développement des compétences", "tel": "+33687357324", "email": "marina.gravigny@ca-charente-perigord.fr", "linkedin": "https://www.linkedin.com/in/marina-gravigny-882419123"}, {"pitch": "S3b", "prenom": "Deborah", "nom": "DI GENNARO", "entreprise": "Groupama Méditerranée", "poste": "Responsable Formation et Dynamique managériale", "tel": "+33603024998", "email": "deborah.di@groupama.fr", "linkedin": "https://www.linkedin.com/in/deborah-di-gennaro-60992817b"}, {"pitch": "S3b", "prenom": "Fabrice", "nom": "STEPHAN", "entreprise": "Assurances du Crédit Mutuel", "poste": "Responsable des ressources humaines", "tel": "+33617114129", "email": "fabrice.stephan@acm.fr", "linkedin": "https://www.linkedin.com/in/fabrice-stephan-4907ab5"}, {"pitch": "S3b", "prenom": "Alain", "nom": "LEVY", "entreprise": "Renault Retail Group", "poste": "Directeur des Ressources Humaines", "tel": "+33607581015", "email": "", "linkedin": "https://www.linkedin.com/in/alain-levy-26538642"}, {"pitch": "S3b", "prenom": "Antoine", "nom": "MARTIN", "entreprise": "MGEN - Pôle Soins", "poste": "Directeur des ressources humaines", "tel": "+33675868114", "email": "", "linkedin": "https://www.linkedin.com/in/antoine-martin-23287261"}, {"pitch": "S3b", "prenom": "Jean-Christophe", "nom": "BIOTTI", "entreprise": "Groupama Paris Val de Loire", "poste": "Directeur des ressources humaines", "tel": "+33675096334", "email": "", "linkedin": "https://www.linkedin.com/in/jean-christophe-biotti-0651335a"}, {"pitch": "S3b", "prenom": "Christophe", "nom": "DANGLEHANT", "entreprise": "AXA", "poste": "Responsable Formation", "tel": "+33668745610", "email": "", "linkedin": "https://www.linkedin.com/in/christophe-danglehant-77764887"}, {"pitch": "S3b", "prenom": "Sandra", "nom": "BERNARD", "entreprise": "La Banque Postale", "poste": "Directrice des Ressources Humaines et de l'Expérience collaborateurs", "tel": "+33658901685", "email": "", "linkedin": "https://www.linkedin.com/in/sandra-bernard-53436567"}, {"pitch": "S3b", "prenom": "Anne Sophie", "nom": "LEGRAND", "entreprise": "CIC Lyonnaise de Banque", "poste": "Directrice des ressources humaines", "tel": "+33615166941", "email": "", "linkedin": "https://www.linkedin.com/in/anne-sophie-legrand-67446b172"}, {"pitch": "S3b", "prenom": "Nathalie", "nom": "CABARET", "entreprise": "Société Générale", "poste": "Product manager - Responsable formation groupe", "tel": "+33663867822", "email": "", "linkedin": "https://www.linkedin.com/in/nathalie-cabaret-085795151"}, {"pitch": "S3b", "prenom": "Sylvain", "nom": "LANGLOIS", "entreprise": "Groupe Covéa", "poste": "Responsable de la formation Terrain GMF", "tel": "+33610542313", "email": "", "linkedin": "https://www.linkedin.com/in/sylvain-langlois-489475a3"}, {"pitch": "S3b", "prenom": "Catarina", "nom": "ALVES", "entreprise": "Caisse d'Epargne Ile-de-France", "poste": "Responsable des ressources humaines", "tel": "+33612216677", "email": "catarina.alves@caisse-epargne.fr", "linkedin": "https://www.linkedin.com/in/catarina-alves-ceidf"}, {"pitch": "S3b", "prenom": "Camille", "nom": "GRAUX", "entreprise": "Caisse d'Epargne Ile-de-France", "poste": "Responsable Ressources Humaines", "tel": "+33660507923", "email": "", "linkedin": "https://www.linkedin.com/in/camillegrauxlkd"}, {"pitch": "S3b", "prenom": "Vincent", "nom": "KEMPF", "entreprise": "Crédit Agricole d'Aquitaine", "poste": "Directeur des ressources humaines", "tel": "+33670755630", "email": "vincent.kempf@ca-aquitaine.fr", "linkedin": "https://www.linkedin.com/in/vincent-kempf-6423a183"}, {"pitch": "S3b", "prenom": "Aridja.", "nom": "PENNES", "entreprise": "AXA", "poste": "Responsable formation", "tel": "+33664328599", "email": "", "linkedin": "https://www.linkedin.com/in/aridja-pennes-6b511a15a"}, {"pitch": "S3b", "prenom": "Fabrice", "nom": "LANGLOIS", "entreprise": "Groupama Assurances Mutuelles", "poste": "Responsable Formation Groupe", "tel": "+33627787528", "email": "fabrice.langlois@groupama.com", "linkedin": "https://www.linkedin.com/in/fabrice-langlois-732326a8"}, {"pitch": "S3b", "prenom": "Laurence", "nom": "PAYET", "entreprise": "MACIF", "poste": "Manager de domaine - QVCT de proximité- DRH MACIF", "tel": "+33663808249", "email": "lpayet@macif.fr", "linkedin": "https://www.linkedin.com/in/laurence-payet-48983137"}, {"pitch": "S3b", "prenom": "Laurence", "nom": "LUSSON", "entreprise": "Crédit Agricole Normandie", "poste": "Directrice des Ressources Humaines et de la Transformation", "tel": "+33635164613", "email": "laurence.lusson@ca-nmp.fr", "linkedin": "https://www.linkedin.com/in/laurence-lusson-1831b573"}, {"pitch": "S3b", "prenom": "Patrick", "nom": "POUTRET", "entreprise": "Crédit Agricole Normandie", "poste": "Directeur des Ressources Humaines et de la Transformation", "tel": "+33609566297", "email": "patrick.poutret@ca-sudmed.fr", "linkedin": "https://www.linkedin.com/in/patrick-poutret-41ab4a134"}, {"pitch": "S3b", "prenom": "Vincent", "nom": "ALBONICO", "entreprise": "Banque Populaire du Sud", "poste": "Directeur Formation et Académie BPVF", "tel": "+33612947324", "email": "vincent@bpvf.banquepopulaire.fr", "linkedin": "https://www.linkedin.com/in/vincent-albonico-a63931114"}, {"pitch": "S3b", "prenom": "Justine", "nom": "DELASPRE", "entreprise": "GROUPE MACSF", "poste": "Responsable RH Formation et développement des compétences", "tel": "+33647924617", "email": "justine.delaspre@macsf.fr", "linkedin": "https://www.linkedin.com/in/justine-delaspre"}, {"pitch": "S3b", "prenom": "Frédéric", "nom": "BERGE", "entreprise": "MACIF", "poste": "Directeur des Ressources Humaines Macif Finance Epargne", "tel": "+33610957774", "email": "fberge@macif.fr", "linkedin": "https://www.linkedin.com/in/frédéric-berge-85763750"}, {"pitch": "S3b", "prenom": "Loïc", "nom": "HERVE", "entreprise": "Harmonie Mutuelle", "poste": "Directeur des Ressources Humaines et Transformation Grand Ouest", "tel": "+33608848086", "email": "loic.herve@harmonie-mutuelle.fr", "linkedin": "https://www.linkedin.com/in/loïc-herve"}, {"pitch": "S3b", "prenom": "Leslie", "nom": "MAILLARD", "entreprise": "BPCE Assurances", "poste": "Directrice des Ressources Humaines & Expérience Collaborateur de BPCE Assurances IARD", "tel": "+33660658743", "email": "leslie.maillard@bpce.fr", "linkedin": "https://www.linkedin.com/in/leslie-maillard-bpce-assurances"}, {"pitch": "S3b", "prenom": "Aurore", "nom": "VAN DER WERF", "entreprise": "CNP Assurances", "poste": "Head of Human Resources", "tel": "+33684742097", "email": "aurore.vanderwerf@cnp.fr", "linkedin": "https://www.linkedin.com/in/van-der-werf-hrdirector"}, {"pitch": "S3b", "prenom": "Christine", "nom": "VIGNALS", "entreprise": "Groupama d'Oc", "poste": "Directrice des ressources humaines", "tel": "+33684804918", "email": "christine.vignals@groupama.fr", "linkedin": "https://www.linkedin.com/in/christine-vignals-89091144"}, {"pitch": "S3b", "prenom": "Manuela", "nom": "CARDOSO", "entreprise": "GROUPAMA - G2S", "poste": "Responsable Formation", "tel": "+33170944030", "email": "manuela.cardoso@groupama-gan-recrute.com", "linkedin": "https://www.linkedin.com/in/profillinkedin"}, {"pitch": "S3b", "prenom": "Aurélie", "nom": "CHARASCH", "entreprise": "Caisse d'Epargne Ile-de-France", "poste": "Responsable RH", "tel": "+33625752378", "email": "aurelie.charasch@ceidf.caisse-epargne.fr", "linkedin": "https://www.linkedin.com/in/aur%C3%A9lie-charasch-8235933b"}, {"pitch": "S3b", "prenom": "Nina", "nom": "BRICMONT", "entreprise": "GROUPE MACIF", "poste": "Directrice des ressources humaines", "tel": "+33627577907", "email": "nbricmont@macif.fr", "linkedin": "https://www.linkedin.com/in/nina-bricmont-7b35815b"}, {"pitch": "S3b", "prenom": "Béatrice", "nom": "LE TERREC", "entreprise": "BNP Paribas Leasing Solutions", "poste": "Head of HR for BNP Paribas Leasing Solutions", "tel": "+33665473198,+33142980030", "email": "beatrice.leterrec@bnpparibas.com", "linkedin": "https://www.linkedin.com/in/beatrice-le-terrec"}, {"pitch": "S3b", "prenom": "Emmanuel", "nom": "CÉLÉRIER", "entreprise": "Crédit Agricole Normandie", "poste": "Directeur des ressources humaines", "tel": "+33612454070", "email": "emmanuel.celerier@ca-alpesprovence.fr", "linkedin": "https://www.linkedin.com/in/emmanuel-célérier-467b7a5"}, {"pitch": "S3b", "prenom": "Marion", "nom": "PROTANO", "entreprise": "Crédit Agricole Normandie", "poste": "Directrice des Ressources Humaines et de la Transformation", "tel": "+33689783103", "email": "marion.protano@ca-norddefrance.fr", "linkedin": "https://www.linkedin.com/in/marion-protano-ba3a0031"}, {"pitch": "S3b", "prenom": "Sebastien", "nom": "MENORET", "entreprise": "Banque Populaire du Sud", "poste": "Directeur Réseau Retail", "tel": "+33665135900", "email": "sebastien.menoret@bpaca.banquepopulaire.fr", "linkedin": "https://www.linkedin.com/in/sebastien-menoret-5b3b97137"}, {"pitch": "S3b", "prenom": "Frank", "nom": "GIRARDEAU", "entreprise": "MGEN - Pôle Soins", "poste": "Directeur Réseau et Distribution", "tel": "+33632530259", "email": "fgirardeau@mgen.fr", "linkedin": "https://www.linkedin.com/in/frank-girardeau-3a2374a7"}, {"pitch": "S3b", "prenom": "Emmanuel", "nom": "ROUDIL", "entreprise": "GROUPE MACSF", "poste": "Directeur réseau hospitalier", "tel": "+33685370436", "email": "christel.nguyen@harmonie-mutuelle.fr", "linkedin": "https://www.linkedin.com/in/emmanuel-roudil"}, {"pitch": "S3b", "prenom": "Jean-Pierre", "nom": "MIQUELIS", "entreprise": "Banque Populaire du Sud", "poste": "Directeur reseau agences spécialisées", "tel": "+33760651610", "email": "jean-pierre.miquelis@bpmed.fr", "linkedin": "https://www.linkedin.com/in/jean-pierre-miquelis-9673358b"}, {"pitch": "S3b", "prenom": "Damien", "nom": "LOUISGRAND", "entreprise": "Groupe AGPM KLESIA", "poste": "Directeur Réseau Commercial et Distribution", "tel": "+33621465508", "email": "damien.louisgrand@groupe-agpm.fr", "linkedin": "https://www.linkedin.com/in/damien-louisgrand-73708aa0"}, {"pitch": "S3b", "prenom": "Herve", "nom": "DELPIROUX", "entreprise": "Allianz France", "poste": "Responsable formation Département DATA, Pilotage et Outils chez Allianz France", "tel": "+33624672230,+33158859550", "email": "herve.delpiroux@agf.fr", "linkedin": "https://www.linkedin.com/in/herve-delpiroux-74206645"}, {"pitch": "S3b", "prenom": "Annelise", "nom": "LEQUEUX", "entreprise": "Crédit Agricole Normandie", "poste": "Directrice des Ressources Humaines", "tel": "+33157727507", "email": "annelise.lequeux@ca-valdefrance.fr", "linkedin": "https://www.linkedin.com/in/annelise-lequeux-009926b4"}]};
+const P={"s1a": "Bonjour [PRENOM], chez Daylindo on aide les entreprises de travail temporaire à consolider leur relation avec leurs clients grands comptes. On travaille avec Supplay qui grâce à notre solution a gagné des appels d'offres — notamment dans l'industrie pharmaceutique — en apportant à ses clients une formation au poste financée par AKTO, donc sans surcoût pour eux. Je vous précise qu'on ne peut pas travailler avec tout le monde — c'est un levier de différenciation, ça perd son sens si tous les acteurs l'ont. J'ai choisi de vous appeler parce que je pense qu'on pourrait nouer un partenariat intéressant. Est-ce que vous avez 20 à 30 minutes cette semaine ou la suivante pour qu'on en parle ?", "s1b": "Bonjour [PRENOM], je vous appelle parce que je pense que vous êtes confronté à une double contrainte que l'on voit partout dans les secteurs saisonniers : former vite des collaborateurs qui arrivent en masse, et maîtriser le coût de cette intégration qui se répète à chaque cycle. On travaille justement avec les grands acteurs de la logistique — un secteur soumis à une très forte saisonnalité. On optimise le parcours d'intégration directement au poste de travail et on fait financer ces parcours par les OPCO — ce qui réduit significativement le coût net pour l'entreprise. Est-ce que vous avez 20 à 30 minutes cette semaine ou la suivante pour voir comment on fait et ce que ça donnerait chez vous ?", "s2a": "Bonjour [PRENOM], je vous appelle parce que je pense que vous êtes confronté à un enjeu que l'on voit partout dans l'industrie : sécuriser la maîtrise des gestes métiers sur vos lignes.\n\nOn vient justement de mesurer chez un industriel 380 000€ de pertes annuelles directement liées au manque de visibilité sur les compétences terrain — 200 000€ de lignes fermées faute de personnel qualifié disponible, et 180 000€ de rebuts générés par des opérateurs sur des postes qu'ils ne maîtrisaient pas encore.\n\nVous avez ce sujet chez vous ?\n\n→ Pause. Laisser le prospect répondre.\n\nDaylindo permet justement de sécuriser la transmission des gestes métiers et de savoir en temps réel qui peut tenir quel poste, à quel niveau. Je vous propose 20 minutes pour vous montrer comment on fait et ce que ça donnerait chez vous ?", "s2b": "Bonjour [PRENOM], je vous contacte parce qu'on travaille avec des industriels qui font face à deux réalités simultanées : un turnover qui s'accélère et une difficulté croissante à trouver les bons profils opérationnels.\n\nVous avez ce sujet chez vous ?\n\n→ Pause. Laisser le prospect répondre.\n\nChez Daylindo on aide les industriels à former leurs nouveaux collaborateurs directement au poste de travail et à valoriser les parcours internes pour limiter le turnover. On fait ça par exemple avec les intérimaires de Supplay pour leurs entreprises utilisatrices, et pour les techniciens d'Orange.\n\nEst-ce que vous avez 20 minutes cette semaine pour voir ce que ça donne concrètement chez vous ?", "s2c": "Bonjour [PRENOM], je vous appelle parce que je pense que vous êtes soumis à une réglementation assez forte sur les compétences de vos opérateurs.\n\nOn a justement travaillé avec Orange et Dekra sur la formation aux habilitations électriques — directement au poste de travail, avec la traçabilité complète pour prouver à tout moment que l'opérateur était dûment formé et évalué.\n\nPour toute formation réglementaire où vous devez faire cette preuve, c'est exactement ce qu'on adresse.\n\nEst-ce que vous avez 20 minutes cette semaine pour voir ce qu'on a fait et si ça s'applique chez vous ?", "s2d": "Bonjour [PRENOM], je vous appelle parce qu'on travaille avec des industriels qui font face à une réalité qu'on voit s'accélérer : dans les 5 prochaines années, près de 60% de vos collaborateurs les plus expérimentés vont partir à la retraite — et avec eux, des années de savoir-faire qui ne sont nulle part documentés.\n\nVous avez ce sujet chez vous ?\n\n→ Pause. Laisser le prospect répondre.\n\nC'est exactement ce qu'on a traité avec Orange — capturer les gestes métiers des experts directement au poste de travail, avant qu'ils partent, pour les rendre transmissibles et évaluables pour les suivants.\n\nEst-ce que vous avez 20 minutes cette semaine pour voir comment on fait concrètement ?", "s3a": "Bonjour [PRENOM], je vous appelle parce que je pense que vous avez un défi que l'on voit chez tous les réseaux d'agences : des dizaines d'agences, des centaines de collaborateurs — et très peu de visibilité sur l'homogénéité des pratiques et des compétences d'une agence à l'autre.\n\nVous avez ce sujet chez vous ?\n\n→ Pause. Laisser le prospect répondre.\n\nOn travaille avec Supplay et Adéquat sur exactement ce sujet — standardiser les parcours, avoir une visibilité centrale sur les compétences terrain, financé par les OPCO. Faire plus avec moins.\n\nEst-ce que vous avez 20 à 30 minutes cette semaine ou la suivante pour voir comment on fait ?", "s3b": "Bonjour [PRENOM], je vous appelle parce que dans les réseaux comme le vôtre, on observe souvent le même écart : les meilleures agences performent très bien, et les autres peinent à atteindre le même niveau — non pas par manque de volonté, mais parce que les pratiques et les compétences ne sont pas homogènes d'un site à l'autre.\n\nC'est un sujet que vous reconnaissez ?\n\n→ Pause. Laisser le prospect répondre.\n\nDaylindo permet à l'équipe centrale d'avoir une visibilité en temps réel sur la maîtrise des compétences dans chaque site, de standardiser les parcours de montée en compétence, et de piloter l'homogénéisation des pratiques à l'échelle du réseau. Et nous pouvons faire financer la démarche par l'OPCO.\n\nEst-ce que vous avez 20 à 30 minutes cette semaine pour voir ce que ça donnerait chez vous ?"};
+const L={"s1a": "S1a — Travail temporaire", "s1b": "S1b — Saisonnalité", "s2a": "S2a — Coût caché", "s2b": "S2b — Turnover & Onboarding", "s2c": "S2c — Conformité réglementaire", "s2d": "S2d — Transmission des savoirs", "s3a": "S3a — Réseau agences intérim", "s3b": "S3b — Franchise / Bancaire / Assurance"};
+const SO={s1:['s1b'],s2:['s2a','s2b','s2c','s2d'],s3:['s3b']};
+const SC={s1:'#f06423',s2:'#3a7ec9',s3:'#8b4fc9'};
+const SI={s1:'&#128176;',s2:'&#128295;',s3:'&#127974;'};
+let sp={s1:'s1b',s2:'s2d',s3:'s3b'};
+let cs='s1',ck=null,cp='s1b';
+let fs={s1:'all',s2:'all',s3:'all'};
 
 function init(){
-  Object.keys(DATA).forEach(seg=>{
-    const def=segPitch[seg]||Object.keys(LABELS)[0];
-    const p=document.getElementById('ptxt-'+seg);const l=document.getElementById('plbl-'+seg);
-    if(p)p.textContent=PITCHES[def];if(l)l.textContent='🎤 '+LABELS[def];
+  ['s1','s2','s3'].forEach(function(seg){
+    var p=document.getElementById('ptxt-'+seg);
+    var l=document.getElementById('plbl-'+seg);
+    if(p)p.textContent=P[sp[seg]];
+    if(l)l.textContent='🎤 '+L[sp[seg]];
   });
 }
+
 function swPitch(seg,pid){
-  segPitch[seg]=pid;
-  event.currentTarget.closest('.ptabs').querySelectorAll('.ptab').forEach(b=>b.classList.remove('active'));
+  sp[seg]=pid;
+  event.currentTarget.closest('.ptabs').querySelectorAll('.ptab').forEach(function(b){b.classList.remove('active');});
   event.currentTarget.classList.add('active');
-  document.getElementById('ptxt-'+seg).textContent=PITCHES[pid];
-  document.getElementById('plbl-'+seg).textContent='🎤 '+LABELS[pid];
+  document.getElementById('ptxt-'+seg).textContent=P[pid];
+  document.getElementById('plbl-'+seg).textContent='🎤 '+L[pid];
 }
-function copySegPitch(seg){
-  navigator.clipboard.writeText(PITCHES[segPitch[seg]]).then(()=>toast('Script '+LABELS[segPitch[seg]]+' copié ✓'));
+
+function copyPitch(seg){
+  navigator.clipboard.writeText(P[sp[seg]]).then(function(){toast('Script copié ✓');});
 }
+
 function gk(seg,i){return seg+'_'+i;}
-function lst(k){try{return JSON.parse(localStorage.getItem('s_'+k))||{st:'idle',n:''};}catch{return{st:'idle',n:''};}}
+function lst(k){try{return JSON.parse(localStorage.getItem('s_'+k))||{st:'idle',n:''};}catch(e){return{st:'idle',n:''};}}
 function sst(k,o){localStorage.setItem('s_'+k,JSON.stringify(o));}
 function stl(s){return{idle:'À appeler',called:'Appelé',rdv:'✅ RDV',noreply:'❌ Sans réponse'}[s]||'À appeler';}
+
 function renderTable(seg){
-  const tb=document.getElementById('tb-'+seg);if(!tb)return;
-  const list=DATA[seg];
-  const q=(document.getElementById('search-'+seg).value||'').toLowerCase();
-  const filt=filters[seg];
-  tb.innerHTML='';let shown=0;
-  list.forEach((c,i)=>{
-    const k=gk(seg,i);const st=lst(k);
-    if(filt!=='all'&&st.st!==filt)return;
-    const txt=(c.prenom+' '+c.nom+' '+c.entreprise+' '+c.poste+' '+c.pitch).toLowerCase();
-    if(q&&!txt.includes(q))return;
+  var tb=document.getElementById('tb-'+seg);
+  if(!tb)return;
+  var list=D[seg];
+  var q=(document.getElementById('srch-'+seg).value||'').toLowerCase();
+  var filt=fs[seg];
+  tb.innerHTML='';
+  var shown=0;
+  for(var i=0;i<list.length;i++){
+    var c=list[i];
+    var k=gk(seg,i);
+    var st=lst(k);
+    if(filt!=='all'&&st.st!==filt)continue;
+    var txt=(c.prenom+' '+c.nom+' '+c.entreprise+' '+c.poste+' '+c.pitch).toLowerCase();
+    if(q&&txt.indexOf(q)<0)continue;
     shown++;
-    const tr=document.createElement('tr');
+    var tr=document.createElement('tr');
     tr.className=st.st==='rdv'?'rdv':(st.st==='called'?'called':'');
-    tr.onclick=()=>openModal(seg,i);
-    const hasLi=c.linkedin&&c.linkedin.startsWith('http');
-    const tel0=c.tel?c.tel.split(',')[0]:'';
-    const pid=c.pitch.toLowerCase();
-    tr.innerHTML=`<td style="color:var(--muted);font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:700">${i+1}</td>
-      <td><span class="pbadge ${pid}">${c.pitch}</span></td>
-      <td><div class="tname">${c.prenom} ${c.nom}</div></td>
-      <td><div class="tco">${c.entreprise}</div></td>
-      <td><div class="tposte" title="${c.poste}">${c.poste}</div></td>
-      <td><div class="ttel">${tel0?`<a href="tel:${tel0}" onclick="event.stopPropagation()">${tel0}</a>`:'—'}</div></td>
-      <td><div class="tact" onclick="event.stopPropagation()">
-        ${c.email?`<button class="ab mail" onclick="window.location='mailto:${c.email}'">📧</button>`:''}<button class="ab li ${hasLi?'':'noli'}" onclick="${hasLi?`window.open('${c.linkedin}','_blank`)`:''}">💼</button>
-      </div></td>
-      <td><span class="sb ${st.st}" onclick="event.stopPropagation();qst('${k}',this)">${stl(st.st)}</span></td>`;
+    (function(seg,i){tr.onclick=function(){openModal(seg,i);};})(seg,i);
+    var hasLi=c.linkedin&&c.linkedin.indexOf('http')===0;
+    var tel0=c.tel?c.tel.split(',')[0]:'';
+    var pid=c.pitch.toLowerCase();
+    var emailBtn=c.email?('<button class="ab m" onclick="event.stopPropagation();window.location='mailto:'+c.email+''">📧</button>'):'';
+    var liBtn='<button class="ab l'+(hasLi?'':' nl')+'" onclick="event.stopPropagation();'+(hasLi?'window.open(''+c.linkedin+'','_blank')':'')+'" title="LinkedIn">💼</button>';
+    tr.innerHTML='<td style="color:var(--mu);font-size:11px;font-family:Barlow Condensed,sans-serif;font-weight:700">'+(i+1)+'</td>'
+      +'<td><span class="pb2 '+pid+'">'+c.pitch+'</span></td>'
+      +'<td><div class="tn">'+c.prenom+' '+c.nom+'</div></td>'
+      +'<td><div class="tc">'+c.entreprise+'</div></td>'
+      +'<td><div class="tp" title="'+c.poste+'">'+c.poste+'</div></td>'
+      +'<td><div class="tt">'+(tel0?'<a href="tel:'+tel0+'" onclick="event.stopPropagation()">'+tel0+'</a>':'—')+'</div></td>'
+      +'<td><div class="ta" onclick="event.stopPropagation()">'+emailBtn+liBtn+'</div></td>'
+      +'<td><span class="stb '+st.st+'" onclick="event.stopPropagation();qst(''+k+'',this)">'+stl(st.st)+'</span></td>';
     tb.appendChild(tr);
-  });
+  }
   document.getElementById('cnt-'+seg).textContent=shown+' contact'+(shown>1?'s':'');
   document.getElementById('no-'+seg).style.display=shown===0?'block':'none';
   updRdv();
 }
+
 function qst(k,badge){
-  const st=lst(k);const cy=['idle','called','rdv','noreply'];
-  const i=cy.indexOf(st.st);st.st=cy[(i+1)%cy.length];sst(k,st);
-  badge.className='sb '+st.st;badge.textContent=stl(st.st);
-  badge.closest('tr').className=st.st==='rdv'?'rdv':(st.st==='called'?'called':'');
+  var st=lst(k);var cy=['idle','called','rdv','noreply'];
+  var i=cy.indexOf(st.st);st.st=cy[(i+1)%cy.length];sst(k,st);
+  badge.className='stb '+st.st;badge.textContent=stl(st.st);
+  var tr=badge.closest('tr');tr.className=st.st==='rdv'?'rdv':(st.st==='called'?'called':'');
   updRdv();
 }
+
 function updRdv(){
-  let t=0;Object.keys(DATA).forEach(seg=>DATA[seg].forEach((_,i)=>{if(lst(gk(seg,i)).st==='rdv')t++;}));
-  const el=document.getElementById('cnt-rdv');if(el)el.textContent=t;
+  var t=0;
+  ['s1','s2','s3'].forEach(function(seg){
+    D[seg].forEach(function(_,i){if(lst(gk(seg,i)).st==='rdv')t++;});
+  });
+  document.getElementById('cnt-rdv').textContent=t;
 }
-function switchTab(seg,btn){
-  cSeg=seg;
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+
+function swTab(seg,btn){
+  cs=seg;
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
   document.getElementById('panel-'+seg).classList.add('active');
-  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');renderTable(seg);
+  document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  renderTable(seg);
 }
-function filterTable(seg){renderTable(seg);}
-function setFilter(seg,val,btn){
-  filters[seg]=val;
-  btn.closest('.fbts').querySelectorAll('.fb').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');renderTable(seg);
+
+function ft(seg){renderTable(seg);}
+
+function sf(seg,val,btn){
+  fs[seg]=val;
+  btn.closest('.fbs').querySelectorAll('.fb').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  renderTable(seg);
 }
+
 function openModal(seg,idx){
-  const c=DATA[seg][idx];cKey=gk(seg,idx);cSeg=seg;
-  cPitch=c.pitch.toLowerCase();
-  const col=SEG_COL[seg]||'#0d1f3c';
-  const raw=(c.nom||'').replace(/[^A-Za-z\u00C0-\u024F]/g,'');
+  var c=D[seg][idx];ck=gk(seg,idx);cs=seg;cp=c.pitch.toLowerCase();
+  var col=SC[seg];
+  var raw=(c.nom||'').replace(/[^A-Za-zÀ-ɏ]/g,'');
+  var initials=((c.prenom[0]||'')+(raw[0]||'')).toUpperCase();
   document.getElementById('m-av').style.background=col;
-  document.getElementById('m-av').textContent=((c.prenom[0]||'')+(raw[0]||'')).toUpperCase();
-  document.getElementById('m-name').textContent=c.prenom+' '+c.nom;
-  document.getElementById('m-poste').textContent=c.poste;
-  document.getElementById('m-co').textContent=(SEG_ICO[seg]||'')+' '+c.entreprise+' — '+c.pitch;
+  document.getElementById('m-av').textContent=initials;
+  document.getElementById('m-nm').textContent=c.prenom+' '+c.nom;
+  document.getElementById('m-po').textContent=c.poste;
+  document.getElementById('m-co').textContent=(SI[seg]||'')+' '+c.entreprise+' — '+c.pitch;
   document.getElementById('m-co').style.color=col;
   document.getElementById('m-tel').textContent=c.tel||'—';
-  document.getElementById('m-email').innerHTML=c.email?`<a href="mailto:${c.email}">${c.email}</a>`:'—';
-  const tel0=c.tel?c.tel.split(',')[0]:'';
-  const cb=document.getElementById('m-call');cb.href=tel0?'tel:'+tel0:'#';cb.className='mbtn call'+(tel0?'':' dis');
-  const eb=document.getElementById('m-email-btn');eb.href=c.email?'mailto:'+c.email:'#';eb.className='mbtn email'+(c.email?'':' dis');
-  const lb=document.getElementById('m-li');const hl=c.linkedin&&c.linkedin.startsWith('http');
-  lb.href=hl?c.linkedin:'#';lb.className='mbtn linkedin'+(hl?'':' dis');if(hl)lb.target='_blank';else lb.removeAttribute('target');
-  const opts=SEG_OPTS[seg]||[cPitch];
-  document.getElementById('m-psel').innerHTML=opts.map(pid=>`<button class="popt ${pid===cPitch?'active':''}" onclick="selPitch('${pid}','${c.prenom.replace(/'/g,"\\'")}'  ,this)">${LABELS[pid]}</button>`).join('');
-  updMPitch(c.prenom);
-  const stObj=lst(cKey);document.getElementById('m-notes').value=stObj.n||'';
-  document.querySelectorAll('.sopt').forEach(b=>b.classList.remove('active'));
-  const ab=document.querySelector('.sopt.s-'+stObj.st);if(ab)ab.classList.add('active');
+  document.getElementById('m-em').innerHTML=c.email?('<a href="mailto:'+c.email+'">'+c.email+'</a>'):'—';
+  var tel0=c.tel?c.tel.split(',')[0]:'';
+  var cb=document.getElementById('m-ca');cb.href=tel0?'tel:'+tel0:'#';cb.className='mbn call'+(tel0?'':' dis');
+  var eb=document.getElementById('m-eb');eb.href=c.email?'mailto:'+c.email:'#';eb.className='mbn em'+(c.email?'':' dis');
+  var lb=document.getElementById('m-li');var hl=c.linkedin&&c.linkedin.indexOf('http')===0;
+  lb.href=hl?c.linkedin:'#';lb.className='mbn li'+(hl?'':' dis');
+  if(hl){lb.target='_blank';}else{lb.removeAttribute('target');}
+  var opts=SO[seg]||[cp];
+  document.getElementById('m-ps').innerHTML=opts.map(function(pid){
+    return '<button class="po'+(pid===cp?' active':'')+'" onclick="selP(''+pid+'',''+c.prenom.replace(/'/g,"\'")+''  ,this)">'+L[pid]+'</button>';
+  }).join('');
+  updMP(c.prenom);
+  var stObj=lst(ck);
+  document.getElementById('m-no').value=stObj.n||'';
+  document.querySelectorAll('.sop').forEach(function(b){b.classList.remove('active');});
+  var ab=document.querySelector('.sop.s'+(stObj.st==='idle'?'i2':stObj.st==='called'?'c':stObj.st==='rdv'?'r':'n'));
+  if(ab)ab.classList.add('active');
   document.getElementById('modal').classList.add('open');
 }
-function selPitch(pid,prenom,btn){cPitch=pid;document.querySelectorAll('.popt').forEach(b=>b.classList.remove('active'));btn.classList.add('active');updMPitch(prenom);}
-function updMPitch(p){const txt=(PITCHES[cPitch]||'').replace(/\[PRENOM\]/g,p);document.getElementById('m-ptxt').textContent=txt;document.getElementById('m-plbl').textContent='🎤 '+LABELS[cPitch];}
-function closeModal(){document.getElementById('modal').classList.remove('open');renderTable(cSeg);}
-function closeOut(e){if(e.target===document.getElementById('modal'))closeModal();}
-function setSt(s,btn){const st=lst(cKey);st.st=s;sst(cKey,st);document.querySelectorAll('.sopt').forEach(b=>b.classList.remove('active'));btn.classList.add('active');toast('Statut : '+stl(s));}
-function saveNote(){const st=lst(cKey);st.n=document.getElementById('m-notes').value;sst(cKey,st);toast('Notes sauvegardées ✓');}
-function copyModal(){navigator.clipboard.writeText(document.getElementById('m-ptxt').textContent).then(()=>toast('Script copié ✓'));}
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
-Object.keys(DATA).forEach(seg=>renderTable(seg));
+
+function selP(pid,prenom,btn){
+  cp=pid;
+  document.querySelectorAll('.po').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  updMP(prenom);
+}
+
+function updMP(p){
+  var txt=(P[cp]||'').replace(/\[PRENOM\]/g,p);
+  document.getElementById('m-pt').textContent=txt;
+  document.getElementById('m-pl').textContent='🎤 '+L[cp];
+}
+
+function cm(){document.getElementById('modal').classList.remove('open');renderTable(cs);}
+function clo(e){if(e.target===document.getElementById('modal'))cm();}
+
+function stS(s,btn){
+  var st=lst(ck);st.st=s;sst(ck,st);
+  document.querySelectorAll('.sop').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  toast('Statut : '+stl(s));
+}
+
+function svN(){
+  var st=lst(ck);st.n=document.getElementById('m-no').value;sst(ck,st);toast('Notes sauvegardées ✓');
+}
+
+function cpM(){
+  navigator.clipboard.writeText(document.getElementById('m-pt').textContent).then(function(){toast('Script copié ✓');});
+}
+
+function toast(msg){
+  var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},2200);
+}
+
+['s1','s2','s3'].forEach(function(seg){renderTable(seg);});
 init();
 </script>
 </body></html>
