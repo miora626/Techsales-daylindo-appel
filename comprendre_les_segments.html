@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Comprendre les 3 segments — Daylindo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0f1923;--ink2:#1e2f40;
+  --s1:#f06423;--s1l:#fff3ed;--s1m:#ffd4b8;
+  --s2:#1d5fa8;--s2l:#edf4ff;--s2m:#b8d4f8;
+  --s3:#6b35c9;--s3l:#f3eeff;--s3m:#d4b8f8;
+  --cream:#faf8f5;--white:#ffffff;
+  --muted:#6b7a8d;--border:#e4e8ee;
+  --sh:0 2px 20px rgba(15,25,35,.08);
+  --sh2:0 8px 40px rgba(15,25,35,.14);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;line-height:1.6}
+
+/* ── HERO ── */
+.hero{
+  background:var(--ink);color:#fff;
+  padding:64px 40px 56px;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 80% at 0% 100%,rgba(30,47,64,.9) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 60% at 100% 0%,rgba(240,100,35,.18) 0%,transparent 55%),
+    radial-gradient(ellipse 40% 50% at 50% 50%,rgba(107,53,201,.08) 0%,transparent 60%);
+  pointer-events:none;
+}
+.hero-inner{position:relative;max-width:900px;margin:0 auto}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+  border-radius:4px;padding:5px 13px;
+  font-family:'Syne',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);
+  margin-bottom:22px;
+}
+.hero h1{
+  font-family:'Syne',sans-serif;font-size:clamp(36px,6vw,60px);
+  font-weight:800;line-height:1.05;letter-spacing:-.02em;
+  margin-bottom:18px;
+}
+.hero h1 em{font-style:normal;color:var(--s1)}
+.hero-sub{font-size:17px;color:rgba(255,255,255,.6);max-width:560px;line-height:1.65;margin-bottom:32px}
+.seg-pills{display:flex;gap:10px;flex-wrap:wrap}
+.seg-pill{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 16px;border-radius:8px;
+  font-family:'Syne',sans-serif;font-size:13px;font-weight:700;
+}
+.sp1{background:rgba(240,100,35,.2);color:#ffb080;border:1px solid rgba(240,100,35,.3)}
+.sp2{background:rgba(29,95,168,.25);color:#80c4ff;border:1px solid rgba(29,95,168,.35)}
+.sp3{background:rgba(107,53,201,.2);color:#c4a0ff;border:1px solid rgba(107,53,201,.3)}
+
+/* ── NAV ANCHOR ── */
+.nav-bar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(250,248,245,.95);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:0 40px;
+}
+.nav-inner{max-width:900px;margin:0 auto;display:flex;gap:0}
+.nav-link{
+  padding:14px 20px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;
+  color:var(--muted);text-decoration:none;border-bottom:2px solid transparent;
+  transition:all .2s;cursor:pointer;
+}
+.nav-link:hover{color:var(--ink)}
+.nav-link.nl1:hover,.nav-link.nl1.active{color:var(--s1);border-color:var(--s1)}
+.nav-link.nl2:hover,.nav-link.nl2.active{color:var(--s2);border-color:var(--s2)}
+.nav-link.nl3:hover,.nav-link.nl3.active{color:var(--s3);border-color:var(--s3)}
+
+/* ── MAIN ── */
+main{max-width:900px;margin:0 auto;padding:48px 40px 80px}
+
+/* ── INTRO ── */
+.intro-box{
+  background:var(--white);border-radius:16px;
+  box-shadow:var(--sh);padding:32px 36px;
+  border-left:4px solid var(--s1);margin-bottom:48px;
+}
+.intro-box h2{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:12px}
+.intro-box p{font-size:15px;line-height:1.7;color:#3a4a5a;margin-bottom:10px}
+.intro-box p:last-child{margin-bottom:0}
+
+/* ── DIFF TABLE ── */
+.diff-table{width:100%;border-collapse:collapse;margin-bottom:48px;background:var(--white);border-radius:16px;box-shadow:var(--sh);overflow:hidden}
+.diff-table thead tr{background:var(--ink)}
+.diff-table th{padding:14px 18px;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;text-align:left;color:rgba(255,255,255,.6)}
+.diff-table th:first-child{color:#fff;font-size:13px}
+.diff-table tbody tr{border-bottom:1px solid var(--border)}
+.diff-table tbody tr:last-child{border:none}
+.diff-table tbody tr:hover{background:#f8fafc}
+.diff-table td{padding:14px 18px;font-size:14px;line-height:1.5;vertical-align:top}
+.diff-table td:first-child{font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:var(--muted);white-space:nowrap}
+.s1-cell{color:var(--s1);font-weight:600}
+.s2-cell{color:var(--s2);font-weight:600}
+.s3-cell{color:var(--s3);font-weight:600}
+
+/* ── SEGMENT SECTION ── */
+.seg-section{margin-bottom:56px;scroll-margin-top:60px}
+.seg-header{
+  display:flex;align-items:flex-start;gap:20px;
+  padding:28px 32px;border-radius:16px 16px 0 0;
+  position:relative;overflow:hidden;
+}
+.sh1{background:var(--s1)}
+.sh2{background:var(--s2)}
+.sh3{background:var(--s3)}
+.seg-header::before{
+  content:'';position:absolute;right:-40px;top:-40px;
+  width:200px;height:200px;border-radius:50%;
+  background:rgba(255,255,255,.06);pointer-events:none;
+}
+.seg-num{
+  font-family:'Syne',sans-serif;font-size:56px;font-weight:800;
+  line-height:1;color:rgba(255,255,255,.15);flex-shrink:0;
+}
+.seg-hinfo{flex:1;position:relative}
+.seg-hinfo h2{
+  font-family:'Syne',sans-serif;font-size:24px;font-weight:800;
+  color:#fff;margin-bottom:6px;
+}
+.seg-hinfo p{font-size:14.5px;color:rgba(255,255,255,.75);line-height:1.55;max-width:500px}
+.seg-tag{
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(255,255,255,.15);border-radius:5px;
+  padding:3px 10px;font-family:'Syne',sans-serif;
+  font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(255,255,255,.8);margin-bottom:10px;
+}
+
+.seg-body{
+  background:var(--white);border-radius:0 0 16px 16px;
+  box-shadow:var(--sh2);overflow:hidden;
+}
+
+.seg-grid{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border)}
+@media(max-width:640px){.seg-grid{grid-template-columns:1fr}}
+
+.seg-col{padding:24px 28px;border-right:1px solid var(--border)}
+.seg-col:last-child{border:none}
+.col-title{
+  font-family:'Syne',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  margin-bottom:14px;
+}
+.item{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;font-size:14px;line-height:1.5}
+.item:last-child{margin-bottom:0}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:6px}
+.d1{background:var(--s1)}.d2{background:var(--s2)}.d3{background:var(--s3)}
+.dko{background:var(--muted)}
+
+/* SCENARIOS */
+.scenarios{padding:24px 28px;border-bottom:1px solid var(--border)}
+.sc-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.scenario{
+  background:var(--cream);border-radius:10px;padding:16px 18px;
+  margin-bottom:10px;border-left:3px solid;
+  font-size:14px;line-height:1.6;font-style:italic;color:#2a3a4a;
+  position:relative;
+}
+.scenario:last-child{margin-bottom:0}
+.sc1{border-color:var(--s1)}.sc2{border-color:var(--s2)}.sc3{border-color:var(--s3)}
+.sc-who{
+  display:inline-flex;align-items:center;gap:5px;
+  font-style:normal;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+  margin-bottom:7px;
+}
+
+/* COMMENT RECONNAITRE */
+.reconn{padding:24px 28px;border-bottom:1px solid var(--border);background:#fafbfc}
+.reconn-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:640px){.reconn-grid{grid-template-columns:1fr}}
+.reconn-item{
+  display:flex;align-items:flex-start;gap:10px;
+  background:var(--white);border-radius:8px;padding:12px 14px;
+  font-size:13.5px;line-height:1.5;border:1px solid var(--border);
+}
+.ri-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+
+/* ERREUR COURANTE */
+.erreur{padding:20px 28px;background:#fef6f3;border-bottom:1px solid var(--border)}
+.erreur-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--s1);margin-bottom:8px}
+.erreur-content{font-size:14px;line-height:1.6;color:#5a2a10}
+
+/* PITCH PREVIEW */
+.pitch-prev{padding:22px 28px;background:var(--ink);border-radius:0 0 16px 16px;position:relative;overflow:hidden}
+.pitch-prev::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 100% at 100% 0%,rgba(240,100,35,.15) 0%,transparent 60%);pointer-events:none}
+.pitch-prev-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:10px;position:relative}
+.pitch-prev-text{font-size:13.5px;line-height:1.75;color:rgba(255,255,255,.8);font-style:italic;position:relative}
+.pitch-prev-text strong{font-style:normal;color:#fff}
+
+/* COMPARAISON RAPIDE */
+.compare-section{margin-bottom:56px}
+.compare-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.compare-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:680px){.compare-cards{grid-template-columns:1fr}}
+.cc{background:var(--white);border-radius:14px;box-shadow:var(--sh);overflow:hidden}
+.cc-top{padding:16px 18px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#fff}
+.cc1-t{background:var(--s1)}.cc2-t{background:var(--s2)}.cc3-t{background:var(--s3)}
+.cc-body{padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.kw-row{display:flex;flex-wrap:wrap;gap:6px}
+.kw{
+  padding:3px 9px;border-radius:5px;
+  font-family:'Syne',sans-serif;font-size:12px;font-weight:700;
+}
+.kw1{background:var(--s1l);color:var(--s1)}
+.kw2{background:var(--s2l);color:var(--s2)}
+.kw3{background:var(--s3l);color:var(--s3)}
+.cc-label{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.cc-val{font-size:13.5px;font-weight:500;line-height:1.4}
+
+/* QUIZ RAPIDE */
+.quiz-section{background:var(--white);border-radius:16px;box-shadow:var(--sh);overflow:hidden;margin-bottom:56px}
+.quiz-header{background:var(--ink);padding:22px 28px}
+.quiz-header h2{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;margin-bottom:4px}
+.quiz-header p{font-size:14px;color:rgba(255,255,255,.55)}
+.quiz-body{padding:24px 28px}
+.qz{margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--border)}
+.qz:last-child{margin-bottom:0;padding-bottom:0;border:none}
+.qz-q{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px}
+.qn{
+  width:24px;height:24px;border-radius:6px;background:var(--ink);
+  display:grid;place-items:center;font-size:12px;font-weight:900;color:#fff;
+  flex-shrink:0;font-family:'Syne',sans-serif;margin-top:1px;
+}
+.qz-opts{display:flex;flex-direction:column;gap:7px;margin-left:34px}
+.qz-opt{
+  display:flex;align-items:center;gap:10px;padding:10px 14px;
+  border-radius:9px;border:2px solid var(--border);background:var(--cream);
+  cursor:pointer;transition:all .18s;font-size:14px;
+}
+.qz-opt:hover{border-color:#aab;background:#f0f2f8}
+.qz-opt.selected{border-color:var(--s2);background:var(--s2l)}
+.qz-opt.correct{border-color:var(--s1);background:var(--s1l);color:#7a2800}
+.qz-opt.wrong{border-color:#d94040;background:rgba(217,64,64,.06);color:#a02828}
+.qz-opt input[type=radio]{display:none}
+.qz-feedback{margin-left:34px;margin-top:8px;padding:10px 14px;border-radius:8px;font-size:13px;display:none;line-height:1.5}
+.qz-feedback.ok{background:rgba(240,100,35,.08);color:#7a2800;display:block}
+.qz-feedback.ko{background:rgba(217,64,64,.08);color:#a02828;display:block}
+.quiz-check-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:14px;background:var(--s1);color:#fff;border:none;
+  border-radius:10px;font-family:'Syne',sans-serif;font-size:16px;font-weight:800;
+  cursor:pointer;transition:all .2s;letter-spacing:.02em;margin-top:8px;
+}
+.quiz-check-btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+
+/* CTA FOOTER */
+.cta-bar{
+  background:var(--ink);border-radius:16px;padding:32px 36px;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  margin-bottom:20px;
+}
+.cta-text h3{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;margin-bottom:4px}
+.cta-text p{font-size:14px;color:rgba(255,255,255,.55)}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:8px;padding:12px 24px;
+  background:var(--s1);color:#fff;border-radius:10px;text-decoration:none;
+  font-family:'Syne',sans-serif;font-size:15px;font-weight:700;
+  transition:all .2s;white-space:nowrap;
+}
+.cta-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+
+footer{text-align:center;padding:16px;font-size:12px;color:var(--muted)}
+@media(max-width:600px){main{padding:32px 16px 60px}.nav-bar{padding:0 16px}.hero{padding:40px 16px 36px}.seg-col{padding:18px 16px}.seg-header{padding:20px 18px}}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.seg-section{animation:fadeUp .5s ease both}
+.seg-section:nth-child(1){animation-delay:.05s}
+.seg-section:nth-child(2){animation-delay:.10s}
+.seg-section:nth-child(3){animation-delay:.15s}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Formation BDR — Daylindo</div>
+    <h1>Comprendre les <em>3 segments</em><br>pour ne plus confondre</h1>
+    <p class="hero-sub">Un guide complet pour identifier immédiatement dans quel segment tu te trouves, qui est en face de toi, et comment adapter ton discours en 10 secondes.</p>
+    <div class="seg-pills">
+      <div class="seg-pill sp1">💰 S1 — Optimisateurs financeurs</div>
+      <div class="seg-pill sp2">🔧 S2 — Gestes métiers</div>
+      <div class="seg-pill sp3">🏦 S3 — Réseaux multi-sites</div>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-bar">
+  <div class="nav-inner">
+    <a class="nav-link" onclick="scrollTo('intro')">Vue d'ensemble</a>
+    <a class="nav-link nl1" onclick="scrollTo('s1')">Segment 1</a>
+    <a class="nav-link nl2" onclick="scrollTo('s2')">Segment 2</a>
+    <a class="nav-link nl3" onclick="scrollTo('s3')">Segment 3</a>
+    <a class="nav-link" onclick="scrollTo('compare')">Comparaison</a>
+    <a class="nav-link" onclick="scrollTo('quiz')">Quiz</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- INTRO -->
+<div id="intro" style="scroll-margin-top:60px">
+<div class="intro-box">
+  <h2>Pourquoi les segments existent ?</h2>
+  <p>Chez Daylindo, tous les clients ne souffrent pas du même problème. Un responsable RH dans une boîte de logistique, un directeur industriel chez Airbus, et un directeur réseau chez AXA n'ont <strong>rien en commun</strong> dans leurs enjeux du quotidien. Si tu leur tiens le même discours, tu perds les trois.</p>
+  <p>Les 3 segments sont là pour que tu saches <strong>immédiatement</strong> quel angle prendre dès les premières secondes d'un appel. C'est la différence entre quelqu'un qui récite un pitch… et quelqu'un qui parle directement au problème que la personne vit en ce moment.</p>
+  <p><strong>La règle d'or :</strong> le segment se reconnaît au secteur de l'entreprise et au problème que la personne exprime. Le persona (RH, Opérationnel, L&D) vient ensuite adapter le vocabulaire.</p>
+</div>
+</div>
+
+<!-- TABLEAU COMPARATIF RAPIDE -->
+<div style="overflow-x:auto;margin-bottom:48px">
+<table class="diff-table">
+  <thead>
+    <tr>
+      <th>Critère</th>
+      <th style="color:#ffb080">💰 Segment 1</th>
+      <th style="color:#80c4ff">🔧 Segment 2</th>
+      <th style="color:#c4a0ff">🏦 Segment 3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Secteurs typiques</td>
+      <td class="s1-cell">Logistique, BTP, Retail, Saisonniers, La Poste</td>
+      <td class="s2-cell">Industrie, Énergie, Aéro, Télécom, Nucléaire</td>
+      <td class="s3-cell">Agences, Franchise, Bancaire, Assurance, Multi-sites</td>
+    </tr>
+    <tr>
+      <td>Problème central</td>
+      <td>Coût de l'intégration qui se répète à chaque cycle</td>
+      <td>Savoir-faire critiques perdus ou non traçables</td>
+      <td>Pratiques hétérogènes entre les sites / agences</td>
+    </tr>
+    <tr>
+      <td>Ce qu'ils cherchent</td>
+      <td>Rentabilité + récupérer les OPCO</td>
+      <td>Sécuriser les compétences + conformité</td>
+      <td>Visibilité centrale + standardisation</td>
+    </tr>
+    <tr>
+      <td>Personas prioritaires</td>
+      <td>DRH, Dir. exploitation, Dir. commercial</td>
+      <td>DRH, Dir. production, Resp. Formation, HSE</td>
+      <td>DRH groupe, Dir. Formation, Dir. Réseau</td>
+    </tr>
+    <tr>
+      <td>Argument choc</td>
+      <td>1 000€–2 500€ récupérés / collaborateur</td>
+      <td>380 000€ de pertes évités chez un industriel</td>
+      <td>Visibilité temps réel sur tout le réseau</td>
+    </tr>
+    <tr>
+      <td>Référence client</td>
+      <td>Supplay, Adéquat, FM Logistic</td>
+      <td>Orange, EDF, Airbus, Safran, Dekra</td>
+      <td>Supplay, Adéquat, réseaux bancaires</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<!-- SEGMENT 1 -->
+<div class="seg-section" id="s1">
+  <div class="seg-header sh1">
+    <div class="seg-num">S1</div>
+    <div class="seg-hinfo">
+      <div class="seg-tag">💰 Segment 1</div>
+      <h2>Optimisateurs financeurs</h2>
+      <p>Des entreprises qui intègrent des collaborateurs en masse, de façon répétée, et qui laissent de l'argent sur la table parce qu'elles ne valorisent pas leurs financements OPCO.</p>
+    </div>
+  </div>
+  <div class="seg-body">
+    <div class="seg-grid">
+      <div class="seg-col">
+        <div class="col-title">Pourquoi ce segment existe</div>
+        <div class="item"><span class="dot d1"></span><span>Ces entreprises ont un flux continu de nouveaux collaborateurs. Chaque nouvelle vague, c'est le même cycle : recruter, intégrer, former, voir partir — puis recommencer.</span></div>
+        <div class="item"><span class="dot d1"></span><span>Le coût réel de l'intégration est énorme mais souvent invisible. On ne voit pas directement la perte — elle est diffuse : managers mobilisés, erreurs, productivité réduite les premières semaines.</span></div>
+        <div class="item"><span class="dot d1"></span><span>La plupart ne savent pas qu'elles peuvent récupérer une partie de ce coût via les OPCO. C'est littéralement de l'argent disponible qu'elles ne réclament pas.</span></div>
+      </div>
+      <div class="seg-col">
+        <div class="col-title">Ce que Daylindo change concrètement</div>
+        <div class="item"><span class="dot d1"></span><span><strong>Structure les parcours d'intégration</strong> au poste de travail — plus d'improvisation, chaque nouveau suit le même chemin efficace.</span></div>
+        <div class="item"><span class="dot d1"></span><span><strong>Monte les dossiers OPCO/AFEST</strong> — Daylindo prépare les preuves et suit les dossiers pour récupérer 1 000€ à 2 500€ par collaborateur formé.</span></div>
+        <div class="item"><span class="dot d1"></span><span><strong>Réduit le temps d'intégration de 40%</strong> — les nouvelles recrues sont opérationnelles bien plus tôt, ce qui réduit directement les coûts.</span></div>
+      </div>
+    </div>
+
+    <div class="scenarios">
+      <div class="sc-title">🎧 Comment ça sonne au téléphone — phrases typiques S1</div>
+      <div class="scenario sc1">
+        <div class="sc-who" style="color:var(--s1)">👥 DRH / Resp. RH</div>
+        « On recrute beaucoup mais les nouveaux ne restent pas — après quelques semaines ils partent et on doit recommencer. »
+      </div>
+      <div class="scenario sc1">
+        <div class="sc-who" style="color:var(--s1)">⚙️ Directeur d'exploitation</div>
+        « J'ai besoin que les nouvelles recrues soient opérationnelles rapidement, là elles mettent 3 semaines avant de tenir leur poste. »
+      </div>
+      <div class="scenario sc1">
+        <div class="sc-who" style="color:var(--s1)">👥 Resp. Formation</div>
+        « On fait des formations en interne mais je n'arrive jamais à monter les dossiers pour récupérer les aides — ça nous coûte une fortune. »
+      </div>
+    </div>
+
+    <div class="reconn">
+      <div class="sc-title">🔍 Comment reconnaître le Segment 1 en 10 secondes</div>
+      <div class="reconn-grid">
+        <div class="reconn-item"><span class="ri-icon">🏭</span><span>Secteur logistique, BTP, retail, saisonnier, call center</span></div>
+        <div class="reconn-item"><span class="ri-icon">🔄</span><span>Volume élevé de recrutements récurrents ou saisonniers</span></div>
+        <div class="reconn-item"><span class="ri-icon">💸</span><span>Parle de coûts, de rentabilité, de "ça revient cher"</span></div>
+        <div class="reconn-item"><span class="ri-icon">📊</span><span>Ne mentionne jamais les OPCO spontanément</span></div>
+        <div class="reconn-item"><span class="ri-icon">⚡</span><span>Veut que les gens soient "opérationnels rapidement"</span></div>
+        <div class="reconn-item"><span class="ri-icon">🔁</span><span>Décrit un problème cyclique — "à chaque saison", "à chaque vague"</span></div>
+      </div>
+    </div>
+
+    <div class="erreur">
+      <div class="erreur-title">⚠️ Erreur classique sur ce segment</div>
+      <div class="erreur-content"><strong>Parler de "méthode pédagogique" ou de "savoir-faire"</strong> — ce n'est pas leur vocabulaire. Eux pensent en euros et en délais. Toujours partir du coût et du temps, jamais de la pédagogie. Le financement OPCO est l'argument N°1 sur ce segment.</div>
+    </div>
+
+    <div class="pitch-prev">
+      <div class="pitch-prev-title">🎤 Angle d'accroche S1b (le plus fréquent)</div>
+      <div class="pitch-prev-text">« Je vous appelle parce que je pense que vous êtes confronté à une double contrainte : <strong>former vite des collaborateurs qui arrivent en masse, et maîtriser le coût de cette intégration qui se répète à chaque cycle.</strong> On optimise le parcours directement au poste de travail et on fait financer ça par les OPCO. Vous avez ce sujet chez vous ? »</div>
+    </div>
+  </div>
+</div>
+
+<!-- SEGMENT 2 -->
+<div class="seg-section" id="s2">
+  <div class="seg-header sh2">
+    <div class="seg-num">S2</div>
+    <div class="seg-hinfo">
+      <div class="seg-tag">🔧 Segment 2</div>
+      <h2>Gestes métiers &amp; savoir-faire critiques</h2>
+      <p>Des entreprises dont la valeur repose sur des compétences techniques précises — et qui risquent de tout perdre le jour où leurs experts partent.</p>
+    </div>
+  </div>
+  <div class="seg-body">
+    <div class="seg-grid">
+      <div class="seg-col">
+        <div class="col-title">Pourquoi ce segment existe</div>
+        <div class="item"><span class="dot d2"></span><span>Ces entreprises ont des métiers où <strong>l'erreur coûte très cher</strong> : rebuts, lignes fermées, accidents, non-conformités réglementaires, pénalités.</span></div>
+        <div class="item"><span class="dot d2"></span><span>Le savoir-faire est souvent <strong>dans la tête des anciens</strong> — transmis informellement, jamais documenté. Le jour où l'expert part, la connaissance disparaît avec lui.</span></div>
+        <div class="item"><span class="dot d2"></span><span>Dans les secteurs réglementés (énergie, aéro, nucléaire), ils doivent <strong>prouver que leurs opérateurs sont formés</strong> lors d'audits — et ils ne peuvent pas.</span></div>
+      </div>
+      <div class="seg-col">
+        <div class="col-title">Ce que Daylindo change concrètement</div>
+        <div class="item"><span class="dot d2"></span><span><strong>Capture les gestes métiers</strong> des experts directement au poste de travail, avant qu'ils partent.</span></div>
+        <div class="item"><span class="dot d2"></span><span><strong>Traçabilité complète</strong> — chaque opérateur a un niveau de maîtrise prouvé, opposable lors d'un audit.</span></div>
+        <div class="item"><span class="dot d2"></span><span><strong>Résultat mesuré</strong> chez un industriel : 380 000€ de pertes annuelles évitées (lignes fermées + rebuts liés au manque de traçabilité).</span></div>
+      </div>
+    </div>
+
+    <div class="scenarios">
+      <div class="sc-title">🎧 Comment ça sonne au téléphone — phrases typiques S2</div>
+      <div class="scenario sc2">
+        <div class="sc-who" style="color:var(--s2)">⚙️ Directeur de production</div>
+        « Dans 3 ans, 60% de mes opérateurs seniors partent à la retraite. Leurs gestes, personne ne sait vraiment les expliquer — c'est dans leur tête depuis 20 ans. »
+      </div>
+      <div class="scenario sc2">
+        <div class="sc-who" style="color:var(--s2)">⚙️ Responsable HSE</div>
+        « On a eu un audit la semaine dernière et on n'a pas pu prouver que certains opérateurs avaient leurs habilitations à jour. Le directeur est furieux. »
+      </div>
+      <div class="scenario sc2">
+        <div class="sc-who" style="color:var(--s2)">📊 Directeur Formation</div>
+        « On fait beaucoup de tutorat sur le terrain mais je ne peux pas mesurer ce qui est vraiment appris. Je n'ai aucune visibilité sur les compétences réelles. »
+      </div>
+    </div>
+
+    <div class="reconn">
+      <div class="sc-title">🔍 Comment reconnaître le Segment 2 en 10 secondes</div>
+      <div class="reconn-grid">
+        <div class="reconn-item"><span class="ri-icon">🏗️</span><span>Secteur industrie, énergie, aéro, télécom, nucléaire, services techniques</span></div>
+        <div class="reconn-item"><span class="ri-icon">👴</span><span>Mentionne des départs seniors, des retraites à venir</span></div>
+        <div class="reconn-item"><span class="ri-icon">📋</span><span>Parle d'audits, d'habilitations, de conformité réglementaire</span></div>
+        <div class="reconn-item"><span class="ri-icon">🔧</span><span>Emplois techniques : conducteur de ligne, technicien, opérateur spécialisé</span></div>
+        <div class="reconn-item"><span class="ri-icon">⚠️</span><span>Évoque des erreurs coûteuses, des rebuts, des lignes à l'arrêt</span></div>
+        <div class="reconn-item"><span class="ri-icon">👁️</span><span>Dit "je n'ai aucune visibilité" sur ce qui se passe sur le terrain</span></div>
+      </div>
+    </div>
+
+    <div class="erreur">
+      <div class="erreur-title">⚠️ Erreur classique sur ce segment</div>
+      <div class="erreur-content"><strong>Attaquer avec le financement OPCO</strong> — ici ce n'est pas le sujet principal. Ce qui les préoccupe c'est la sécurité, la conformité et la pérennité des compétences. Le financement peut être mentionné en bonus, jamais comme argument central. La référence Orange et le chiffre des 380 000€ sont bien plus puissants.</div>
+    </div>
+
+    <div class="pitch-prev">
+      <div class="pitch-prev-title">🎤 Angle d'accroche S2d (Transmission des savoirs — le plus fréquent)</div>
+      <div class="pitch-prev-text">« Je vous appelle parce que dans les 5 prochaines années, près de 60% de vos collaborateurs les plus expérimentés vont partir à la retraite — et avec eux, des années de savoir-faire qui ne sont nulle part documentés. <strong>Vous avez ce risque identifié chez vous ?</strong> C'est exactement ce qu'on a traité avec Orange — capturer les gestes des experts avant qu'ils partent. »</div>
+    </div>
+  </div>
+</div>
+
+<!-- SEGMENT 3 -->
+<div class="seg-section" id="s3">
+  <div class="seg-header sh3">
+    <div class="seg-num">S3</div>
+    <div class="seg-hinfo">
+      <div class="seg-tag">🏦 Segment 3</div>
+      <h2>Réseaux multi-sites</h2>
+      <p>Des organisations avec des dizaines ou centaines de sites / agences où les pratiques varient d'un endroit à l'autre et où personne au central n'a de visibilité réelle.</p>
+    </div>
+  </div>
+  <div class="seg-body">
+    <div class="seg-grid">
+      <div class="seg-col">
+        <div class="col-title">Pourquoi ce segment existe</div>
+        <div class="item"><span class="dot d3"></span><span>Ces organisations ont un problème structurel : <strong>elles ne peuvent pas envoyer un formateur dans chaque agence</strong>. Les meilleures agences performent, les autres se débrouillent.</span></div>
+        <div class="item"><span class="dot d3"></span><span>Il n'y a <strong>aucune visibilité centrale</strong> sur ce qui est vraiment maîtrisé où. Le siège pilote à l'aveugle.</span></div>
+        <div class="item"><span class="dot d3"></span><span>L'onboarding des permanents d'agence est non-standardisé : chaque manager fait à sa façon, avec des résultats très variables.</span></div>
+      </div>
+      <div class="seg-col">
+        <div class="col-title">Ce que Daylindo change concrètement</div>
+        <div class="item"><span class="dot d3"></span><span><strong>Tableau de bord central</strong> — le siège voit en temps réel les niveaux de maîtrise par agence, identifie les sites en retard.</span></div>
+        <div class="item"><span class="dot d3"></span><span><strong>Référentiel commun</strong> déployé sur tout le réseau — mêmes parcours, même standard partout.</span></div>
+        <div class="item"><span class="dot d3"></span><span><strong>2 500€ par permanent formé</strong> récupérables via OPCO — le coût de la démarche est largement amorti.</span></div>
+      </div>
+    </div>
+
+    <div class="scenarios">
+      <div class="sc-title">🎧 Comment ça sonne au téléphone — phrases typiques S3</div>
+      <div class="scenario sc3">
+        <div class="sc-who" style="color:var(--s3)">📊 Directeur Formation / L&D</div>
+        « On a un parcours d'intégration commun mais je n'ai aucun moyen de savoir s'il est vraiment appliqué dans chaque agence. Certains le font bien, d'autres pas du tout. »
+      </div>
+      <div class="scenario sc3">
+        <div class="sc-who" style="color:var(--s3)">⚙️ Directeur Réseau</div>
+        « Mes meilleures agences performent très bien. Mes moins bonnes… je ne sais même pas pourquoi. Il doit y avoir une question de formation mais je n'ai aucun outil pour le mesurer. »
+      </div>
+      <div class="scenario sc3">
+        <div class="sc-who" style="color:var(--s3)">👥 DRH groupe</div>
+        « On a 80 agences, des centaines de permanents. L'onboarding est fait à la main par chaque responsable. C'est ingérable et on perd de l'argent à ne pas valoriser nos formations. »
+      </div>
+    </div>
+
+    <div class="reconn">
+      <div class="sc-title">🔍 Comment reconnaître le Segment 3 en 10 secondes</div>
+      <div class="reconn-grid">
+        <div class="reconn-item"><span class="ri-icon">🏦</span><span>Secteur bancaire, assurance, franchise, réseau de boutiques, multi-sites</span></div>
+        <div class="reconn-item"><span class="ri-icon">🗺️</span><span>Mentionne des "agences", des "sites", du "réseau"</span></div>
+        <div class="reconn-item"><span class="ri-icon">📊</span><span>Parle de "visibilité", de "pilotage", d'"homogénéité des pratiques"</span></div>
+        <div class="reconn-item"><span class="ri-icon">🔗</span><span>Problème de standardisation entre les sites</span></div>
+        <div class="reconn-item"><span class="ri-icon">🏢</span><span>Siège qui pilote plusieurs unités décentralisées</span></div>
+        <div class="reconn-item"><span class="ri-icon">📉</span><span>Écart de performance inexpliqué entre les agences</span></div>
+      </div>
+    </div>
+
+    <div class="erreur">
+      <div class="erreur-title">⚠️ Erreur classique sur ce segment</div>
+      <div class="erreur-content"><strong>Parler uniquement de gestes métiers techniques</strong> — ici le problème n'est pas la complexité du métier mais l'<em>hétérogénéité</em> entre les sites. L'argument central est la visibilité centrale et la standardisation. Le financement OPCO reste un plus, mais l'angle principal est "je vois tout, je pilote tout".</div>
+    </div>
+
+    <div class="pitch-prev">
+      <div class="pitch-prev-title">🎤 Angle d'accroche S3b (le plus fréquent)</div>
+      <div class="pitch-prev-text">« Je vous appelle parce que dans les réseaux comme le vôtre, on observe souvent le même écart : les meilleures agences performent très bien, et les autres peinent à atteindre le même niveau — non pas par manque de volonté, mais parce que les pratiques et les compétences ne sont pas homogènes. <strong>C'est un sujet que vous reconnaissez ?</strong> »</div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPARAISON RAPIDE -->
+<div class="compare-section" id="compare">
+  <div class="compare-title">⚡ La différence en un coup d'œil</div>
+  <div class="compare-cards">
+    <div class="cc">
+      <div class="cc-top cc1-t">💰 S1 — Le financeur</div>
+      <div class="cc-body">
+        <div><div class="cc-label">Question clé qu'il se pose</div><div class="cc-val">« Comment je réduis le coût de mon intégration ? »</div></div>
+        <div><div class="cc-label">Mots-clés à utiliser</div><div class="kw-row"><span class="kw kw1">OPCO</span><span class="kw kw1">Coût</span><span class="kw kw1">ROI</span><span class="kw kw1">Rapidité</span><span class="kw kw1">Financement</span></div></div>
+        <div><div class="cc-label">À ne jamais dire</div><div class="cc-val" style="color:#c04010">"Méthode pédagogique" ou "transmission des savoirs" → trop abstract pour lui</div></div>
+        <div><div class="cc-label">Chiffre qui frappe</div><div class="cc-val"><strong>1 000€–2 500€</strong> récupérés / collaborateur</div></div>
+      </div>
+    </div>
+    <div class="cc">
+      <div class="cc-top cc2-t">🔧 S2 — Le sécurisateur</div>
+      <div class="cc-body">
+        <div><div class="cc-label">Question clé qu'il se pose</div><div class="cc-val">« Comment je protège les compétences critiques de mon entreprise ? »</div></div>
+        <div><div class="cc-label">Mots-clés à utiliser</div><div class="kw-row"><span class="kw kw2">Traçabilité</span><span class="kw kw2">Conformité</span><span class="kw kw2">Savoir-faire</span><span class="kw kw2">Audit</span></div></div>
+        <div><div class="cc-label">À ne jamais dire</div><div class="cc-val" style="color:#1a4a90">"On finance votre formation" comme argument principal → le OPCO est en bonus ici</div></div>
+        <div><div class="cc-label">Chiffre qui frappe</div><div class="cc-val"><strong>380 000€</strong> de pertes évitées chez un industriel</div></div>
+      </div>
+    </div>
+    <div class="cc">
+      <div class="cc-top cc3-t">🏦 S3 — Le pilote réseau</div>
+      <div class="cc-body">
+        <div><div class="cc-label">Question clé qu'il se pose</div><div class="cc-val">« Comment j'harmonise les pratiques et je vois ce qui se passe dans chaque site ? »</div></div>
+        <div><div class="cc-label">Mots-clés à utiliser</div><div class="kw-row"><span class="kw kw3">Visibilité</span><span class="kw kw3">Pilotage</span><span class="kw kw3">Homogénéité</span><span class="kw kw3">Réseau</span></div></div>
+        <div><div class="cc-label">À ne jamais dire</div><div class="cc-val" style="color:#5a1aa0">"Gestes techniques critiques" → son problème est organisationnel, pas technique</div></div>
+        <div><div class="cc-label">Chiffre qui frappe</div><div class="cc-val"><strong>2 500€/pers.</strong> récupérables pour chaque permanent formé</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div class="quiz-section" id="quiz">
+  <div class="quiz-header">
+    <h2>Quiz — Identifie le segment en 10 secondes</h2>
+    <p>Lis la phrase prononcée par le prospect. Dans quel segment es-tu ?</p>
+  </div>
+  <div class="quiz-body">
+
+    <div class="qz">
+      <div class="qz-q"><span class="qn">1</span>« On intègre 200 saisonniers chaque été. C'est un coût énorme et on ne récupère jamais les aides de l'État. »</div>
+      <div class="qz-opts">
+        <label class="qz-opt" data-q="1" data-v="S1"><input type="radio" name="q1" value="S1"/>💰 Segment 1 — Optimisateurs financeurs</label>
+        <label class="qz-opt" data-q="1" data-v="S2"><input type="radio" name="q1" value="S2"/>🔧 Segment 2 — Gestes métiers</label>
+        <label class="qz-opt" data-q="1" data-v="S3"><input type="radio" name="q1" value="S3"/>🏦 Segment 3 — Réseaux multi-sites</label>
+      </div>
+      <div class="qz-feedback" id="fb-1">✅ Segment 1. Saisonniers + coût élevé + aides non réclamées = le cœur du S1. Le financement OPCO est exactement ce qu'il cherche.</div>
+    </div>
+
+    <div class="qz">
+      <div class="qz-q"><span class="qn">2</span>« Mon expert soudeur part à la retraite dans 6 mois. Il est le seul à savoir faire certaines soudures spéciales. Personne n'a appris. »</div>
+      <div class="qz-opts">
+        <label class="qz-opt" data-q="2" data-v="S1"><input type="radio" name="q2" value="S1"/>💰 Segment 1 — Optimisateurs financeurs</label>
+        <label class="qz-opt" data-q="2" data-v="S2"><input type="radio" name="q2" value="S2"/>🔧 Segment 2 — Gestes métiers</label>
+        <label class="qz-opt" data-q="2" data-v="S3"><input type="radio" name="q2" value="S3"/>🏦 Segment 3 — Réseaux multi-sites</label>
+      </div>
+      <div class="qz-feedback" id="fb-2">✅ Segment 2. Départ d'un expert + geste métier unique non transmis = risque de perte de savoir-faire critique. Pitch S2d — transmission des savoirs.</div>
+    </div>
+
+    <div class="qz">
+      <div class="qz-q"><span class="qn">3</span>« J'ai 45 agences en France. Certaines surperforment, d'autres pas. Je ne sais pas vraiment pourquoi ni comment corriger ça. »</div>
+      <div class="qz-opts">
+        <label class="qz-opt" data-q="3" data-v="S1"><input type="radio" name="q3" value="S1"/>💰 Segment 1 — Optimisateurs financeurs</label>
+        <label class="qz-opt" data-q="3" data-v="S2"><input type="radio" name="q3" value="S2"/>🔧 Segment 2 — Gestes métiers</label>
+        <label class="qz-opt" data-q="3" data-v="S3"><input type="radio" name="q3" value="S3"/>🏦 Segment 3 — Réseaux multi-sites</label>
+      </div>
+      <div class="qz-feedback" id="fb-3">✅ Segment 3. 45 agences + écart de performance inexpliqué = problème de pilotage réseau et d'homogénéité des pratiques. Pitch S3b.</div>
+    </div>
+
+    <div class="qz">
+      <div class="qz-q"><span class="qn">4</span>« On a eu un audit IRSN. On ne pouvait pas prouver que nos opérateurs avaient reçu la formation réglementaire requise. »</div>
+      <div class="qz-opts">
+        <label class="qz-opt" data-q="4" data-v="S1"><input type="radio" name="q4" value="S1"/>💰 Segment 1 — Optimisateurs financeurs</label>
+        <label class="qz-opt" data-q="4" data-v="S2"><input type="radio" name="q4" value="S2"/>🔧 Segment 2 — Gestes métiers</label>
+        <label class="qz-opt" data-q="4" data-v="S3"><input type="radio" name="q4" value="S3"/>🏦 Segment 3 — Réseaux multi-sites</label>
+      </div>
+      <div class="qz-feedback" id="fb-4">✅ Segment 2. Audit IRSN (nucléaire) + impossibilité de prouver la formation = conformité réglementaire = Segment 2. Pitch S2c — conformité réglementaire, référence Orange/Dekra.</div>
+    </div>
+
+    <div class="qz">
+      <div class="qz-q"><span class="qn">5</span>« On recrute 300 intérimaires par an pour la logistique. Ça tourne beaucoup. Le coût de les former à chaque fois c'est colossal. »</div>
+      <div class="qz-opts">
+        <label class="qz-opt" data-q="5" data-v="S1"><input type="radio" name="q5" value="S1"/>💰 Segment 1 — Optimisateurs financeurs</label>
+        <label class="qz-opt" data-q="5" data-v="S2"><input type="radio" name="q5" value="S2"/>🔧 Segment 2 — Gestes métiers</label>
+        <label class="qz-opt" data-q="5" data-v="S3"><input type="radio" name="q5" value="S3"/>🏦 Segment 3 — Réseaux multi-sites</label>
+      </div>
+      <div class="qz-feedback" id="fb-5">✅ Segment 1. Intérimaires + logistique + coût élevé de la formation répétée = S1. L'argument : structurer le parcours et récupérer les financements OPCO pour transformer ce coût en investissement.</div>
+    </div>
+
+    <button class="quiz-check-btn" onclick="checkQuiz()">🎯 Vérifier mes réponses</button>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-bar">
+  <div class="cta-text">
+    <h3>Tu maîtrises les segments ?</h3>
+    <p>Passe à l'étape suivante — les pitchs adaptés à chaque segment.</p>
+  </div>
+  <a class="cta-btn" href="https://andrianalymioratiana-dotcom.github.io/Pitch-techsales-daylindo/daylindo_pitchs_cold_call.html" target="_blank">Voir les Pitchs Cold Call →</a>
+</div>
+
+</main>
+
+<footer><strong>Daylindo</strong> — Guide interne Formation BDR · Comprendre les 3 segments</footer>
+
+<script>
+var CORRECT = {1:'S1',2:'S2',3:'S3',4:'S2',5:'S1'};
+
+function checkQuiz(){
+  var score=0; var total=5;
+  for(var q=1;q<=5;q++){
+    var sel=document.querySelector('input[name="q'+q+'"]:checked');
+    var fb=document.getElementById('fb-'+q);
+    var opts=document.querySelectorAll('[data-q="'+q+'"]');
+    opts.forEach(function(o){o.classList.remove('correct','wrong','selected');});
+    if(!sel){
+      fb.className='qz-feedback ko';fb.textContent='⚠ Sélectionne une réponse.';
+      continue;
+    }
+    var chosen=sel.value;
+    opts.forEach(function(o){
+      if(o.dataset.v===CORRECT[q]) o.classList.add('correct');
+      else if(o.dataset.v===chosen&&chosen!==CORRECT[q]) o.classList.add('wrong');
+    });
+    if(chosen===CORRECT[q]){
+      score++;
+      fb.className='qz-feedback ok';
+    } else {
+      fb.className='qz-feedback ko';
+      fb.textContent='✗ Mauvaise réponse. La bonne réponse est '+CORRECT[q]+'. '+fb.textContent;
+    }
+  }
+  document.querySelector('.quiz-check-btn').textContent='Score : '+score+' / '+total+' — Réessayer';
+}
+
+document.querySelectorAll('.qz-opt').forEach(function(opt){
+  opt.addEventListener('click',function(){
+    var q=this.dataset.q;
+    document.querySelectorAll('[data-q="'+q+'"]').forEach(function(o){o.classList.remove('selected');});
+    this.classList.add('selected');
+    this.querySelector('input').checked=true;
+  });
+});
+
+function scrollTo(id){
+  var el=document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+</body></html>
