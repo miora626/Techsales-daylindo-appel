@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche 2 — Le problème que l'on résout</title>
+<style>
+  :root{
+    --bg:#f6f7f7; --surface:#ffffff; --border:#e2e5e4;
+    --ink:#1e2a28; --ink-soft:#5a6663;
+    --accent:#1f6f64; --accent-dark:#16544c; --accent-soft:#e6f0ee;
+    --good:#2e7d53; --good-bg:#eaf6ef; --bad:#b3413b; --bad-bg:#fbeceb;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55;}
+  header{padding:14px 24px;background:var(--ink);color:#fff;font-size:14px;letter-spacing:.02em;}
+  main{max-width:680px;margin:0 auto;padding:32px 20px 80px;}
+  h1{font-family:Georgia,"Times New Roman",serif;font-size:26px;margin:0 0 6px;color:var(--ink);}
+  .lead{color:var(--ink-soft);margin:0 0 14px;font-size:15px;}
+  .meta{font-size:13px;color:var(--accent-dark);font-weight:600;margin-bottom:18px;}
+  .instructions{background:var(--accent-soft);border:1px solid #cfe4e0;border-radius:8px;padding:14px 16px;font-size:14px;margin-bottom:22px;}
+  .name-field{margin-bottom:24px;}
+  .name-field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;}
+  .name-field input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:6px;font-size:15px;font-family:inherit;}
+  .progress-wrap{margin-bottom:30px;}
+  .progress-label{font-size:13px;font-weight:600;margin-bottom:6px;}
+  .progress-bar{height:8px;background:var(--border);border-radius:6px;overflow:hidden;}
+  .progress-fill{height:100%;width:0%;background:var(--accent);transition:width .25s ease;}
+  section{margin-bottom:34px;}
+  section > h2{font-size:16px;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:20px;}
+  .question{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 18px 20px;margin-bottom:16px;}
+  .q-label{font-size:12px;font-weight:700;color:var(--accent-dark);margin-bottom:6px;}
+  .q-prompt{font-size:15px;font-weight:600;margin:0 0 14px;}
+  .q-prompt .quote{font-style:italic;color:var(--ink-soft);}
+  .options{display:flex;flex-direction:column;gap:8px;}
+  .opt-btn{text-align:left;padding:10px 14px;border:1px solid var(--border);border-radius:7px;background:#fff;
+    cursor:pointer;font-size:14px;font-family:inherit;color:var(--ink);}
+  .opt-btn:hover{border-color:var(--accent);}
+  .opt-btn.correct{background:var(--good-bg);border-color:var(--good);color:var(--good);font-weight:600;}
+  .opt-btn.incorrect{background:var(--bad-bg);border-color:var(--bad);color:var(--bad);}
+  .opt-btn:disabled{cursor:default;}
+  .vf-row{display:flex;gap:10px;}
+  .vf-row .opt-btn{flex:1;text-align:center;}
+  .q-hint{font-size:13px;color:var(--ink-soft);margin:10px 0 0;}
+  .sub-sit{margin-top:16px;padding-top:14px;border-top:1px dashed var(--border);}
+  .sub-sit:first-of-type{margin-top:0;padding-top:0;border-top:none;}
+  .sub-label{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:6px;}
+  textarea{width:100%;min-height:80px;padding:12px 14px;border:1px solid var(--border);border-radius:7px;
+    font-family:inherit;font-size:14px;resize:vertical;}
+  .charcount{font-size:12px;color:var(--ink-soft);text-align:right;margin-top:4px;}
+  .score-block{display:flex;align-items:center;justify-content:space-between;background:var(--surface);
+    border:1px solid var(--border);border-radius:10px;padding:14px 18px;font-size:14px;font-weight:600;margin-bottom:24px;}
+  #scoreDisplay{color:var(--accent-dark);}
+  .submit-block{border-top:1px solid var(--border);padding-top:22px;}
+  .submit-block p{margin:0 0 6px;font-size:14px;}
+  .hint{color:var(--ink-soft);font-size:13px;margin-bottom:16px;}
+  .btn-row{display:flex;flex-wrap:wrap;gap:10px;}
+  button.action{padding:11px 18px;border-radius:7px;border:1px solid var(--accent);background:var(--accent);
+    color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
+  button.action:hover{background:var(--accent-dark);}
+  button.secondary{background:#fff;color:var(--accent-dark);}
+  footer{text-align:center;font-size:12px;color:var(--ink-soft);padding:20px 0 40px;}
+  @media print{header, .submit-block, .instructions{display:none;}}
+</style>
+</head>
+<body>
+
+<header>Formation BDR — Daylindo</header>
+
+<main>
+  <h1>Fiche 2 — Le problème que l'on résout</h1>
+  <p class="lead">Exercices pratiques. Lis chaque question, remplis ta réponse, puis envoie le fichier complété à Miora.</p>
+  <div class="meta">~10 minutes · 1 QCM · 4 Vrai/Faux · 1 ouverte · 1 mise en situation (4 volets)</div>
+
+  <div class="instructions">
+    <strong>Instructions :</strong> Pour les QCM et Vrai/Faux, clique sur ta réponse. Pour les questions ouvertes, rédige au moins 2 phrases.
+    Une fois terminé, clique sur « Télécharger mes réponses » et envoie le fichier à Miora.
+  </div>
+
+  <div class="name-field">
+    <label for="learnerName">Ton prénom</label>
+    <input type="text" id="learnerName" placeholder="Ton prénom">
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">Progression — <span id="progressCount">0</span> / 10</div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <section>
+    <h2>Question à choix multiple</h2>
+    <div class="question" data-qid="q1">
+      <div class="q-label">Q1</div>
+      <p class="q-prompt">Parmi ces 3 problèmes, lequel n'est <u>PAS</u> cité dans la fiche Daylindo ?</p>
+      <div class="options">
+        <button class="opt-btn" data-correct="false">A — Le turnover élevé — les nouvelles recrues partent rapidement.</button>
+        <button class="opt-btn" data-correct="false">B — La perte de savoir-faire — les experts quittent sans transmettre.</button>
+        <button class="opt-btn" data-correct="true">C — Le manque de candidats sur le marché du travail.</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Vrai / Faux</h2>
+
+    <div class="question" data-qid="q2">
+      <div class="q-label">Q2</div>
+      <p class="q-prompt">Le turnover peut coûter cher à une entreprise.</p>
+      <div class="options vf-row">
+        <button class="opt-btn" data-correct="true">Vrai</button>
+        <button class="opt-btn" data-correct="false">Faux</button>
+      </div>
+    </div>
+
+    <div class="question" data-qid="q3">
+      <div class="q-label">Q3</div>
+      <p class="q-prompt">La perte de savoir-faire peut créer des erreurs.</p>
+      <div class="options vf-row">
+        <button class="opt-btn" data-correct="true">Vrai</button>
+        <button class="opt-btn" data-correct="false">Faux</button>
+      </div>
+    </div>
+
+    <div class="question" data-qid="q4">
+      <div class="q-label">Q4</div>
+      <p class="q-prompt">Le financement (OPCO/AFEST) est un bon argument pour ouvrir un appel avec un prospect.</p>
+      <div class="options vf-row">
+        <button class="opt-btn" data-correct="false">Vrai</button>
+        <button class="opt-btn" data-correct="true">Faux</button>
+      </div>
+      <p class="q-hint">Rappel de la fiche : le financement est un point d'appui une fois le vrai problème identifié — jamais une accroche.</p>
+    </div>
+
+    <div class="question" data-qid="q5">
+      <div class="q-label">Q5</div>
+      <p class="q-prompt">Toutes les entreprises savent valoriser leurs formations grâce aux financements OPCO.</p>
+      <div class="options vf-row">
+        <button class="opt-btn" data-correct="false">Vrai</button>
+        <button class="opt-btn" data-correct="true">Faux</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Question ouverte</h2>
+    <div class="question" data-qid="q6">
+      <div class="q-label">Q6</div>
+      <p class="q-prompt">Cite les 3 problèmes principaux que Daylindo aide à résoudre.</p>
+      <p class="q-hint">→ Une phrase par problème. Rédige 3 phrases distinctes, une pour chaque problème. Sois précis·e et concis·e.</p>
+      <textarea class="open-answer" data-max="600" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 600</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Mise en situation</h2>
+    <div class="question" data-qid="q7">
+      <div class="q-label">Q7</div>
+      <p class="q-prompt">Pour chaque situation ci-dessous, identifie la conséquence — ou le problème dominant — pour l'entreprise.</p>
+
+      <div class="sub-sit" data-subid="q7a">
+        <div class="sub-label">Sit. A — Turnover élevé → quelle conséquence ?</div>
+        <textarea class="open-answer" data-max="300" placeholder="Ta réponse..."></textarea>
+        <div class="charcount"><span class="cur">0</span> / 300</div>
+      </div>
+
+      <div class="sub-sit" data-subid="q7b">
+        <div class="sub-label">Sit. B — Perte de savoir-faire → quelle conséquence ?</div>
+        <textarea class="open-answer" data-max="300" placeholder="Ta réponse..."></textarea>
+        <div class="charcount"><span class="cur">0</span> / 300</div>
+      </div>
+
+      <div class="sub-sit" data-subid="q7c">
+        <div class="sub-label">Sit. C — Coûts non valorisés → quelle conséquence ?</div>
+        <textarea class="open-answer" data-max="300" placeholder="Ta réponse..."></textarea>
+        <div class="charcount"><span class="cur">0</span> / 300</div>
+      </div>
+
+      <div class="sub-sit" data-subid="q7d">
+        <div class="sub-label">Sit. D — Une usine avec des machines spécifiques : un technicien de 20 ans d'expérience part à la retraite dans 3 mois. Quel est le problème dominant ici, et pourquoi ?</div>
+        <textarea class="open-answer" data-max="300" placeholder="Ta réponse..."></textarea>
+        <div class="charcount"><span class="cur">0</span> / 300</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="score-block">
+    <span>Score QCM + Vrai/Faux</span>
+    <span id="scoreDisplay">—</span>
+  </div>
+
+  <div class="submit-block">
+    <p><strong>Prêt·e à envoyer tes réponses ?</strong></p>
+    <p class="hint">Vérifie tes réponses QCM/Vrai-Faux, puis télécharge et envoie à Miora.</p>
+    <div class="btn-row">
+      <button class="action" id="checkBtn">Vérifier mes réponses</button>
+      <button class="action secondary" id="downloadBtn">Télécharger mes réponses</button>
+      <button class="action secondary" id="printBtn">Imprimer</button>
+    </div>
+  </div>
+</main>
+
+<footer>Daylindo — Formation BDR · Fiche 2 — Le problème que l'on résout · Exercice interne</footer>
+
+<script>
+  const answered = new Set();
+  const totalQ = 10;
+  const scoredQids = ['q1','q2','q3','q4','q5'];
+
+  function updateProgress(){
+    document.getElementById('progressCount').textContent = answered.size;
+    document.getElementById('progressFill').style.width = (answered.size/totalQ*100) + '%';
+  }
+
+  // QCM + Vrai/Faux handling
+  document.querySelectorAll('.question').forEach(qDiv => {
+    const qid = qDiv.dataset.qid;
+    if (!scoredQids.includes(qid)) return;
+    qDiv.querySelectorAll('.opt-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (qDiv.dataset.answered === 'true') return;
+        qDiv.dataset.answered = 'true';
+        qDiv.dataset.selected = btn.textContent.trim();
+        qDiv.dataset.wasCorrect = btn.dataset.correct;
+        qDiv.querySelectorAll('.opt-btn').forEach(b => {
+          b.disabled = true;
+          if (b.dataset.correct === 'true') b.classList.add('correct');
+          else if (b === btn) b.classList.add('incorrect');
+        });
+        answered.add(qid);
+        updateProgress();
+      });
+    });
+  });
+
+  // Open questions + mises en situation handling
+  document.querySelectorAll('.open-answer').forEach(ta => {
+    const max = parseInt(ta.dataset.max, 10);
+    const counter = ta.parentElement.querySelector('.charcount .cur');
+    const container = ta.closest('.sub-sit') || ta.closest('.question');
+    const id = container.dataset.subid || container.dataset.qid;
+    ta.addEventListener('input', () => {
+      if (ta.value.length > max) ta.value = ta.value.slice(0, max);
+      counter.textContent = ta.value.length;
+      if (ta.value.trim().length > 0) answered.add(id);
+      else answered.delete(id);
+      updateProgress();
+    });
+  });
+
+  document.getElementById('checkBtn').addEventListener('click', () => {
+    let correct = 0, done = 0;
+    scoredQids.forEach(qid => {
+      const qDiv = document.querySelector(`.question[data-qid="${qid}"]`);
+      if (qDiv.dataset.answered === 'true') {
+        done++;
+        if (qDiv.dataset.wasCorrect === 'true') correct++;
+      }
+    });
+    if (done < scoredQids.length) {
+      document.getElementById('scoreDisplay').textContent = `Réponds aux ${scoredQids.length} QCM/Vrai-Faux d'abord (${done}/${scoredQids.length} fait)`;
+    } else {
+      document.getElementById('scoreDisplay').textContent = `${correct} / ${scoredQids.length} bonnes réponses`;
+    }
+  });
+
+  function buildSummary(){
+    const name = document.getElementById('learnerName').value.trim() || 'Sans nom';
+    let correct = 0;
+    let lines = [`Fiche 2 — Le problème que l'on résout`, `Prénom : ${name}`, ''];
+    scoredQids.forEach((qid, i) => {
+      const qDiv = document.querySelector(`.question[data-qid="${qid}"]`);
+      const status = qDiv.dataset.answered === 'true' ? (qDiv.dataset.wasCorrect === 'true' ? 'Correct' : 'Incorrect') : 'Non répondu';
+      if (qDiv.dataset.wasCorrect === 'true') correct++;
+      lines.push(`Q${i+1} : ${status}`);
+      if (qDiv.dataset.selected) lines.push(`  Réponse choisie : ${qDiv.dataset.selected}`);
+    });
+    lines.push('', `Score QCM + Vrai/Faux : ${correct} / ${scoredQids.length}`, '');
+    const q6 = document.querySelector('.question[data-qid="q6"] .open-answer');
+    lines.push(`Q6 (3 problèmes) : ${q6.value.trim() || '(vide)'}`, '');
+    document.querySelectorAll('.sub-sit').forEach((sub, i) => {
+      const label = sub.querySelector('.sub-label').textContent;
+      const ta = sub.querySelector('.open-answer');
+      lines.push(`${label} : ${ta.value.trim() || '(vide)'}`, '');
+    });
+    return { name, text: lines.join('\n') };
+  }
+
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+    const { name, text } = buildSummary();
+    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Fiche2_${name.replace(/\s+/g,'_')}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+    const subject = encodeURIComponent(`Exercices Fiche 2 — ${name}`);
+    const body = encodeURIComponent(text);
+    window.location.href = `mailto:miora@daylindo.com?subject=${subject}&body=${body}`;
+  });
+
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+</script>
+
+</body>
+</html>
