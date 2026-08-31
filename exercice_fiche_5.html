@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche 5 — Pourquoi les clients achètent</title>
+<style>
+  :root{
+    --bg:#f6f7f7; --surface:#ffffff; --border:#e2e5e4;
+    --ink:#1e2a28; --ink-soft:#5a6663;
+    --accent:#1f6f64; --accent-dark:#16544c; --accent-soft:#e6f0ee;
+    --good:#2e7d53; --good-bg:#eaf6ef; --bad:#b3413b; --bad-bg:#fbeceb;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55;}
+  header{padding:14px 24px;background:var(--ink);color:#fff;font-size:14px;letter-spacing:.02em;}
+  main{max-width:700px;margin:0 auto;padding:32px 20px 80px;}
+  h1{font-family:Georgia,"Times New Roman",serif;font-size:23px;margin:0 0 6px;color:var(--ink);}
+  .lead{color:var(--ink-soft);margin:0 0 14px;font-size:15px;}
+  .meta{font-size:13px;color:var(--accent-dark);font-weight:600;margin-bottom:14px;}
+  .benefit-legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;}
+  .benefit-card{background:var(--accent-soft);border:1px solid #cfe4e0;border-radius:8px;padding:10px 12px;
+    font-size:12px;color:var(--accent-dark);flex:1 1 160px;}
+  .benefit-card b{display:block;font-size:13px;margin-bottom:2px;}
+  .instructions{background:var(--accent-soft);border:1px solid #cfe4e0;border-radius:8px;padding:14px 16px;font-size:14px;margin-bottom:22px;}
+  .name-field{margin-bottom:24px;}
+  .name-field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;}
+  .name-field input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:6px;font-size:15px;font-family:inherit;}
+  .progress-wrap{margin-bottom:30px;}
+  .progress-label{font-size:13px;font-weight:600;margin-bottom:6px;}
+  .progress-bar{height:8px;background:var(--border);border-radius:6px;overflow:hidden;}
+  .progress-fill{height:100%;width:0%;background:var(--accent);transition:width .25s ease;}
+  section{margin-bottom:34px;}
+  section > h2{font-size:16px;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:20px;}
+  .question{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 18px 20px;margin-bottom:16px;}
+  .q-label{font-size:12px;font-weight:700;color:var(--accent-dark);margin-bottom:6px;}
+  .q-prompt{font-size:15px;font-weight:600;margin:0 0 6px;}
+  .q-prompt .quote{font-style:italic;color:var(--ink-soft);font-weight:500;}
+  .options{display:flex;flex-direction:column;gap:8px;}
+  .opt-btn{text-align:left;padding:10px 14px;border:1px solid var(--border);border-radius:7px;background:#fff;
+    cursor:pointer;font-size:14px;font-family:inherit;color:var(--ink);}
+  .opt-btn:hover{border-color:var(--accent);}
+  .opt-btn.correct{background:var(--good-bg);border-color:var(--good);color:var(--good);font-weight:600;}
+  .opt-btn.incorrect{background:var(--bad-bg);border-color:var(--bad);color:var(--bad);}
+  .opt-btn:disabled{cursor:default;}
+  .benefit-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 12px;}
+  .benefit-row .opt-btn{flex:1 1 auto;text-align:center;min-width:130px;}
+  .q-hint{font-size:13px;color:var(--ink-soft);margin:8px 0 0;}
+  .sub-label{font-size:13px;font-weight:700;color:var(--ink);margin:14px 0 6px;}
+  textarea{width:100%;min-height:70px;padding:12px 14px;border:1px solid var(--border);border-radius:7px;
+    font-family:inherit;font-size:14px;resize:vertical;}
+  .charcount{font-size:12px;color:var(--ink-soft);text-align:right;margin-top:4px;}
+  .score-block{display:flex;align-items:center;justify-content:space-between;background:var(--surface);
+    border:1px solid var(--border);border-radius:10px;padding:14px 18px;font-size:14px;font-weight:600;margin-bottom:24px;}
+  #scoreDisplay{color:var(--accent-dark);}
+  .submit-block{border-top:1px solid var(--border);padding-top:22px;}
+  .submit-block p{margin:0 0 6px;font-size:14px;}
+  .hint{color:var(--ink-soft);font-size:13px;margin-bottom:16px;}
+  .btn-row{display:flex;flex-wrap:wrap;gap:10px;}
+  button.action{padding:11px 18px;border-radius:7px;border:1px solid var(--accent);background:var(--accent);
+    color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
+  button.action:hover{background:var(--accent-dark);}
+  button.secondary{background:#fff;color:var(--accent-dark);}
+  footer{text-align:center;font-size:12px;color:var(--ink-soft);padding:20px 0 40px;}
+  @media print{header, .submit-block, .instructions{display:none;}}
+</style>
+</head>
+<body>
+
+<header>Formation BDR — Daylindo</header>
+
+<main>
+  <h1>Fiche 5 — Pourquoi les clients achètent</h1>
+  <p class="lead">Transforme les caractéristiques en bénéfices réels. Le client n'achète pas une perceuse — il achète un trou dans le mur.</p>
+  <div class="meta">~15 minutes · 3 Traducteurs · 4 QCM · 1 Mise en situation</div>
+
+  <div class="benefit-legend">
+    <div class="benefit-card"><b>⚡ Gagner du temps</b>Recrues opérationnelles plus vite · −40% temps d'intégration</div>
+    <div class="benefit-card"><b>🔒 Garder le savoir-faire</b>Compétences prouvées, sécurisées et traçables</div>
+    <div class="benefit-card"><b>💰 Gagner de l'argent</b>1 000€–2 500€ / collaborateur formé via OPCO & AFEST — <em>à amener en réponse, jamais en ouverture</em></div>
+  </div>
+
+  <div class="instructions">
+    <strong>Instructions :</strong> Partie 1 — sélectionne le bénéfice correspondant et reformule en langage client (avec chiffres si possible). Partie 2 — QCM classique. Mise en situation — texte libre.
+    Clique sur « Vérifier » puis « Télécharger » pour envoyer à Miora.
+  </div>
+
+  <div class="name-field">
+    <label for="learnerName">Ton prénom</label>
+    <input type="text" id="learnerName" placeholder="Ton prénom">
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">Progression — <span id="progressCount">0</span> / <span id="progressTotal">?</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <section>
+    <h2>Partie 1 — Le traducteur : Caractéristique → Bénéfice</h2>
+    <p class="q-hint" style="margin-bottom:16px;">Pour chaque caractéristique, identifie le bénéfice Daylindo correspondant et reformule en langage client.</p>
+
+    <div class="question" data-qid="t1">
+      <div class="q-label">Caractéristique — Ce que tu NE dois PAS dire</div>
+      <p class="q-prompt"><span class="quote">« Nous mettons en place une formation mieux organisée et structurée pour vos nouveaux arrivants. »</span></p>
+      <p class="q-hint">→ Transforme en bénéfice réel. Indice : vitesse d'apprentissage et erreurs.</p>
+      <div class="sub-label">Quel bénéfice ?</div>
+      <div class="benefit-row" data-track="t1-benefit">
+        <button class="opt-btn" data-correct="true">⚡ Gagner du temps</button>
+        <button class="opt-btn" data-correct="false">🔒 Garder le savoir-faire</button>
+        <button class="opt-btn" data-correct="false">💰 Gagner de l'argent</button>
+      </div>
+      <div class="sub-label">Ta reformulation en langage client</div>
+      <textarea class="track-answer" data-track="t1-reform" data-max="350" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 350</div>
+    </div>
+
+    <div class="question" data-qid="t2">
+      <div class="q-label">Caractéristique — Ce que tu NE dois PAS dire</div>
+      <p class="q-prompt"><span class="quote">« Nous aidons vos experts avec une méthode pour transmettre leurs compétences. »</span></p>
+      <p class="q-hint">→ Transforme en bénéfice réel. Indice : sécurisation des bonnes pratiques.</p>
+      <div class="sub-label">Quel bénéfice ?</div>
+      <div class="benefit-row" data-track="t2-benefit">
+        <button class="opt-btn" data-correct="false">⚡ Gagner du temps</button>
+        <button class="opt-btn" data-correct="true">🔒 Garder le savoir-faire</button>
+        <button class="opt-btn" data-correct="false">💰 Gagner de l'argent</button>
+      </div>
+      <div class="sub-label">Ta reformulation en langage client</div>
+      <textarea class="track-answer" data-track="t2-reform" data-max="350" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 350</div>
+    </div>
+
+    <div class="question" data-qid="t3">
+      <div class="q-label">Caractéristique — Ce que tu NE dois PAS dire</div>
+      <p class="q-prompt"><span class="quote">« Nous proposons une optimisation des financements et une préparation de vos dossiers. »</span></p>
+      <p class="q-hint">→ Transforme en bénéfice réel. Indice : parle du montant exact récupérable — mais seulement parce que c'est toi qui traduis une caractéristique ici, pas parce que tu ouvrirais un appel avec ça.</p>
+      <div class="sub-label">Quel bénéfice ?</div>
+      <div class="benefit-row" data-track="t3-benefit">
+        <button class="opt-btn" data-correct="false">⚡ Gagner du temps</button>
+        <button class="opt-btn" data-correct="false">🔒 Garder le savoir-faire</button>
+        <button class="opt-btn" data-correct="true">💰 Gagner de l'argent</button>
+      </div>
+      <div class="sub-label">Ta reformulation en langage client</div>
+      <textarea class="track-answer" data-track="t3-reform" data-max="350" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 350</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Partie 2 — QCM : Vendre des résultats</h2>
+
+    <div class="question" data-qid="q1">
+      <div class="q-label">Q1</div>
+      <p class="q-prompt">Selon le texte, que cherche réellement à acheter un client lorsqu'il prend une décision ?</p>
+      <div class="options" data-track="q1">
+        <button class="opt-btn" data-correct="false">A — Une nouvelle plateforme digitale innovante.</button>
+        <button class="opt-btn" data-correct="false">B — Uniquement une formation théorique pour ses employés.</button>
+        <button class="opt-btn" data-correct="true">C — Un résultat concret : un gain de temps, un gain d'argent ou des compétences prouvées sécurisées.</button>
+      </div>
+    </div>
+
+    <div class="question" data-qid="q2">
+      <div class="q-label">Q2</div>
+      <p class="q-prompt">Comment se traduit concrètement le bénéfice « Gagner du temps » pour l'entreprise ?</p>
+      <div class="options" data-track="q2">
+        <button class="opt-btn" data-correct="false">A — Les experts peuvent partir à la retraite plus tôt.</button>
+        <button class="opt-btn" data-correct="true">B — Les nouvelles recrues apprennent plus vite, font moins d'erreurs et deviennent opérationnelles plus rapidement.</button>
+        <button class="opt-btn" data-correct="false">C — La durée légale du travail est réduite pour les managers.</button>
+      </div>
+    </div>
+
+    <div class="question" data-qid="q3">
+      <div class="q-label">Q3</div>
+      <p class="q-prompt">Quel est le résultat final du bénéfice « Garder le savoir-faire » ?</p>
+      <div class="options" data-track="q3">
+        <button class="opt-btn" data-correct="true">A — Les compétences prouvées sont transmises, enregistrées et sécurisées dans l'entreprise.</button>
+        <button class="opt-btn" data-correct="false">B — Les experts sont obligés de signer des clauses de non-concurrence.</button>
+        <button class="opt-btn" data-correct="false">C — Les recrues doivent passer des examens écrits chaque semaine.</button>
+      </div>
+    </div>
+
+    <div class="question" data-qid="q4">
+      <div class="q-label">Q4</div>
+      <p class="q-prompt">Quel est le résultat financier direct du bénéfice « Gagner de l'argent », et quand doit-on l'amener dans une conversation ?</p>
+      <div class="options" data-track="q4">
+        <button class="opt-btn" data-correct="true">A — Entre 1 000€ et 2 500€ récupérables par collaborateur formé — uniquement une fois un autre problème déjà identifié, ou si le prospect pose la question.</button>
+        <button class="opt-btn" data-correct="false">B — Le logiciel de formation est totalement gratuit, à mentionner dès la première minute de l'appel.</button>
+        <button class="opt-btn" data-correct="false">C — Les nouveaux collaborateurs acceptent de travailler pour un salaire inférieur.</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Mise en situation — Responsable Formation, 900 salariés</h2>
+    <div class="question" data-qid="qM">
+      <div class="q-label">M</div>
+      <p class="q-prompt">Tu es en appel avec un Responsable Formation dans une entreprise de 900 salariés. Il te demande : <span class="quote">« Oui, mais concrètement, votre optimisation de financement... ça change quoi pour nous ? »</span></p>
+      <p class="q-hint">💡 Rappel : c'est lui qui pose la question — tu peux donc répondre avec le montant exact (1 000€–2 500€/collaborateur). Transforme le jargon en résultat concret pour le client, comme si tu étais au téléphone.</p>
+      <textarea class="track-answer" data-track="qM" data-max="500" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 500</div>
+    </div>
+  </section>
+
+  <div class="score-block">
+    <span>Score Traducteurs + QCM</span>
+    <span id="scoreDisplay">—</span>
+  </div>
+
+  <div class="submit-block">
+    <p><strong>Prêt·e à envoyer tes réponses ?</strong></p>
+    <p class="hint">Vérifie tes traducteurs et QCM, puis télécharge le fichier et envoie-le à Miora.</p>
+    <div class="btn-row">
+      <button class="action" id="checkBtn">Vérifier mes réponses</button>
+      <button class="action secondary" id="downloadBtn">Télécharger mes réponses</button>
+      <button class="action secondary" id="printBtn">Imprimer</button>
+    </div>
+  </div>
+</main>
+
+<footer>Daylindo — Formation BDR · Fiche 5 — Pourquoi les clients achètent · Exercice interne</footer>
+
+<script>
+  const answered = new Set();
+  const scoredTracks = ['t1-benefit','t2-benefit','t3-benefit','q1','q2','q3','q4'];
+  const allTracks = document.querySelectorAll('[data-track]');
+  const totalQ = allTracks.length;
+  document.getElementById('progressTotal').textContent = totalQ;
+
+  function updateProgress(){
+    document.getElementById('progressCount').textContent = answered.size;
+    document.getElementById('progressFill').style.width = (answered.size/totalQ*100) + '%';
+  }
+
+  document.querySelectorAll('[data-track]').forEach(group => {
+    if (!group.classList.contains('options') && !group.classList.contains('benefit-row')) return;
+    const trackId = group.dataset.track;
+    group.querySelectorAll('.opt-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (group.dataset.answered === 'true') return;
+        group.dataset.answered = 'true';
+        group.dataset.selected = btn.textContent.trim();
+        group.dataset.wasCorrect = btn.dataset.correct;
+        group.querySelectorAll('.opt-btn').forEach(b => {
+          b.disabled = true;
+          if (b.dataset.correct === 'true') b.classList.add('correct');
+          else if (b === btn) b.classList.add('incorrect');
+        });
+        answered.add(trackId);
+        updateProgress();
+      });
+    });
+  });
+
+  document.querySelectorAll('.track-answer').forEach(ta => {
+    const max = parseInt(ta.dataset.max, 10);
+    const trackId = ta.dataset.track;
+    const counter = ta.parentElement.querySelector('.charcount .cur');
+    ta.addEventListener('input', () => {
+      if (ta.value.length > max) ta.value = ta.value.slice(0, max);
+      if (counter) counter.textContent = ta.value.length;
+      if (ta.value.trim().length > 0) answered.add(trackId); else answered.delete(trackId);
+      updateProgress();
+    });
+  });
+
+  document.getElementById('checkBtn').addEventListener('click', () => {
+    let correct = 0, done = 0;
+    scoredTracks.forEach(trackId => {
+      const group = document.querySelector(`[data-track="${trackId}"]`);
+      if (group.dataset.answered === 'true') {
+        done++;
+        if (group.dataset.wasCorrect === 'true') correct++;
+      }
+    });
+    if (done < scoredTracks.length) {
+      document.getElementById('scoreDisplay').textContent = `Réponds aux ${scoredTracks.length} traducteurs/QCM d'abord (${done}/${scoredTracks.length} fait)`;
+    } else {
+      document.getElementById('scoreDisplay').textContent = `${correct} / ${scoredTracks.length} bonnes réponses`;
+    }
+  });
+
+  function val(trackId){
+    const el = document.querySelector(`[data-track="${trackId}"]`);
+    if (!el) return '(vide)';
+    if (el.tagName === 'TEXTAREA') return el.value.trim() || '(vide)';
+    return el.dataset.selected || '(non répondu)';
+  }
+
+  function buildSummary(){
+    const name = document.getElementById('learnerName').value.trim() || 'Sans nom';
+    let correct = 0;
+    scoredTracks.forEach(t => { const g = document.querySelector(`[data-track="${t}"]`); if (g.dataset.wasCorrect === 'true') correct++; });
+    let lines = [`Fiche 5 — Pourquoi les clients achètent`, `Prénom : ${name}`, '',
+      `Score Traducteurs + QCM : ${correct} / ${scoredTracks.length}`, '',
+      `T1 — Bénéfice : ${val('t1-benefit')} | Reformulation : ${val('t1-reform')}`,
+      `T2 — Bénéfice : ${val('t2-benefit')} | Reformulation : ${val('t2-reform')}`,
+      `T3 — Bénéfice : ${val('t3-benefit')} | Reformulation : ${val('t3-reform')}`, '',
+      `Mise en situation : ${val('qM')}`
+    ];
+    return { name, text: lines.join('\n') };
+  }
+
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+    const { name, text } = buildSummary();
+    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Fiche5_${name.replace(/\s+/g,'_')}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+    const subject = encodeURIComponent(`Exercices Fiche 5 — ${name}`);
+    const body = encodeURIComponent(text);
+    window.location.href = `mailto:miora@daylindo.com?subject=${subject}&body=${body}`;
+  });
+
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+</script>
+
+</body>
+</html>
