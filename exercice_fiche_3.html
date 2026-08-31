@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche 3 — La solution Daylindo (vue globale)</title>
+<style>
+  :root{
+    --bg:#f6f7f7; --surface:#ffffff; --border:#e2e5e4;
+    --ink:#1e2a28; --ink-soft:#5a6663;
+    --accent:#1f6f64; --accent-dark:#16544c; --accent-soft:#e6f0ee;
+    --good:#2e7d53; --good-bg:#eaf6ef; --bad:#b3413b; --bad-bg:#fbeceb;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55;}
+  header{padding:14px 24px;background:var(--ink);color:#fff;font-size:14px;letter-spacing:.02em;}
+  main{max-width:700px;margin:0 auto;padding:32px 20px 80px;}
+  h1{font-family:Georgia,"Times New Roman",serif;font-size:24px;margin:0 0 6px;color:var(--ink);}
+  .lead{color:var(--ink-soft);margin:0 0 14px;font-size:15px;}
+  .meta{font-size:13px;color:var(--accent-dark);font-weight:600;margin-bottom:14px;}
+  .brique-legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+  .brique-legend span{background:var(--accent-soft);border:1px solid #cfe4e0;border-radius:6px;
+    padding:5px 10px;font-size:12px;font-weight:600;color:var(--accent-dark);}
+  .instructions{background:var(--accent-soft);border:1px solid #cfe4e0;border-radius:8px;padding:14px 16px;font-size:14px;margin-bottom:22px;}
+  .name-field{margin-bottom:24px;}
+  .name-field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;}
+  .name-field input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:6px;font-size:15px;font-family:inherit;}
+  .progress-wrap{margin-bottom:30px;}
+  .progress-label{font-size:13px;font-weight:600;margin-bottom:6px;}
+  .progress-bar{height:8px;background:var(--border);border-radius:6px;overflow:hidden;}
+  .progress-fill{height:100%;width:0%;background:var(--accent);transition:width .25s ease;}
+  section{margin-bottom:34px;}
+  section > h2{font-size:16px;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:20px;}
+  .question{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 18px 20px;margin-bottom:16px;}
+  .q-label{font-size:12px;font-weight:700;color:var(--accent-dark);margin-bottom:6px;}
+  .q-prompt{font-size:15px;font-weight:600;margin:0 0 14px;}
+  .q-prompt .quote{font-style:italic;color:var(--ink-soft);font-weight:500;}
+  .options{display:flex;flex-direction:column;gap:8px;}
+  .opt-btn{text-align:left;padding:10px 14px;border:1px solid var(--border);border-radius:7px;background:#fff;
+    cursor:pointer;font-size:14px;font-family:inherit;color:var(--ink);}
+  .opt-btn:hover{border-color:var(--accent);}
+  .opt-btn.correct{background:var(--good-bg);border-color:var(--good);color:var(--good);font-weight:600;}
+  .opt-btn.incorrect{background:var(--bad-bg);border-color:var(--bad);color:var(--bad);}
+  .opt-btn:disabled{cursor:default;}
+  .brique-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+  .brique-row .opt-btn{flex:1 1 auto;text-align:center;min-width:90px;font-size:13px;padding:9px 8px;}
+  .q-hint{font-size:13px;color:var(--ink-soft);margin:10px 0 0;}
+  textarea{width:100%;min-height:80px;padding:12px 14px;border:1px solid var(--border);border-radius:7px;
+    font-family:inherit;font-size:14px;resize:vertical;}
+  .charcount{font-size:12px;color:var(--ink-soft);text-align:right;margin-top:4px;}
+  .score-block{display:flex;align-items:center;justify-content:space-between;background:var(--surface);
+    border:1px solid var(--border);border-radius:10px;padding:14px 18px;font-size:14px;font-weight:600;margin-bottom:24px;}
+  #scoreDisplay{color:var(--accent-dark);}
+  .submit-block{border-top:1px solid var(--border);padding-top:22px;}
+  .submit-block p{margin:0 0 6px;font-size:14px;}
+  .hint{color:var(--ink-soft);font-size:13px;margin-bottom:16px;}
+  .btn-row{display:flex;flex-wrap:wrap;gap:10px;}
+  button.action{padding:11px 18px;border-radius:7px;border:1px solid var(--accent);background:var(--accent);
+    color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
+  button.action:hover{background:var(--accent-dark);}
+  button.secondary{background:#fff;color:var(--accent-dark);}
+  footer{text-align:center;font-size:12px;color:var(--ink-soft);padding:20px 0 40px;}
+  @media print{header, .submit-block, .instructions{display:none;}}
+</style>
+</head>
+<body>
+
+<header>Formation BDR — Daylindo</header>
+
+<main>
+  <h1>Fiche 3 — La solution Daylindo — Vue globale : les 5 briques</h1>
+  <p class="lead">Exercices pratiques. Associe chaque besoin à la bonne brique, réponds aux QCM et traite la mise en situation.</p>
+  <div class="meta">~15 minutes · 5 QCM · 5 Diagnostics · 1 Mise en situation</div>
+
+  <div class="brique-legend">
+    <span>Brique 1 — Ingénierie</span>
+    <span>Brique 2 — Formateurs terrain</span>
+    <span>Brique 3 — Plateforme digitale</span>
+    <span>Brique 4 — Financement</span>
+    <span>Brique 5 — Preuves opposables</span>
+  </div>
+
+  <div class="instructions">
+    <strong>Instructions :</strong> Pour les QCM, clique sur la bonne réponse. Pour le diagnostic, sélectionne la brique correspondante puis justifie en quelques mots.
+    Pour la mise en situation, rédige 2–3 phrases en citant au moins 2 briques. Clique sur « Vérifier » puis « Télécharger » pour envoyer à Miora.
+  </div>
+
+  <div class="name-field">
+    <label for="learnerName">Ton prénom</label>
+    <input type="text" id="learnerName" placeholder="Ton prénom">
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">Progression — <span id="progressCount">0</span> / 11</div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <section>
+    <h2>Partie 1 — QCM : Les 5 briques</h2>
+
+    <div class="question" data-qid="q1">
+      <div class="q-label">Q1</div>
+      <p class="q-prompt">Selon le texte, comment doit-on définir la solution Daylindo ?</p>
+      <div class="options">
+        <button class="opt-btn" data-correct="false">A — C'est uniquement une nouvelle application mobile de formation.</button>
+        <button class="opt-btn" data-correct="true">B — C'est un système complet composé de plusieurs éléments qui travaillent ensemble.</button>
+        <button class="opt-btn" data-correct="false">C — C'est uniquement un organisme de formation classique.</button>
+      </div>
+    </div>
+
+    <div class="question" data-qid="q2">
+      <div class="q-label">Q2</div>
+      <p class="q-prompt">À quoi sert l'Ingénierie — la Brique 1 ?</p>
+      <div class="options">
+        <button class="opt-btn" data-correct="true">A — À structurer les étapes d'apprentissage, les méthodes et l'organisation sur le terrain.</button>
+        <button class="opt-btn" data-correct="false">B — À réparer les problèmes techniques de l'application mobile.</button>
+        <button class="opt-btn" data-correct="false">C — À recruter de nouveaux experts métier.</button>
+      </div>
+    </div>
+
+    <div class="question" data-qid="q3">
+      <div class="q-label">Q3</div>
+      <p class="q-prompt">Pourquoi Daylindo propose-t-il l'outillage et la formation des formateurs terrain — Brique 2 ?</p>
+      <div class="options">
+        <button class="opt-btn" data-correct="false">A — Pour que les managers obtiennent une promotion.</button>
+        <button class="opt-btn" data-correct="true">B — Parce que les experts métier doivent savoir transmettre avec méthode pour que l'accompagnement soit structuré et efficace.</button>
+        <button class="opt-btn" data-correct="false">C — Pour qu'ils apprennent à utiliser des logiciels de comptabilité.</button>
+      </div>
+    </div>
+
+    <div class="question" data-qid="q4">
+      <div class="q-label">Q4</div>
+      <p class="q-prompt">Quel est le but de la Brique 4 — Optimisation du financement ?</p>
+      <div class="options">
+        <button class="opt-btn" data-correct="false">A — Vendre nos services plus cher.</button>
+        <button class="opt-btn" data-correct="true">B — Préparer les dossiers et suivre les preuves pour aider l'entreprise à récupérer une partie des coûts.</button>
+        <button class="opt-btn" data-correct="false">C — Financer les repas des collaborateurs en formation.</button>
+      </div>
+    </div>
+
+    <div class="question" data-qid="q5">
+      <div class="q-label">Q5</div>
+      <p class="q-prompt">Quel est le but de la Brique 5 — Les preuves opposables ?</p>
+      <div class="options">
+        <button class="opt-btn" data-correct="false">A — Décerner un diplôme officiel reconnu par l'État.</button>
+        <button class="opt-btn" data-correct="true">B — Produire une donnée fiable et actionnable montrant que la compétence est réellement acquise, opposable face à un client, un auditeur ou un financeur.</button>
+        <button class="opt-btn" data-correct="false">C — Remplacer l'évaluation du manager par un test automatique.</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Partie 2 — Le diagnostic : associe le besoin à la brique</h2>
+    <p class="q-hint" style="margin-bottom:16px;">Pour chaque situation ci-dessous, sélectionne la brique Daylindo la plus adaptée, puis justifie en quelques mots.</p>
+
+    <div class="question" data-qid="qA">
+      <div class="q-label">Sit. A</div>
+      <p class="q-prompt"><span class="quote">« Nos experts connaissent parfaitement leur travail, mais quand il s'agit de l'expliquer aux jeunes recrues, ils n'ont pas la bonne méthode. »</span></p>
+      <p class="q-hint">Quelle brique répond à ce besoin ?</p>
+      <div class="brique-row">
+        <button class="opt-btn" data-correct="false">Brique 1</button>
+        <button class="opt-btn" data-correct="true">Brique 2</button>
+        <button class="opt-btn" data-correct="false">Brique 3</button>
+        <button class="opt-btn" data-correct="false">Brique 4</button>
+        <button class="opt-btn" data-correct="false">Brique 5</button>
+      </div>
+      <textarea class="just-answer" data-max="250" placeholder="Justifie en quelques mots..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 250</div>
+    </div>
+
+    <div class="question" data-qid="qB">
+      <div class="q-label">Sit. B</div>
+      <p class="q-prompt"><span class="quote">« On fait beaucoup d'actions sur le terrain, mais je n'ai aucune visibilité. J'ai besoin de pouvoir suivre les progrès et tracer ce qui se passe. »</span></p>
+      <p class="q-hint">Quelle brique répond à ce besoin ?</p>
+      <div class="brique-row">
+        <button class="opt-btn" data-correct="false">Brique 1</button>
+        <button class="opt-btn" data-correct="false">Brique 2</button>
+        <button class="opt-btn" data-correct="true">Brique 3</button>
+        <button class="opt-btn" data-correct="false">Brique 4</button>
+        <button class="opt-btn" data-correct="false">Brique 5</button>
+      </div>
+      <textarea class="just-answer" data-max="250" placeholder="Justifie en quelques mots..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 250</div>
+    </div>
+
+    <div class="question" data-qid="qC">
+      <div class="q-label">Sit. C</div>
+      <p class="q-prompt"><span class="quote">« Nous formons déjà beaucoup en interne, mais nous n'avons jamais le temps de monter les dossiers pour obtenir les aides, ça nous coûte trop cher. »</span></p>
+      <p class="q-hint">Quelle brique répond à ce besoin ?</p>
+      <div class="brique-row">
+        <button class="opt-btn" data-correct="false">Brique 1</button>
+        <button class="opt-btn" data-correct="false">Brique 2</button>
+        <button class="opt-btn" data-correct="false">Brique 3</button>
+        <button class="opt-btn" data-correct="true">Brique 4</button>
+        <button class="opt-btn" data-correct="false">Brique 5</button>
+      </div>
+      <textarea class="just-answer" data-max="250" placeholder="Justifie en quelques mots..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 250</div>
+    </div>
+
+    <div class="question" data-qid="qD">
+      <div class="q-label">Sit. D</div>
+      <p class="q-prompt"><span class="quote">« Avant même de lancer la formation, nous avons besoin d'organiser les choses, d'avoir un parcours clair avec des étapes d'apprentissage définies. »</span></p>
+      <p class="q-hint">Quelle brique répond à ce besoin ?</p>
+      <div class="brique-row">
+        <button class="opt-btn" data-correct="true">Brique 1</button>
+        <button class="opt-btn" data-correct="false">Brique 2</button>
+        <button class="opt-btn" data-correct="false">Brique 3</button>
+        <button class="opt-btn" data-correct="false">Brique 4</button>
+        <button class="opt-btn" data-correct="false">Brique 5</button>
+      </div>
+      <textarea class="just-answer" data-max="250" placeholder="Justifie en quelques mots..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 250</div>
+    </div>
+
+    <div class="question" data-qid="qE">
+      <div class="q-label">Sit. E</div>
+      <p class="q-prompt"><span class="quote">« On nous demande de prouver, lors d'un audit, que nos opérateurs maîtrisent vraiment telle procédure — pas juste qu'ils ont suivi une formation. »</span></p>
+      <p class="q-hint">Quelle brique répond à ce besoin ?</p>
+      <div class="brique-row">
+        <button class="opt-btn" data-correct="false">Brique 1</button>
+        <button class="opt-btn" data-correct="false">Brique 2</button>
+        <button class="opt-btn" data-correct="false">Brique 3</button>
+        <button class="opt-btn" data-correct="false">Brique 4</button>
+        <button class="opt-btn" data-correct="true">Brique 5</button>
+      </div>
+      <textarea class="just-answer" data-max="250" placeholder="Justifie en quelques mots..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 250</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Mise en situation — Un DRH te parle</h2>
+    <div class="question" data-qid="qM">
+      <div class="q-label">M</div>
+      <p class="q-prompt">Un DRH te dit : <span class="quote">« Nous faisons déjà de la formation interne, mais c'est difficile à suivre, et ça coûte cher. »</span></p>
+      <p class="q-hint">Cite au moins 2 briques et explique en 2–3 phrases comment Daylindo répond à chaque besoin exprimé.</p>
+      <textarea class="open-answer" data-max="700" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 700</div>
+    </div>
+  </section>
+
+  <div class="score-block">
+    <span>Score QCM + Diagnostic</span>
+    <span id="scoreDisplay">—</span>
+  </div>
+
+  <div class="submit-block">
+    <p><strong>Prêt·e à envoyer tes réponses ?</strong></p>
+    <p class="hint">Vérifie tes QCM et diagnostics, puis télécharge le fichier et envoie-le à Miora.</p>
+    <div class="btn-row">
+      <button class="action" id="checkBtn">Vérifier mes réponses</button>
+      <button class="action secondary" id="downloadBtn">Télécharger mes réponses</button>
+      <button class="action secondary" id="printBtn">Imprimer</button>
+    </div>
+  </div>
+</main>
+
+<footer>Daylindo — Formation BDR · Fiche 3 — La solution Daylindo (vue globale) · Exercice interne</footer>
+
+<script>
+  const answered = new Set();
+  const totalQ = 11;
+  const scoredQids = ['q1','q2','q3','q4','q5','qA','qB','qC','qD','qE'];
+
+  function updateProgress(){
+    document.getElementById('progressCount').textContent = answered.size;
+    document.getElementById('progressFill').style.width = (answered.size/totalQ*100) + '%';
+  }
+
+  document.querySelectorAll('.question').forEach(qDiv => {
+    const qid = qDiv.dataset.qid;
+    if (!scoredQids.includes(qid)) return;
+    qDiv.querySelectorAll('.opt-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (qDiv.dataset.answered === 'true') return;
+        qDiv.dataset.answered = 'true';
+        qDiv.dataset.selected = btn.textContent.trim();
+        qDiv.dataset.wasCorrect = btn.dataset.correct;
+        qDiv.querySelectorAll('.opt-btn').forEach(b => {
+          b.disabled = true;
+          if (b.dataset.correct === 'true') b.classList.add('correct');
+          else if (b === btn) b.classList.add('incorrect');
+        });
+        answered.add(qid);
+        updateProgress();
+      });
+    });
+  });
+
+  // Justification + open textareas (don't affect scoring, but tracked for the summary)
+  document.querySelectorAll('.just-answer, .open-answer').forEach(ta => {
+    const max = parseInt(ta.dataset.max, 10);
+    const counter = ta.parentElement.querySelector('.charcount .cur');
+    ta.addEventListener('input', () => {
+      if (ta.value.length > max) ta.value = ta.value.slice(0, max);
+      counter.textContent = ta.value.length;
+    });
+  });
+  // qM counts toward progress once written
+  const qM = document.querySelector('.question[data-qid="qM"] .open-answer');
+  qM.addEventListener('input', () => {
+    if (qM.value.trim().length > 0) answered.add('qM'); else answered.delete('qM');
+    updateProgress();
+  });
+
+  document.getElementById('checkBtn').addEventListener('click', () => {
+    let correct = 0, done = 0;
+    scoredQids.forEach(qid => {
+      const qDiv = document.querySelector(`.question[data-qid="${qid}"]`);
+      if (qDiv.dataset.answered === 'true') {
+        done++;
+        if (qDiv.dataset.wasCorrect === 'true') correct++;
+      }
+    });
+    if (done < scoredQids.length) {
+      document.getElementById('scoreDisplay').textContent = `Réponds aux ${scoredQids.length} QCM/diagnostics d'abord (${done}/${scoredQids.length} fait)`;
+    } else {
+      document.getElementById('scoreDisplay').textContent = `${correct} / ${scoredQids.length} bonnes réponses`;
+    }
+  });
+
+  function buildSummary(){
+    const name = document.getElementById('learnerName').value.trim() || 'Sans nom';
+    let correct = 0;
+    let lines = [`Fiche 3 — La solution Daylindo (vue globale)`, `Prénom : ${name}`, ''];
+    scoredQids.forEach((qid) => {
+      const qDiv = document.querySelector(`.question[data-qid="${qid}"]`);
+      const status = qDiv.dataset.answered === 'true' ? (qDiv.dataset.wasCorrect === 'true' ? 'Correct' : 'Incorrect') : 'Non répondu';
+      if (qDiv.dataset.wasCorrect === 'true') correct++;
+      lines.push(`${qid} : ${status}`);
+      if (qDiv.dataset.selected) lines.push(`  Réponse choisie : ${qDiv.dataset.selected}`);
+      const just = qDiv.querySelector('.just-answer');
+      if (just) lines.push(`  Justification : ${just.value.trim() || '(vide)'}`);
+    });
+    lines.push('', `Score QCM + Diagnostic : ${correct} / ${scoredQids.length}`, '');
+    lines.push(`Mise en situation DRH : ${qM.value.trim() || '(vide)'}`, '');
+    return { name, text: lines.join('\n') };
+  }
+
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+    const { name, text } = buildSummary();
+    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Fiche3_${name.replace(/\s+/g,'_')}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+    const subject = encodeURIComponent(`Exercices Fiche 3 — ${name}`);
+    const body = encodeURIComponent(text);
+    window.location.href = `mailto:miora@daylindo.com?subject=${subject}&body=${body}`;
+  });
+
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+</script>
+
+</body>
+</html>
