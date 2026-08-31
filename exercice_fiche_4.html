@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche 4 — À qui on parle : Comprendre les personas</title>
+<style>
+  :root{
+    --bg:#f6f7f7; --surface:#ffffff; --border:#e2e5e4;
+    --ink:#1e2a28; --ink-soft:#5a6663;
+    --accent:#1f6f64; --accent-dark:#16544c; --accent-soft:#e6f0ee;
+    --good:#2e7d53; --good-bg:#eaf6ef; --bad:#b3413b; --bad-bg:#fbeceb;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55;}
+  header{padding:14px 24px;background:var(--ink);color:#fff;font-size:14px;letter-spacing:.02em;}
+  main{max-width:700px;margin:0 auto;padding:32px 20px 80px;}
+  h1{font-family:Georgia,"Times New Roman",serif;font-size:23px;margin:0 0 6px;color:var(--ink);}
+  .lead{color:var(--ink-soft);margin:0 0 14px;font-size:15px;}
+  .meta{font-size:13px;color:var(--accent-dark);font-weight:600;margin-bottom:14px;}
+  .persona-legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;}
+  .persona-card{background:var(--accent-soft);border:1px solid #cfe4e0;border-radius:8px;padding:10px 12px;
+    font-size:12px;color:var(--accent-dark);flex:1 1 150px;}
+  .persona-card b{display:block;font-size:13px;margin-bottom:2px;}
+  .instructions{background:var(--accent-soft);border:1px solid #cfe4e0;border-radius:8px;padding:14px 16px;font-size:14px;margin-bottom:22px;}
+  .name-field{margin-bottom:24px;}
+  .name-field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;}
+  .name-field input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:6px;font-size:15px;font-family:inherit;}
+  .progress-wrap{margin-bottom:30px;}
+  .progress-label{font-size:13px;font-weight:600;margin-bottom:6px;}
+  .progress-bar{height:8px;background:var(--border);border-radius:6px;overflow:hidden;}
+  .progress-fill{height:100%;width:0%;background:var(--accent);transition:width .25s ease;}
+  section{margin-bottom:34px;}
+  section > h2{font-size:16px;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:20px;}
+  .question{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 18px 20px;margin-bottom:16px;}
+  .q-label{font-size:12px;font-weight:700;color:var(--accent-dark);margin-bottom:6px;}
+  .q-prompt{font-size:15px;font-weight:600;margin:0 0 14px;}
+  .q-prompt .quote{font-style:italic;color:var(--ink-soft);font-weight:500;}
+  .options{display:flex;flex-direction:column;gap:8px;}
+  .opt-btn{text-align:left;padding:10px 14px;border:1px solid var(--border);border-radius:7px;background:#fff;
+    cursor:pointer;font-size:14px;font-family:inherit;color:var(--ink);}
+  .opt-btn:hover{border-color:var(--accent);}
+  .opt-btn.correct{background:var(--good-bg);border-color:var(--good);color:var(--good);font-weight:600;}
+  .opt-btn.incorrect{background:var(--bad-bg);border-color:var(--bad);color:var(--bad);}
+  .opt-btn:disabled{cursor:default;}
+  .persona-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+  .persona-row .opt-btn{flex:1 1 auto;text-align:center;min-width:110px;}
+  .q-hint{font-size:13px;color:var(--ink-soft);margin:10px 0 0;}
+  .q-hint.callout{background:var(--accent-soft);border:1px solid #cfe4e0;border-radius:6px;padding:8px 10px;margin-top:12px;}
+  .sub-label{font-size:13px;font-weight:700;color:var(--ink);margin:14px 0 6px;}
+  textarea{width:100%;min-height:70px;padding:12px 14px;border:1px solid var(--border);border-radius:7px;
+    font-family:inherit;font-size:14px;resize:vertical;}
+  .charcount{font-size:12px;color:var(--ink-soft);text-align:right;margin-top:4px;}
+  .score-block{display:flex;align-items:center;justify-content:space-between;background:var(--surface);
+    border:1px solid var(--border);border-radius:10px;padding:14px 18px;font-size:14px;font-weight:600;margin-bottom:24px;}
+  #scoreDisplay{color:var(--accent-dark);}
+  .submit-block{border-top:1px solid var(--border);padding-top:22px;}
+  .submit-block p{margin:0 0 6px;font-size:14px;}
+  .hint{color:var(--ink-soft);font-size:13px;margin-bottom:16px;}
+  .btn-row{display:flex;flex-wrap:wrap;gap:10px;}
+  button.action{padding:11px 18px;border-radius:7px;border:1px solid var(--accent);background:var(--accent);
+    color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
+  button.action:hover{background:var(--accent-dark);}
+  button.secondary{background:#fff;color:var(--accent-dark);}
+  footer{text-align:center;font-size:12px;color:var(--ink-soft);padding:20px 0 40px;}
+  @media print{header, .submit-block, .instructions{display:none;}}
+</style>
+</head>
+<body>
+
+<header>Formation BDR — Daylindo</header>
+
+<main>
+  <h1>Fiche 4 — À qui on parle : Comprendre les personas</h1>
+  <p class="lead">Exercices pratiques. Identifie les interlocuteurs, adapte ton discours et maîtrise le pivot commercial.</p>
+  <div class="meta">~15 minutes · 4 Radars · 4 QCM · 1 Pivot · 1 Mise en situation</div>
+
+  <div class="persona-legend">
+    <div class="persona-card"><b>👥 RH</b>DRH / Resp. RH — Turnover · Fidélisation · Intégration</div>
+    <div class="persona-card"><b>⚙️ Opérationnel</b>Dir. prod / Manager — Efficacité · Rapidité · Moins d'erreurs <em>(ou savoir-faire critique selon le secteur — voir Sit. D)</em></div>
+    <div class="persona-card"><b>📊 Resp. Formation</b>L&D — Méthode · Outils · Visibilité · Suivi</div>
+  </div>
+
+  <div class="instructions">
+    <strong>Instructions :</strong> Partie 1 — sélectionne le persona puis rédige la priorité à mettre en avant. Partie 2 — QCM classique. Partie 3 & Mise en situation — texte libre.
+    Clique sur « Vérifier » puis « Télécharger » pour envoyer à Miora.
+  </div>
+
+  <div class="name-field">
+    <label for="learnerName">Ton prénom</label>
+    <input type="text" id="learnerName" placeholder="Ton prénom">
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">Progression — <span id="progressCount">0</span> / <span id="progressTotal">?</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <section>
+    <h2>Partie 1 — Le radar à personas : identifie l'interlocuteur et sa priorité</h2>
+    <p class="q-hint" style="margin-bottom:16px;">Pour chaque situation, identifie l'interlocuteur et la priorité à mettre en avant.</p>
+
+    <div class="question" data-qid="sitA">
+      <div class="q-label">Sit. A</div>
+      <p class="q-prompt"><span class="quote">« En ce moment, mon plus gros souci c'est que les gens démissionnent au bout d'un mois, je dois sans cesse relancer des recrutements. »</span></p>
+      <div class="sub-label">Interlocuteur</div>
+      <div class="persona-row" data-track="sitA-persona">
+        <button class="opt-btn" data-correct="true">RH</button>
+        <button class="opt-btn" data-correct="false">Opérationnel</button>
+        <button class="opt-btn" data-correct="false">Resp. Formation</button>
+      </div>
+      <div class="sub-label">Priorité à mettre en avant</div>
+      <textarea class="track-answer" data-track="sitA-prio" data-max="250" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 250</div>
+    </div>
+
+    <div class="question" data-qid="sitB">
+      <div class="q-label">Sit. B</div>
+      <p class="q-prompt"><span class="quote">« J'ai besoin que les gars sur la ligne de production arrêtent de faire des erreurs et soient capables de tenir la cadence tout de suite. »</span></p>
+      <div class="sub-label">Interlocuteur</div>
+      <div class="persona-row" data-track="sitB-persona">
+        <button class="opt-btn" data-correct="false">RH</button>
+        <button class="opt-btn" data-correct="true">Opérationnel</button>
+        <button class="opt-btn" data-correct="false">Resp. Formation</button>
+      </div>
+      <div class="sub-label">Priorité à mettre en avant</div>
+      <textarea class="track-answer" data-track="sitB-prio" data-max="250" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 250</div>
+    </div>
+
+    <div class="question" data-qid="sitC">
+      <div class="q-label">Sit. C</div>
+      <p class="q-prompt"><span class="quote">« Nous faisons beaucoup de choses sur le terrain, mais je n'ai aucun outil pour voir clairement qui a validé quelle étape de son apprentissage. »</span></p>
+      <div class="sub-label">Interlocuteur</div>
+      <div class="persona-row" data-track="sitC-persona">
+        <button class="opt-btn" data-correct="false">RH</button>
+        <button class="opt-btn" data-correct="false">Opérationnel</button>
+        <button class="opt-btn" data-correct="true">Resp. Formation</button>
+      </div>
+      <div class="sub-label">Priorité à mettre en avant</div>
+      <textarea class="track-answer" data-track="sitC-prio" data-max="250" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 250</div>
+    </div>
+
+    <div class="question" data-qid="sitD">
+      <div class="q-label">Sit. D</div>
+      <p class="q-prompt"><span class="quote">« Notre technicien qui connaît vraiment le réglage de nos machines part à la retraite dans 2 mois, et personne d'autre ne maîtrise vraiment ces réglages critiques. »</span></p>
+      <div class="sub-label">Interlocuteur</div>
+      <div class="persona-row" data-track="sitD-persona">
+        <button class="opt-btn" data-correct="false">RH</button>
+        <button class="opt-btn" data-correct="true">Opérationnel</button>
+        <button class="opt-btn" data-correct="false">Resp. Formation</button>
+      </div>
+      <div class="sub-label">Priorité à mettre en avant</div>
+      <textarea class="track-answer" data-track="sitD-prio" data-max="250" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 250</div>
+      <p class="q-hint callout">⚠️ Même interlocuteur que la Situation B (Opérationnel) — mais est-ce la même priorité à mettre en avant ? Compare tes deux réponses.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Partie 2 — QCM : Maîtriser l'adaptation du discours</h2>
+
+    <div class="question" data-qid="q1">
+      <div class="q-label">Q1</div>
+      <p class="q-prompt">Selon la fiche, pourquoi est-il inefficace d'utiliser un discours unique pour tous tes appels ?</p>
+      <div class="options" data-track="q1">
+        <button class="opt-btn" data-correct="false">A — Parce que ça ennuie le prospect.</button>
+        <button class="opt-btn" data-correct="true">B — Parce que chaque personne a des responsabilités différentes et donc des priorités différentes.</button>
+        <button class="opt-btn" data-correct="false">C — Parce qu'il faut toujours commencer par parler du prix.</button>
+      </div>
+    </div>
+
+    <div class="question" data-qid="q2">
+      <div class="q-label">Q2</div>
+      <p class="q-prompt">Tu joins un Directeur d'exploitation ou un Manager terrain. Quelle est, le plus souvent, sa priorité ?</p>
+      <div class="options" data-track="q2">
+        <button class="opt-btn" data-correct="false">A — Suivre et tracer les compétences sur un outil.</button>
+        <button class="opt-btn" data-correct="true">B — Avoir des équipes efficaces et opérationnelles rapidement, avec moins d'erreurs.</button>
+        <button class="opt-btn" data-correct="false">C — Réduire le turnover et engager les managers.</button>
+      </div>
+      <p class="q-hint">Rappel : c'est la priorité la plus fréquente pour ce persona — mais pas systématique. Revois la Sit. D ci-dessus : même fonction, priorité différente selon le contexte.</p>
+    </div>
+
+    <div class="question" data-qid="q3">
+      <div class="q-label">Q3</div>
+      <p class="q-prompt">Quels sont les mots-clés qui parleront le plus à un DRH ?</p>
+      <div class="options" data-track="q3">
+        <button class="opt-btn" data-correct="true">A — Fidélisation, engagement et intégration.</button>
+        <button class="opt-btn" data-correct="false">B — Efficacité, rapidité et performance terrain.</button>
+        <button class="opt-btn" data-correct="false">C — Méthode, outils et visibilité.</button>
+      </div>
+    </div>
+
+    <div class="question" data-qid="q4">
+      <div class="q-label">Q4</div>
+      <p class="q-prompt">Que cherche avant tout un Responsable Formation (L&D) ?</p>
+      <div class="options" data-track="q4">
+        <button class="opt-btn" data-correct="false">A — Produire plus vite avec ses équipes.</button>
+        <button class="opt-btn" data-correct="false">B — Trouver des solutions pour stabiliser les effectifs.</button>
+        <button class="opt-btn" data-correct="true">C — Piloter efficacement les compétences terrain, suivre les progrès et organiser les formations.</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Partie 3 — Le pivot commercial</h2>
+    <div class="question" data-qid="q5">
+      <div class="q-label">Q5</div>
+      <p class="q-prompt">Comment modifies-tu instantanément ton approche face à ce changement d'interlocuteur ?</p>
+      <p class="q-hint">Contexte : tu appelles pour parler au <strong>DRH</strong> (turnover, fidélisation). Le standard te transfère par erreur au <strong>Responsable de production</strong>.<br>
+      → Sur quels bénéfices vas-tu pivoter ? En 1–2 phrases. Arrête de parler de ce qui intéresse le DRH — reformule sur ce qui intéresse un opérationnel.</p>
+      <textarea class="track-answer" data-track="q5" data-max="400" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 400</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Mise en situation — Entreprise de 1 200 salariés</h2>
+    <div class="question" data-qid="qM">
+      <div class="q-label">M</div>
+      <p class="q-prompt">Tu appelles une entreprise de 1 200 salariés. La personne te dit : <span class="quote">« On recrute beaucoup, mais les nouveaux ne restent pas. Après quelques semaines, ils partent et on doit recommencer. »</span></p>
+
+      <div class="sub-label">1 — Identifie le persona</div>
+      <div class="persona-row" data-track="qM-persona">
+        <button class="opt-btn" data-correct="true">RH</button>
+        <button class="opt-btn" data-correct="false">Opérationnel</button>
+        <button class="opt-btn" data-correct="false">Resp. Formation</button>
+      </div>
+
+      <div class="sub-label">2 — Identifie sa priorité</div>
+      <textarea class="track-answer" data-track="qM-prio" data-max="250" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 250</div>
+
+      <div class="sub-label">3 — Adapte ton message (1–2 phrases)</div>
+      <textarea class="track-answer" data-track="qM-msg" data-max="400" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 400</div>
+    </div>
+  </section>
+
+  <div class="score-block">
+    <span>Score Radars + QCM</span>
+    <span id="scoreDisplay">—</span>
+  </div>
+
+  <div class="submit-block">
+    <p><strong>Prêt·e à envoyer tes réponses ?</strong></p>
+    <p class="hint">Vérifie tes radars et QCM, puis télécharge le fichier et envoie-le à Miora.</p>
+    <div class="btn-row">
+      <button class="action" id="checkBtn">Vérifier mes réponses</button>
+      <button class="action secondary" id="downloadBtn">Télécharger mes réponses</button>
+      <button class="action secondary" id="printBtn">Imprimer</button>
+    </div>
+  </div>
+</main>
+
+<footer>Daylindo — Formation BDR · Fiche 4 — À qui on parle : Comprendre les personas · Exercice interne</footer>
+
+<script>
+  const answered = new Set();
+  // Scored (right/wrong) button-groups: persona selections + QCM
+  const scoredTracks = ['sitA-persona','sitB-persona','sitC-persona','sitD-persona','q1','q2','q3','q4','qM-persona'];
+  // All trackable units (scored + open text) for the progress bar
+  const allTracks = document.querySelectorAll('[data-track]');
+  const totalQ = allTracks.length;
+  document.getElementById('progressTotal').textContent = totalQ;
+
+  function updateProgress(){
+    document.getElementById('progressCount').textContent = answered.size;
+    document.getElementById('progressFill').style.width = (answered.size/totalQ*100) + '%';
+  }
+
+  document.querySelectorAll('[data-track] > .opt-btn, [data-track].options .opt-btn, [data-track].persona-row .opt-btn').forEach(() => {});
+
+  document.querySelectorAll('[data-track]').forEach(group => {
+    if (!group.classList.contains('options') && !group.classList.contains('persona-row')) return;
+    const trackId = group.dataset.track;
+    group.querySelectorAll('.opt-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (group.dataset.answered === 'true') return;
+        group.dataset.answered = 'true';
+        group.dataset.selected = btn.textContent.trim();
+        group.dataset.wasCorrect = btn.dataset.correct;
+        group.querySelectorAll('.opt-btn').forEach(b => {
+          b.disabled = true;
+          if (b.dataset.correct === 'true') b.classList.add('correct');
+          else if (b === btn) b.classList.add('incorrect');
+        });
+        answered.add(trackId);
+        updateProgress();
+      });
+    });
+  });
+
+  document.querySelectorAll('.track-answer').forEach(ta => {
+    const max = parseInt(ta.dataset.max, 10);
+    const trackId = ta.dataset.track;
+    const counter = ta.parentElement.querySelector('.charcount .cur');
+    ta.addEventListener('input', () => {
+      if (ta.value.length > max) ta.value = ta.value.slice(0, max);
+      if (counter) counter.textContent = ta.value.length;
+      if (ta.value.trim().length > 0) answered.add(trackId); else answered.delete(trackId);
+      updateProgress();
+    });
+  });
+
+  document.getElementById('checkBtn').addEventListener('click', () => {
+    let correct = 0, done = 0;
+    scoredTracks.forEach(trackId => {
+      const group = document.querySelector(`[data-track="${trackId}"]`);
+      if (group.dataset.answered === 'true') {
+        done++;
+        if (group.dataset.wasCorrect === 'true') correct++;
+      }
+    });
+    if (done < scoredTracks.length) {
+      document.getElementById('scoreDisplay').textContent = `Réponds aux ${scoredTracks.length} radars/QCM d'abord (${done}/${scoredTracks.length} fait)`;
+    } else {
+      document.getElementById('scoreDisplay').textContent = `${correct} / ${scoredTracks.length} bonnes réponses`;
+    }
+  });
+
+  function val(trackId){
+    const el = document.querySelector(`[data-track="${trackId}"]`);
+    if (!el) return '(vide)';
+    if (el.tagName === 'TEXTAREA') return el.value.trim() || '(vide)';
+    return el.dataset.selected || '(non répondu)';
+  }
+
+  function buildSummary(){
+    const name = document.getElementById('learnerName').value.trim() || 'Sans nom';
+    let correct = 0;
+    scoredTracks.forEach(t => { const g = document.querySelector(`[data-track="${t}"]`); if (g.dataset.wasCorrect === 'true') correct++; });
+    let lines = [`Fiche 4 — À qui on parle : Comprendre les personas`, `Prénom : ${name}`, '',
+      `Score Radars + QCM : ${correct} / ${scoredTracks.length}`, '',
+      `Sit. A — Interlocuteur : ${val('sitA-persona')} | Priorité : ${val('sitA-prio')}`,
+      `Sit. B — Interlocuteur : ${val('sitB-persona')} | Priorité : ${val('sitB-prio')}`,
+      `Sit. C — Interlocuteur : ${val('sitC-persona')} | Priorité : ${val('sitC-prio')}`,
+      `Sit. D — Interlocuteur : ${val('sitD-persona')} | Priorité : ${val('sitD-prio')}`, '',
+      `Q5 (pivot) : ${val('q5')}`, '',
+      `Mise en situation — Persona : ${val('qM-persona')} | Priorité : ${val('qM-prio')} | Message : ${val('qM-msg')}`
+    ];
+    return { name, text: lines.join('\n') };
+  }
+
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+    const { name, text } = buildSummary();
+    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Fiche4_${name.replace(/\s+/g,'_')}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+    const subject = encodeURIComponent(`Exercices Fiche 4 — ${name}`);
+    const body = encodeURIComponent(text);
+    window.location.href = `mailto:miora@daylindo.com?subject=${subject}&body=${body}`;
+  });
+
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+</script>
+
+</body>
+</html>
