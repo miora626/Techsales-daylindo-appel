@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche 1 — Comprendre la mission de Daylindo</title>
+<style>
+  :root{
+    --bg:#f6f7f7;
+    --surface:#ffffff;
+    --border:#e2e5e4;
+    --ink:#1e2a28;
+    --ink-soft:#5a6663;
+    --accent:#1f6f64;
+    --accent-dark:#16544c;
+    --accent-soft:#e6f0ee;
+    --good:#2e7d53;
+    --good-bg:#eaf6ef;
+    --bad:#b3413b;
+    --bad-bg:#fbeceb;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;
+  }
+  header{
+    padding:14px 24px;
+    background:var(--ink);
+    color:#fff;
+    font-size:14px;
+    letter-spacing:.02em;
+  }
+  main{
+    max-width:680px;
+    margin:0 auto;
+    padding:32px 20px 80px;
+  }
+  h1{
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:26px;
+    margin:0 0 6px;
+    color:var(--ink);
+  }
+  .lead{
+    color:var(--ink-soft);
+    margin:0 0 14px;
+    font-size:15px;
+  }
+  .meta{
+    font-size:13px;
+    color:var(--accent-dark);
+    font-weight:600;
+    margin-bottom:18px;
+  }
+  .instructions{
+    background:var(--accent-soft);
+    border:1px solid #cfe4e0;
+    border-radius:8px;
+    padding:14px 16px;
+    font-size:14px;
+    margin-bottom:22px;
+  }
+  .name-field{
+    margin-bottom:24px;
+  }
+  .name-field label{
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .name-field input{
+    width:100%;
+    padding:10px 12px;
+    border:1px solid var(--border);
+    border-radius:6px;
+    font-size:15px;
+    font-family:inherit;
+  }
+  .progress-wrap{margin-bottom:30px;}
+  .progress-label{font-size:13px;font-weight:600;margin-bottom:6px;}
+  .progress-bar{
+    height:8px;
+    background:var(--border);
+    border-radius:6px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background:var(--accent);
+    transition:width .25s ease;
+  }
+  section{margin-bottom:34px;}
+  section > h2{
+    font-size:16px;
+    border-bottom:2px solid var(--ink);
+    padding-bottom:6px;
+    margin-bottom:20px;
+  }
+  .question{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:18px 18px 20px;
+    margin-bottom:16px;
+  }
+  .q-label{
+    font-size:12px;
+    font-weight:700;
+    color:var(--accent-dark);
+    margin-bottom:6px;
+  }
+  .q-prompt{font-size:15px;font-weight:600;margin:0 0 14px;}
+  .q-prompt .quote{font-style:italic;color:var(--ink-soft);}
+  .options{display:flex;flex-direction:column;gap:8px;}
+  .opt-btn{
+    text-align:left;
+    padding:10px 14px;
+    border:1px solid var(--border);
+    border-radius:7px;
+    background:#fff;
+    cursor:pointer;
+    font-size:14px;
+    font-family:inherit;
+    color:var(--ink);
+  }
+  .opt-btn:hover{border-color:var(--accent);}
+  .opt-btn.correct{background:var(--good-bg);border-color:var(--good);color:var(--good);font-weight:600;}
+  .opt-btn.incorrect{background:var(--bad-bg);border-color:var(--bad);color:var(--bad);}
+  .opt-btn:disabled{cursor:default;}
+  .q-hint{font-size:13px;color:var(--ink-soft);margin:10px 0 0;}
+  textarea{
+    width:100%;
+    min-height:90px;
+    padding:12px 14px;
+    border:1px solid var(--border);
+    border-radius:7px;
+    font-family:inherit;
+    font-size:14px;
+    resize:vertical;
+  }
+  .charcount{font-size:12px;color:var(--ink-soft);text-align:right;margin-top:4px;}
+  .score-block{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px 18px;
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:24px;
+  }
+  #scoreDisplay{color:var(--accent-dark);}
+  .submit-block{
+    border-top:1px solid var(--border);
+    padding-top:22px;
+  }
+  .submit-block p{margin:0 0 6px;font-size:14px;}
+  .hint{color:var(--ink-soft);font-size:13px;margin-bottom:16px;}
+  .btn-row{display:flex;flex-wrap:wrap;gap:10px;}
+  button.action{
+    padding:11px 18px;
+    border-radius:7px;
+    border:1px solid var(--accent);
+    background:var(--accent);
+    color:#fff;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    font-family:inherit;
+  }
+  button.action:hover{background:var(--accent-dark);}
+  button.secondary{
+    background:#fff;
+    color:var(--accent-dark);
+  }
+  footer{
+    text-align:center;
+    font-size:12px;
+    color:var(--ink-soft);
+    padding:20px 0 40px;
+  }
+  @media print{
+    header, .submit-block, .instructions{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>Formation BDR — Daylindo</header>
+
+<main>
+  <h1>Fiche 1 — Comprendre la mission de Daylindo</h1>
+  <p class="lead">Exercices pratiques. Lis chaque question et remplis ta réponse. Envoie le fichier complété à Miora.</p>
+  <div class="meta">~10 minutes · 3 QCM · 3 Questions ouvertes</div>
+
+  <div class="instructions">
+    <strong>Instructions :</strong> Pour les QCM, clique sur la bonne réponse. Pour les questions ouvertes, rédige au moins 2 phrases.
+    Une fois terminé, clique sur « Télécharger mes réponses » et envoie le fichier à Miora.
+  </div>
+
+  <div class="name-field">
+    <label for="learnerName">Ton prénom</label>
+    <input type="text" id="learnerName" placeholder="Ton prénom">
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">Progression — <span id="progressCount">0</span> / 6</div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <section>
+    <h2>Questions à choix multiple</h2>
+
+    <div class="question" data-qid="q1">
+      <div class="q-label">Q1</div>
+      <p class="q-prompt">Quel est le problème principal que rencontrent les entreprises ciblées par Daylindo ?</p>
+      <div class="options">
+        <button class="opt-btn" data-correct="false">A — Elles n'arrivent pas à trouver de candidats pour leurs recrutements.</button>
+        <button class="opt-btn" data-correct="true">B — Les managers n'ont pas toujours le temps de bien transmettre les compétences terrain aux nouveaux, ce qui entraîne des erreurs et une perte du savoir-faire.</button>
+        <button class="opt-btn" data-correct="false">C — Leurs employés ne veulent pas utiliser de nouveaux logiciels.</button>
+      </div>
+    </div>
+
+    <div class="question" data-qid="q2">
+      <div class="q-label">Q2</div>
+      <p class="q-prompt">Concrètement, comment Daylindo aide-t-il les entreprises ?</p>
+      <div class="options">
+        <button class="opt-btn" data-correct="false">A — En proposant des formations théoriques dans des salles de classe classiques.</button>
+        <button class="opt-btn" data-correct="false">B — En remplaçant les managers par des formateurs externes.</button>
+        <button class="opt-btn" data-correct="true">C — En structurant la transmission des compétences opérationnelles directement au poste de travail, avec des formateurs terrain formés.</button>
+      </div>
+    </div>
+
+    <div class="question" data-qid="q3">
+      <div class="q-label">Q3</div>
+      <p class="q-prompt">Daylindo est-il uniquement un logiciel de formation ?</p>
+      <div class="options">
+        <button class="opt-btn" data-correct="false">A — Oui, c'est un outil informatique à télécharger.</button>
+        <button class="opt-btn" data-correct="true">B — Non, Daylindo est une démarche complète soutenue par une plateforme, qui permet aussi d'obtenir des preuves opposables des compétences transmises — pas juste un outil.</button>
+        <button class="opt-btn" data-correct="false">C — Non, Daylindo est uniquement une agence de recrutement.</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Questions ouvertes</h2>
+
+    <div class="question" data-qid="q4">
+      <div class="q-label">Q4 — Test de l'ami curieux</div>
+      <p class="q-prompt">Complète cette phrase de façon fluide et naturelle :<br>« Daylindo aide les entreprises à ______ pour ______. »</p>
+      <p class="q-hint">Inspire-toi de la fiche, mais reformule avec tes propres mots (max 20 mots au total).</p>
+      <textarea class="open-answer" data-max="300" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 300</div>
+    </div>
+
+    <div class="question" data-qid="q5">
+      <div class="q-label">Q5 — Le recadrage du prospect</div>
+      <p class="q-prompt">Il te dit : <span class="quote">« Vous vendez juste une nouvelle application pour faire de la formation sur ordinateur. »</span><br>→ Comment le corriges-tu en une phrase ?</p>
+      <p class="q-hint">Rédige au moins 2 phrases, avec tes propres mots. Sois direct·e et convaincant·e.</p>
+      <textarea class="open-answer" data-max="400" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 400</div>
+    </div>
+
+    <div class="question" data-qid="q6">
+      <div class="q-label">Q6 — Mise en situation</div>
+      <p class="q-prompt">Un Responsable RH te dit : <span class="quote">« Dites-moi juste en une phrase ce que fait votre société. »</span><br>→ Rédige une seule phrase, max 20 mots, orientée résultat, sans jargon.</p>
+      <p class="q-hint">Pense à l'interlocuteur : résultat concret, langage simple, pas de termes techniques. Reformule avec tes propres mots.</p>
+      <textarea class="open-answer" data-max="300" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 300</div>
+    </div>
+  </section>
+
+  <div class="score-block">
+    <span>Score QCM</span>
+    <span id="scoreDisplay">—</span>
+  </div>
+
+  <div class="submit-block">
+    <p><strong>Prêt·e à envoyer tes réponses ?</strong></p>
+    <p class="hint">Vérifie d'abord tes réponses QCM avec le bouton ci-dessous. Ensuite télécharge le fichier et envoie-le à Miora.</p>
+    <div class="btn-row">
+      <button class="action" id="checkBtn">Vérifier mes QCM</button>
+      <button class="action secondary" id="downloadBtn">Télécharger mes réponses</button>
+      <button class="action secondary" id="printBtn">Imprimer</button>
+    </div>
+  </div>
+</main>
+
+<footer>Daylindo — Formation BDR · Fiche 1 — Comprendre la mission · Exercice interne</footer>
+
+<script>
+  const answered = new Set();
+  const totalQ = 6;
+
+  function updateProgress(){
+    document.getElementById('progressCount').textContent = answered.size;
+    document.getElementById('progressFill').style.width = (answered.size/totalQ*100) + '%';
+  }
+
+  // QCM handling
+  document.querySelectorAll('.question[data-qid="q1"], .question[data-qid="q2"], .question[data-qid="q3"]').forEach(qDiv => {
+    const qid = qDiv.dataset.qid;
+    qDiv.querySelectorAll('.opt-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (qDiv.dataset.answered === 'true') return;
+        qDiv.dataset.answered = 'true';
+        qDiv.dataset.selected = btn.textContent.trim();
+        qDiv.dataset.wasCorrect = btn.dataset.correct;
+        qDiv.querySelectorAll('.opt-btn').forEach(b => {
+          b.disabled = true;
+          if (b.dataset.correct === 'true') b.classList.add('correct');
+          else if (b === btn) b.classList.add('incorrect');
+        });
+        answered.add(qid);
+        updateProgress();
+      });
+    });
+  });
+
+  // Open questions handling
+  document.querySelectorAll('.open-answer').forEach(ta => {
+    const max = parseInt(ta.dataset.max, 10);
+    const counter = ta.parentElement.querySelector('.charcount .cur');
+    const qDiv = ta.closest('.question');
+    ta.addEventListener('input', () => {
+      if (ta.value.length > max) ta.value = ta.value.slice(0, max);
+      counter.textContent = ta.value.length;
+      if (ta.value.trim().length > 0) answered.add(qDiv.dataset.qid);
+      else answered.delete(qDiv.dataset.qid);
+      updateProgress();
+    });
+  });
+
+  document.getElementById('checkBtn').addEventListener('click', () => {
+    const qcmDivs = document.querySelectorAll('.question[data-qid="q1"], .question[data-qid="q2"], .question[data-qid="q3"]');
+    let correct = 0, done = 0;
+    qcmDivs.forEach(q => {
+      if (q.dataset.answered === 'true') {
+        done++;
+        if (q.dataset.wasCorrect === 'true') correct++;
+      }
+    });
+    if (done < 3) {
+      document.getElementById('scoreDisplay').textContent = `Réponds aux 3 QCM d'abord (${done}/3 fait)`;
+    } else {
+      document.getElementById('scoreDisplay').textContent = `${correct} / 3 bonnes réponses`;
+    }
+  });
+
+  function buildSummary(){
+    const name = document.getElementById('learnerName').value.trim() || 'Sans nom';
+    const qcmDivs = document.querySelectorAll('.question[data-qid="q1"], .question[data-qid="q2"], .question[data-qid="q3"]');
+    let correct = 0;
+    let lines = [`Fiche 1 — Comprendre la mission de Daylindo`, `Prénom : ${name}`, ''];
+    qcmDivs.forEach((q, i) => {
+      const status = q.dataset.answered === 'true' ? (q.dataset.wasCorrect === 'true' ? 'Correct' : 'Incorrect') : 'Non répondu';
+      if (q.dataset.wasCorrect === 'true') correct++;
+      lines.push(`Q${i+1} : ${status}`);
+      if (q.dataset.selected) lines.push(`  Réponse choisie : ${q.dataset.selected}`);
+    });
+    lines.push('', `Score QCM : ${correct} / 3`, '');
+    document.querySelectorAll('.open-answer').forEach((ta, i) => {
+      lines.push(`Q${i+4} : ${ta.value.trim() || '(vide)'}`, '');
+    });
+    return { name, text: lines.join('\n') };
+  }
+
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+    const { name, text } = buildSummary();
+    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Fiche1_${name.replace(/\s+/g,'_')}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+    const subject = encodeURIComponent(`Exercices Fiche 1 — ${name}`);
+    const body = encodeURIComponent(text);
+    window.location.href = `mailto:miora@daylindo.com?subject=${subject}&body=${body}`;
+  });
+
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+</script>
+
+</body>
+</html>
