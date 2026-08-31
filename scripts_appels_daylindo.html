@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scripts d'appel Daylindo — Par segment & persona</title>
+<style>
+  :root{
+    --bg:#f6f7f7; --surface:#ffffff; --border:#e2e5e4;
+    --ink:#1e2a28; --ink-soft:#5a6663;
+    --accent:#1f6f64; --accent-dark:#16544c; --accent-soft:#e6f0ee;
+    --warn:#a8711f; --warn-bg:#fdf3e3;
+    --rh:#8a4b8f; --rh-bg:#f5edf6;
+    --op:#1f6f64; --op-bg:#e6f0ee;
+    --ld:#2a5d8a; --ld-bg:#e9f1f8;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55;}
+  header{padding:14px 24px;background:var(--ink);color:#fff;font-size:14px;letter-spacing:.02em;}
+  main{max-width:780px;margin:0 auto;padding:32px 20px 80px;}
+  h1{font-family:Georgia,"Times New Roman",serif;font-size:24px;margin:0 0 6px;color:var(--ink);}
+  .lead{color:var(--ink-soft);margin:0 0 18px;font-size:15px;}
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px;}
+  .toc a{background:var(--accent-soft);border:1px solid #cfe4e0;border-radius:6px;padding:6px 12px;
+    font-size:12.5px;font-weight:600;color:var(--accent-dark);text-decoration:none;}
+  .rule-box{background:var(--warn-bg);border:1px solid #ecd9b3;border-radius:8px;padding:14px 16px;
+    font-size:13.5px;color:var(--warn);margin-bottom:28px;}
+  .rule-box strong{color:var(--ink);}
+  .segment-block{margin-bottom:44px;}
+  .segment-head{background:var(--ink);color:#fff;border-radius:10px 10px 0 0;padding:14px 18px;}
+  .segment-head h2{margin:0 0 4px;font-size:18px;}
+  .segment-head p{margin:0;font-size:13px;color:#cfd6d4;}
+  .segment-body{background:var(--surface);border:1px solid var(--border);border-top:none;
+    border-radius:0 0 10px 10px;padding:20px;}
+  .step{margin-bottom:20px;}
+  .step-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;
+    color:var(--accent-dark);margin-bottom:6px;}
+  .script-line{background:#fbf9f4;border:1px solid #e8e2d4;border-left:3px solid var(--accent);
+    border-radius:7px;padding:11px 14px;font-size:13.5px;font-style:italic;margin-bottom:6px;}
+  .q-list{margin:0 0 4px;padding-left:18px;font-size:13.5px;}
+  .q-list li{padding:3px 0;}
+  .persona-branch{border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:12px;}
+  .persona-branch.rh{border-left:4px solid var(--rh);}
+  .persona-branch.op{border-left:4px solid var(--op);}
+  .persona-branch.ld{border-left:4px solid var(--ld);}
+  .persona-branch-title{font-size:13.5px;font-weight:700;margin:0 0 8px;}
+  .persona-branch.rh .persona-branch-title{color:var(--rh);}
+  .persona-branch.op .persona-branch-title{color:var(--op);}
+  .persona-branch.ld .persona-branch-title{color:var(--ld);}
+  .obj-label{font-size:12.5px;font-weight:700;margin:8px 0 4px;color:var(--ink-soft);}
+  .caution-block{background:var(--warn-bg);border:1px solid #ecd9b3;border-radius:8px;padding:14px 16px;margin-bottom:16px;}
+  .caution-block .step-label{color:var(--warn);}
+  .financing-note{font-size:12.5px;color:var(--ink-soft);font-style:italic;margin-top:14px;padding-top:12px;border-top:1px dashed var(--border);}
+  footer{text-align:center;font-size:12px;color:var(--ink-soft);padding:20px 0 40px;}
+  @media print{header{display:none;}}
+</style>
+</head>
+<body>
+
+<header>Formation BDR — Daylindo</header>
+
+<main>
+  <h1>Scripts d'appel — Par segment & persona</h1>
+  <p class="lead">Une fois que tu as identifié le segment (recherche préalable) et le persona (Mission 2, en direct), voici comment structurer ton appel jusqu'à la proposition de RDV. Toujours dans l'ordre : Attirer l'attention → Comprendre les enjeux → Créer l'intérêt → Proposer un RDV (Module 6).</p>
+
+  <div class="toc">
+    <a href="#s1">💰 S1 — Turnover & coûts</a>
+    <a href="#s2">🔧 S2 — Gestes métiers</a>
+    <a href="#s3">🏦 S3 — Réseaux multi-sites</a>
+    <a href="#sante">🏥 Santé (hybride)</a>
+    <a href="#transport">🚚 Transport (prudence)</a>
+    <a href="#agro">🌾 Agroalimentaire</a>
+  </div>
+
+  <div class="rule-box">
+    <strong>Règle qui traverse tous les scripts :</strong> la Mission 3 (Créer l'intérêt) se construit toujours à partir de ce que le prospect vient de dire en Mission 2 — jamais un argument générique récité. Le financement (OPCO/AFEST) n'ouvre jamais un appel : il vient en réponse, une fois le vrai problème posé, ou quand c'est le prospect qui pose la question.
+  </div>
+
+  <div class="segment-block" id="s1">
+    <div class="segment-head">
+      <h2>💰 S1 — Turnover & coûts d'intégration</h2>
+      <p>Intérim · Saisonniers · Logistique · BTP (main-d'œuvre) · Retail mono-site</p>
+    </div>
+    <div class="segment-body">
+
+      <div class="step">
+        <div class="step-label">1 · Attirer l'attention (avant de savoir qui décroche)</div>
+        <div class="script-line">« Bonjour [Prénom], [Ton prénom] de Daylindo. Je vous appelle parce qu'on aide des entreprises comme la vôtre à réduire le temps et le coût d'intégration de leurs nouvelles recrues. Vous avez 2 minutes ? »</div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">2 · Comprendre les enjeux</div>
+        <ul class="q-list">
+          <li>« Aujourd'hui, combien de temps faut-il en moyenne à un nouveau pour être vraiment autonome sur son poste ? »</li>
+          <li>« Comment se passe l'intégration concrètement — qui forme, avec quel support ? »</li>
+          <li>« Vous avez déjà exploré les financements OPCO pour ces formations, ou c'est un sujet que vous n'avez pas eu le temps de creuser ? »</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <div class="step-label">3 · Créer l'intérêt — selon qui répond</div>
+
+        <div class="persona-branch rh">
+          <p class="persona-branch-title">👥 RH / DRH — a évoqué turnover, fidélisation</p>
+          <div class="script-line">« Ce que vous décrivez, on le voit beaucoup dans votre secteur — le sujet, ce n'est pas juste de former plus vite, c'est de réussir à garder les gens plus longtemps. Nos clients réduisent nettement le turnover précoce en structurant mieux cette première période. »</div>
+          <p class="obj-label">Objection fréquente : « On a déjà un parcours d'intégration. »</p>
+          <div class="script-line">« C'est exactement le bon point de départ — la question, c'est : est-ce qu'il est suivi et mesuré, ou est-ce que ça dépend de qui forme ce jour-là ? »</div>
+        </div>
+
+        <div class="persona-branch op">
+          <p class="persona-branch-title">⚙️ Opérationnel — a évoqué cadence, erreurs, productivité</p>
+          <div class="script-line">« Ce que vous décrivez, on le voit beaucoup en logistique/BTP — nos clients réduisent le temps avant qu'un nouveau tienne vraiment la cadence, ce qui limite les erreurs des premières semaines. »</div>
+          <p class="obj-label">Objection fréquente : « On n'a pas le temps de mettre en place un nouveau truc. »</p>
+          <div class="script-line">« Justement, ça ne rajoute pas de charge à vos équipes — ce sont vos propres experts terrain qui transmettent, mais avec une méthode, pas avec plus de temps. »</div>
+        </div>
+
+        <div class="persona-branch ld">
+          <p class="persona-branch-title">📊 Resp. Formation — moins fréquent en S1, mais possible dans les grosses structures</p>
+          <div class="script-line">« Ce que vous décrivez rejoint ce qu'on résout souvent : le suivi et la traçabilité de ce qui a été réellement acquis — pas juste "a suivi la formation". »</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">4 · Proposer un RDV</div>
+        <div class="script-line">« Est-ce que ça vaut le coup qu'on vous montre comment ça fonctionne concrètement, avec un expert ? »</div>
+      </div>
+
+      <div class="financing-note">💰 Financement — seulement si le prospect pose la question ou si le coût est déjà au centre de l'échange : « Selon les profils, on aide à récupérer entre 1 000€ et 2 500€ par collaborateur formé via les OPCO — mais ça vient en complément, ce n'est pas le cœur du sujet. »</div>
+      <p class="obj-label" style="margin-top:14px;">Réf. : Supplay · Adéquat · Grands acteurs logistique</p>
+    </div>
+  </div>
+
+  <div class="segment-block" id="s2">
+    <div class="segment-head">
+      <h2>🔧 S2 — Gestes métiers & savoir-faire critiques</h2>
+      <p>Industrie · Énergie · Aéronautique · Télécom · Secteurs réglementés · BTP technique</p>
+    </div>
+    <div class="segment-body">
+
+      <div class="step">
+        <div class="step-label">1 · Attirer l'attention</div>
+        <div class="script-line">« Je vous appelle parce qu'on travaille avec des entreprises industrielles confrontées à un sujet précis : sécuriser un savoir-faire qui repose sur peu de personnes. Ça vous parle ? »</div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">2 · Comprendre les enjeux</div>
+        <ul class="q-list">
+          <li>« Est-ce que vous avez des postes où la compétence repose vraiment sur une ou deux personnes expérimentées ? »</li>
+          <li>« Si cette personne partait demain, qu'est-ce qui se passerait ? »</li>
+          <li>« Aujourd'hui, comment est transmis ce savoir-faire — c'est écrit quelque part, ou ça reste dans la tête des gens ? »</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <div class="step-label">3 · Créer l'intérêt — selon qui répond</div>
+
+        <div class="persona-branch op">
+          <p class="persona-branch-title">⚙️ Dir. Production / Opérations — a évoqué un expert qui part, un geste qui se perd</p>
+          <div class="script-line">« Ce qu'on fait, concrètement, c'est capturer et structurer ce que vos experts savent faire, avant qu'ils partent — pas remplacer leur expertise, la sécuriser. »</div>
+          <p class="obj-label">Objection fréquente : « Nos experts n'ont pas le temps de former. »</p>
+          <div class="script-line">« C'est justement pour ça qu'on les outille avec une méthode simple, pas une usine à gaz — ça leur prend moins de temps que de réexpliquer à chaque nouvel arrivant sans support. »</div>
+        </div>
+
+        <div class="persona-branch ld">
+          <p class="persona-branch-title">📊 Resp. Formation / L&D — ou Resp. HSE / Conformité — a évoqué audit, habilitations, preuve</p>
+          <div class="script-line">« Ce qu'on apporte ici, c'est de rendre la compétence opposable — vous pouvez la montrer à un auditeur ou un client, pas juste dire "il a suivi la formation". »</div>
+          <p class="obj-label">Objection fréquente : « On a déjà un système de traçabilité. »</p>
+          <div class="script-line">« Est-ce qu'il trace vraiment la compétence acquise sur le terrain, ou juste la présence à une session ? »</div>
+        </div>
+
+        <div class="persona-branch rh">
+          <p class="persona-branch-title">👥 DRH — moins central en S2, angle fidélisation des experts</p>
+          <div class="script-line">« Sécuriser ce savoir-faire, c'est aussi valoriser vos collaborateurs expérimentés comme référents — un vrai levier de fidélisation en fin de carrière. »</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">4 · Proposer un RDV</div>
+        <div class="script-line">« Est-ce que ça vaut le coup qu'on vous montre comment ça fonctionne concrètement, avec un expert ? »</div>
+      </div>
+
+      <p class="obj-label" style="margin-top:14px;">Réf. : Orange · Thalès · Saur · Dekra</p>
+    </div>
+  </div>
+
+  <div class="segment-block" id="s3">
+    <div class="segment-head">
+      <h2>🏦 S3 — Réseaux multi-sites</h2>
+      <p>Franchise · Bancaire · Assurance · Réseaux boutiques · Retail multi-sites</p>
+    </div>
+    <div class="segment-body">
+
+      <div class="step">
+        <div class="step-label">1 · Attirer l'attention</div>
+        <div class="script-line">« Je vous appelle parce qu'on aide les réseaux à harmoniser les pratiques entre leurs sites — aujourd'hui, avez-vous une vraie visibilité sur ce qui se passe agence par agence en termes de compétences ? »</div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">2 · Comprendre les enjeux</div>
+        <ul class="q-list">
+          <li>« Comment savez-vous si chaque site applique vraiment le même parcours d'intégration ? »</li>
+          <li>« Avez-vous déjà eu des écarts de pratique entre deux sites qui vous ont posé problème ? »</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <div class="step-label">3 · Créer l'intérêt — selon qui répond</div>
+
+        <div class="persona-branch rh">
+          <p class="persona-branch-title">👥 DRH groupe / 📊 Dir. Formation — a évoqué l'absence de visibilité centrale</p>
+          <div class="script-line">« On centralise la visibilité — vous voyez en temps réel où en est chaque site, sans dépendre du reporting manuel de chaque manager. »</div>
+        </div>
+
+        <div class="persona-branch op">
+          <p class="persona-branch-title">⚙️ Dir. Réseau / Exploitation — a évoqué l'hétérogénéité des pratiques terrain</p>
+          <div class="script-line">« Ça vous permet d'harmoniser sans complexifier le quotidien des équipes terrain — chaque manager garde son autonomie, mais avec un référentiel commun. »</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">4 · Proposer un RDV</div>
+        <div class="script-line">« Est-ce que ça vaut le coup qu'on vous montre comment ça fonctionne concrètement, avec un expert ? »</div>
+      </div>
+
+      <div class="financing-note">💰 Financement — uniquement en réponse : « Pour les permanents en agence, on structure aussi la partie financement OPCO — ça vient s'ajouter, une fois qu'on a vu le reste. »</div>
+      <p class="obj-label" style="margin-top:14px;">Réf. : Supplay · Adéquat · Réseau franchises</p>
+    </div>
+  </div>
+
+  <div class="segment-block" id="sante">
+    <div class="segment-head">
+      <h2>🏥 Santé — cas hybride, pas purement S2</h2>
+      <p>Combine vitesse d'intégration (comme S1) et valorisation/fidélisation — jamais réduit à la seule perte de savoir-faire expert</p>
+    </div>
+    <div class="segment-body">
+      <div class="caution-block">
+        <div class="step-label">⚠️ Pourquoi ce n'est pas un simple S2</div>
+        Contrairement à l'industrie lourde, la priorité n°1 en santé est le plus souvent de former vite et efficacement, avec un vrai enjeu de fidélisation — pas la capitalisation d'un savoir-faire d'expert proche du départ. Ne jamais ouvrir sur "vos experts vont partir avec leur savoir-faire" en santé : ça ne correspond pas au problème vécu.
+      </div>
+
+      <div class="step">
+        <div class="step-label">1 · Attirer l'attention</div>
+        <div class="script-line">« Je vous appelle parce qu'on aide des structures de santé à former plus vite leurs nouvelles recrues, sur des postes où l'erreur coûte cher — et à fidéliser via une vraie perspective de compétences reconnues. »</div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">2 · Comprendre les enjeux</div>
+        <ul class="q-list">
+          <li>« Comment se passe l'intégration des nouveaux aujourd'hui — combien de temps avant qu'ils soient pleinement autonomes ? »</li>
+          <li>« Est-ce que vous avez des difficultés à garder vos équipes sur la durée ? »</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <div class="step-label">3 · Créer l'intérêt</div>
+        <div class="script-line">« Ce qu'on apporte, c'est à la fois une montée en compétence plus rapide sur le poste, et une reconnaissance concrète des compétences acquises — ce qui aide aussi à fidéliser vos équipes sur la durée. »</div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">4 · Proposer un RDV</div>
+        <div class="script-line">« Est-ce que ça vaut le coup qu'on vous montre comment ça fonctionne concrètement ? »</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="segment-block" id="transport">
+    <div class="segment-head">
+      <h2>🚚 Transport — à traiter avec prudence</h2>
+      <p>Métiers très encadrés par des protocoles de sécurité — l'angle qui fonctionne est le suivi/la traçabilité, pas la pédagogie ni l'argent</p>
+    </div>
+    <div class="segment-body">
+      <div class="caution-block">
+        <div class="step-label">⚠️ Ce qu'il ne faut jamais faire ici</div>
+        Ne jamais forcer un argument AFEST — le contexte réglementaire du transport ne s'y prête pas toujours. Ne jamais amener le financement de façon insistante ou en ouverture. Toujours vérifier le contexte précis avec un expert avant de formuler un argument financier.
+      </div>
+
+      <div class="step">
+        <div class="step-label">1 · Attirer l'attention</div>
+        <div class="script-line">« Je vous appelle parce qu'on aide des entreprises de transport à centraliser le suivi des habilitations et des formations obligatoires de leurs conducteurs. »</div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">2 · Comprendre les enjeux</div>
+        <ul class="q-list">
+          <li>« Comment suivez-vous aujourd'hui qui a bien ses habilitations à jour ? »</li>
+          <li>« Est-ce que ça vous a déjà posé problème lors d'un contrôle ? »</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <div class="step-label">3 · Créer l'intérêt</div>
+        <div class="script-line">« Ce qu'on apporte, c'est un suivi centralisé et traçable du parcours de formation de chaque conducteur — vous savez à tout moment qui est à jour sur quoi. »</div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">4 · Proposer un RDV</div>
+        <div class="script-line">« Est-ce que ça vaut le coup qu'un expert vous montre comment on structure ce suivi ? »</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="segment-block" id="agro">
+    <div class="segment-head">
+      <h2>🌾 Agroalimentaire — au cas par cas, jamais généralisé</h2>
+      <p>Certains postes ressemblent à S1 (tâches simples, turnover), d'autres à S2 (savoir-faire technique) — à distinguer dès la découverte</p>
+    </div>
+    <div class="segment-body">
+      <div class="step">
+        <div class="step-label">1 · Attirer l'attention (neutre, avant de savoir lequel des deux cas s'applique)</div>
+        <div class="script-line">« Je vous appelle parce qu'on aide des entreprises agroalimentaires à structurer la formation sur leurs postes de production. »</div>
+      </div>
+
+      <div class="step">
+        <div class="step-label">2 · Comprendre les enjeux — la question qui tranche</div>
+        <ul class="q-list">
+          <li>« Vos postes de production, ce sont plutôt des tâches répétitives, ou ça demande un vrai savoir-faire technique ? »</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <div class="step-label">3 · Créer l'intérêt — selon la réponse</div>
+        <div class="script-line"><strong>Si tâches simples / turnover</strong> → reprendre le script S1 (angle vitesse d'intégration, coût du turnover).</div>
+        <div class="script-line"><strong>Si savoir-faire technique</strong> → reprendre le script S2 (angle sécurisation du geste, transmission avant départ).</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>Daylindo — Formation BDR · Scripts d'appel par segment & persona · Document interne</footer>
+
+</body>
+</html>
