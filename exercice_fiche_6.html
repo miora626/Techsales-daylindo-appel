@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche 6 — Le rôle du BDR chez Daylindo</title>
+<style>
+  :root{
+    --bg:#f6f7f7; --surface:#ffffff; --border:#e2e5e4;
+    --ink:#1e2a28; --ink-soft:#5a6663;
+    --accent:#1f6f64; --accent-dark:#16544c; --accent-soft:#e6f0ee;
+    --good:#2e7d53; --good-bg:#eaf6ef; --bad:#b3413b; --bad-bg:#fbeceb;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55;}
+  header{padding:14px 24px;background:var(--ink);color:#fff;font-size:14px;letter-spacing:.02em;}
+  main{max-width:700px;margin:0 auto;padding:32px 20px 80px;}
+  h1{font-family:Georgia,"Times New Roman",serif;font-size:23px;margin:0 0 6px;color:var(--ink);}
+  .lead{color:var(--ink-soft);margin:0 0 14px;font-size:15px;}
+  .meta{font-size:13px;color:var(--accent-dark);font-weight:600;margin-bottom:14px;}
+  .mission-flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:20px;}
+  .mission-flow .step{background:var(--accent-soft);border:1px solid #cfe4e0;border-radius:8px;padding:8px 12px;
+    font-size:12px;color:var(--accent-dark);font-weight:600;display:flex;align-items:center;gap:6px;}
+  .mission-flow .arrow{color:var(--ink-soft);}
+  .instructions{background:var(--accent-soft);border:1px solid #cfe4e0;border-radius:8px;padding:14px 16px;font-size:14px;margin-bottom:22px;}
+  .name-field{margin-bottom:24px;}
+  .name-field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;}
+  .name-field input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:6px;font-size:15px;font-family:inherit;}
+  .progress-wrap{margin-bottom:30px;}
+  .progress-label{font-size:13px;font-weight:600;margin-bottom:6px;}
+  .progress-bar{height:8px;background:var(--border);border-radius:6px;overflow:hidden;}
+  .progress-fill{height:100%;width:0%;background:var(--accent);transition:width .25s ease;}
+  section{margin-bottom:34px;}
+  section > h2{font-size:16px;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:20px;}
+  .question{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 18px 20px;margin-bottom:16px;}
+  .q-label{font-size:12px;font-weight:700;color:var(--accent-dark);margin-bottom:6px;}
+  .q-prompt{font-size:15px;font-weight:600;margin:0 0 6px;}
+  .q-prompt .quote{font-style:italic;color:var(--ink-soft);font-weight:500;}
+  .options{display:flex;flex-direction:column;gap:8px;}
+  .opt-btn{text-align:left;padding:10px 14px;border:1px solid var(--border);border-radius:7px;background:#fff;
+    cursor:pointer;font-size:14px;font-family:inherit;color:var(--ink);}
+  .opt-btn:hover{border-color:var(--accent);}
+  .opt-btn.correct{background:var(--good-bg);border-color:var(--good);color:var(--good);font-weight:600;}
+  .opt-btn.incorrect{background:var(--bad-bg);border-color:var(--bad);color:var(--bad);}
+  .opt-btn:disabled{cursor:default;}
+  .order-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+  .order-row .mission-name{flex:1 1 220px;font-size:14px;font-weight:600;}
+  .order-row .num-group{display:flex;gap:6px;}
+  .order-row .num-group .opt-btn{min-width:38px;text-align:center;padding:8px 10px;}
+  .q-hint{font-size:13px;color:var(--ink-soft);margin:8px 0 0;}
+  .sub-label{font-size:13px;font-weight:700;color:var(--ink);margin:14px 0 6px;}
+  textarea{width:100%;min-height:70px;padding:12px 14px;border:1px solid var(--border);border-radius:7px;
+    font-family:inherit;font-size:14px;resize:vertical;}
+  .charcount{font-size:12px;color:var(--ink-soft);text-align:right;margin-top:4px;}
+  .score-block{display:flex;align-items:center;justify-content:space-between;background:var(--surface);
+    border:1px solid var(--border);border-radius:10px;padding:14px 18px;font-size:14px;font-weight:600;margin-bottom:24px;}
+  #scoreDisplay{color:var(--accent-dark);}
+  .submit-block{border-top:1px solid var(--border);padding-top:22px;}
+  .submit-block p{margin:0 0 6px;font-size:14px;}
+  .hint{color:var(--ink-soft);font-size:13px;margin-bottom:16px;}
+  .btn-row{display:flex;flex-wrap:wrap;gap:10px;}
+  button.action{padding:11px 18px;border-radius:7px;border:1px solid var(--accent);background:var(--accent);
+    color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
+  button.action:hover{background:var(--accent-dark);}
+  button.secondary{background:#fff;color:var(--accent-dark);}
+  footer{text-align:center;font-size:12px;color:var(--ink-soft);padding:20px 0 40px;}
+  @media print{header, .submit-block, .instructions{display:none;}}
+</style>
+</head>
+<body>
+
+<header>Formation BDR — Daylindo</header>
+
+<main>
+  <h1>Fiche 6 — Le rôle du BDR chez Daylindo</h1>
+  <p class="lead">Maîtrise les 4 missions du BDR, évite les erreurs classiques et structure chaque appel pour décrocher le rendez-vous.</p>
+  <div class="meta">~15 minutes · 3 Audits · 5 QCM · 1 Ordre · 1 Phrase clé</div>
+
+  <div class="mission-flow">
+    <span class="step">1 · Attirer l'attention</span><span class="arrow">→</span>
+    <span class="step">2 · Comprendre les enjeux</span><span class="arrow">→</span>
+    <span class="step">3 · Créer de l'intérêt</span><span class="arrow">→</span>
+    <span class="step">4 · Proposer un RDV</span>
+  </div>
+
+  <div class="instructions">
+    <strong>Instructions :</strong> Partie 1 — identifie l'erreur et écris la correction. Partie 2 — QCM. Partie 3 — remets les 4 missions dans l'ordre exact et rédige ta phrase de RDV.
+    Clique sur « Vérifier » puis « Télécharger » pour envoyer à Miora.
+  </div>
+
+  <div class="name-field">
+    <label for="learnerName">Ton prénom</label>
+    <input type="text" id="learnerName" placeholder="Ton prénom">
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">Progression — <span id="progressCount">0</span> / <span id="progressTotal">?</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <section>
+    <h2>Partie 1 — L'audit de l'appel : identifie l'erreur et la correction</h2>
+    <p class="q-hint" style="margin-bottom:16px;">Pour chaque situation, identifie l'erreur du BDR et écris la correction à appliquer.</p>
+
+    <div class="question" data-qid="sitA">
+      <div class="q-label">Sit. A — Le monologue</div>
+      <p class="q-prompt">Le BDR est au téléphone depuis 3 minutes et monologue pour détailler toutes les étapes de la démarche Daylindo sans laisser le prospect respirer.</p>
+      <p class="q-hint">💡 Indice : que faire pour que le prospect ne décroche pas mentalement ?</p>
+      <div class="sub-label">❌ Erreur commise</div>
+      <textarea class="track-answer" data-track="sitA-erreur" data-max="250" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 250</div>
+      <div class="sub-label">✓ Correction à appliquer</div>
+      <textarea class="track-answer" data-track="sitA-correction" data-max="300" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 300</div>
+    </div>
+
+    <div class="question" data-qid="sitB">
+      <div class="q-label">Sit. B — Le vendeur prématuré</div>
+      <p class="q-prompt">Le prospect semble intéressé, et le BDR lui répond : <span class="quote">« C'est parfait, je vous envoie notre contrat et nos tarifs pour que vous puissiez nous acheter la prestation. »</span></p>
+      <p class="q-hint">💡 Indice : souviens-toi que ton rôle n'est pas de vendre.</p>
+      <div class="sub-label">❌ Erreur commise</div>
+      <textarea class="track-answer" data-track="sitB-erreur" data-max="250" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 250</div>
+      <div class="sub-label">✓ Correction à appliquer</div>
+      <textarea class="track-answer" data-track="sitB-correction" data-max="300" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 300</div>
+    </div>
+
+    <div class="question" data-qid="sitC">
+      <div class="q-label">Sit. C — Le technicien dès le départ</div>
+      <p class="q-prompt">Dès les premières secondes, le BDR se lance dans une explication technique complexe sur la différence entre une plateforme et une méthode d'ingénierie.</p>
+      <p class="q-hint">💡 Indice : que faut-il donner au prospect pour attirer son attention sans le perdre ?</p>
+      <div class="sub-label">❌ Erreur commise</div>
+      <textarea class="track-answer" data-track="sitC-erreur" data-max="250" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 250</div>
+      <div class="sub-label">✓ Correction à appliquer</div>
+      <textarea class="track-answer" data-track="sitC-correction" data-max="300" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 300</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Partie 2 — QCM : Maîtriser les 4 missions du BDR</h2>
+
+    <div class="question" data-qid="q1">
+      <div class="q-label">Q1</div>
+      <p class="q-prompt">Selon la fiche, quel est ton objectif principal et final en tant que BDR chez Daylindo ?</p>
+      <div class="options" data-track="q1">
+        <button class="opt-btn" data-correct="false">A — Vendre la solution directement au téléphone.</button>
+        <button class="opt-btn" data-correct="false">B — Présenter l'intégralité de l'offre Daylindo en détail.</button>
+        <button class="opt-btn" data-correct="true">C — Obtenir un rendez-vous qualifié avec un expert.</button>
+      </div>
+    </div>
+
+    <div class="question" data-qid="q2">
+      <div class="q-label">Q2</div>
+      <p class="q-prompt">Que dois-tu faire pour accomplir ta mission n°2 — « Comprendre les enjeux » ?</p>
+      <div class="options" data-track="q2">
+        <button class="opt-btn" data-correct="false">A — Parler de Daylindo pendant 5 minutes.</button>
+        <button class="opt-btn" data-correct="true">B — Poser des questions, écouter et creuser pour découvrir si le prospect a un besoin réel.</button>
+        <button class="opt-btn" data-correct="false">C — Faire comprendre qu'il y a une opportunité financière.</button>
+      </div>
+    </div>
+
+    <div class="question" data-qid="q3">
+      <div class="q-label">Q3</div>
+      <p class="q-prompt">Comment dois-tu accomplir ta mission n°3 — « Créer de l'intérêt » — de façon efficace ?</p>
+      <div class="options" data-track="q3">
+        <button class="opt-btn" data-correct="false">A — En donnant un chiffre financier généraliste, même si le prospect n'a encore rien dit sur son problème.</button>
+        <button class="opt-btn" data-correct="true">B — En reliant un bénéfice concret au besoin que le prospect vient d'exprimer en Mission 2.</button>
+        <button class="opt-btn" data-correct="false">C — En listant toutes les fonctionnalités de la plateforme Daylindo.</button>
+      </div>
+      <p class="q-hint">L'intérêt se construit à partir de ce que le prospect vient de dire — jamais à partir d'un chiffre lâché à froid.</p>
+    </div>
+
+    <div class="question" data-qid="q4">
+      <div class="q-label">Q4</div>
+      <p class="q-prompt">Quel est le risque majeur si tu essaies de vendre directement au téléphone au lieu de proposer un rendez-vous ?</p>
+      <div class="options" data-track="q4">
+        <button class="opt-btn" data-correct="true">A — Le prospect va se braquer.</button>
+        <button class="opt-btn" data-correct="false">B — Le prospect va acheter sans négocier.</button>
+        <button class="opt-btn" data-correct="false">C — Le prospect va demander à parler au DRH.</button>
+      </div>
+    </div>
+
+    <div class="question" data-qid="q5">
+      <div class="q-label">Q5</div>
+      <p class="q-prompt">Si le prospect décroche mentalement pendant que tu parles, quelle est la solution immédiate ?</p>
+      <div class="options" data-track="q5">
+        <button class="opt-btn" data-correct="false">A — Proposer un rendez-vous tout de suite.</button>
+        <button class="opt-btn" data-correct="true">B — Poser des questions au prospect pour le faire participer.</button>
+        <button class="opt-btn" data-correct="false">C — Parler plus fort pour attirer son attention.</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Partie 3 — Structuration de l'appel</h2>
+
+    <div class="question" data-qid="q6">
+      <div class="q-label">Q6</div>
+      <p class="q-prompt">La chronologie de l'appel — remets ces 4 missions dans l'ordre exact (de 1 à 4).</p>
+      <p class="q-hint" style="margin-bottom:10px;">Clique sur le chiffre correspondant à la position de chaque mission dans la chronologie d'un appel réussi.</p>
+
+      <div class="order-row">
+        <span class="mission-name">🎯 Attirer l'attention</span>
+        <div class="num-group" data-track="order-attirer">
+          <button class="opt-btn" data-correct="true">1</button>
+          <button class="opt-btn" data-correct="false">2</button>
+          <button class="opt-btn" data-correct="false">3</button>
+          <button class="opt-btn" data-correct="false">4</button>
+        </div>
+      </div>
+      <div class="order-row">
+        <span class="mission-name">🔍 Comprendre les enjeux</span>
+        <div class="num-group" data-track="order-comprendre">
+          <button class="opt-btn" data-correct="false">1</button>
+          <button class="opt-btn" data-correct="true">2</button>
+          <button class="opt-btn" data-correct="false">3</button>
+          <button class="opt-btn" data-correct="false">4</button>
+        </div>
+      </div>
+      <div class="order-row">
+        <span class="mission-name">💡 Créer de l'intérêt</span>
+        <div class="num-group" data-track="order-interet">
+          <button class="opt-btn" data-correct="false">1</button>
+          <button class="opt-btn" data-correct="false">2</button>
+          <button class="opt-btn" data-correct="true">3</button>
+          <button class="opt-btn" data-correct="false">4</button>
+        </div>
+      </div>
+      <div class="order-row">
+        <span class="mission-name">📅 Proposer un rendez-vous</span>
+        <div class="num-group" data-track="order-rdv">
+          <button class="opt-btn" data-correct="false">1</button>
+          <button class="opt-btn" data-correct="false">2</button>
+          <button class="opt-btn" data-correct="false">3</button>
+          <button class="opt-btn" data-correct="true">4</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="question" data-qid="q7">
+      <div class="q-label">Q7</div>
+      <p class="q-prompt">L'ouverture de la porte — rédige la phrase exacte pour proposer un rendez-vous (Mission 4).</p>
+      <p class="q-hint">Tu as passé les 3 premières étapes avec succès. Le prospect a écouté et compris qu'il y a un bénéfice potentiel pour lui. → Rédige ta phrase de proposition de RDV, naturelle et non-pressante.</p>
+      <textarea class="track-answer" data-track="q7" data-max="400" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 400</div>
+      <p class="q-hint">✅ Phrase type tirée de la fiche : <em>« Est-ce que ça vaut le coup qu'on vous montre comment cela fonctionne concrètement ? »</em></p>
+    </div>
+  </section>
+
+  <div class="score-block">
+    <span>Score QCM + Ordre des missions</span>
+    <span id="scoreDisplay">—</span>
+  </div>
+
+  <div class="submit-block">
+    <p><strong>Prêt·e à envoyer tes réponses ?</strong></p>
+    <p class="hint">Vérifie tes QCM et l'ordre des missions, puis télécharge le fichier et envoie-le à Miora.</p>
+    <div class="btn-row">
+      <button class="action" id="checkBtn">Vérifier mes réponses</button>
+      <button class="action secondary" id="downloadBtn">Télécharger mes réponses</button>
+      <button class="action secondary" id="printBtn">Imprimer</button>
+    </div>
+  </div>
+</main>
+
+<footer>Daylindo — Formation BDR · Fiche 6 — Le rôle du BDR chez Daylindo · Exercice interne</footer>
+
+<script>
+  const answered = new Set();
+  const scoredTracks = ['q1','q2','q3','q4','q5','order-attirer','order-comprendre','order-interet','order-rdv'];
+  const allTracks = document.querySelectorAll('[data-track]');
+  const totalQ = allTracks.length;
+  document.getElementById('progressTotal').textContent = totalQ;
+
+  function updateProgress(){
+    document.getElementById('progressCount').textContent = answered.size;
+    document.getElementById('progressFill').style.width = (answered.size/totalQ*100) + '%';
+  }
+
+  document.querySelectorAll('[data-track]').forEach(group => {
+    if (!group.classList.contains('options') && !group.classList.contains('num-group')) return;
+    const trackId = group.dataset.track;
+    group.querySelectorAll('.opt-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (group.dataset.answered === 'true') return;
+        group.dataset.answered = 'true';
+        group.dataset.selected = btn.textContent.trim();
+        group.dataset.wasCorrect = btn.dataset.correct;
+        group.querySelectorAll('.opt-btn').forEach(b => {
+          b.disabled = true;
+          if (b.dataset.correct === 'true') b.classList.add('correct');
+          else if (b === btn) b.classList.add('incorrect');
+        });
+        answered.add(trackId);
+        updateProgress();
+      });
+    });
+  });
+
+  document.querySelectorAll('.track-answer').forEach(ta => {
+    const max = parseInt(ta.dataset.max, 10);
+    const trackId = ta.dataset.track;
+    const counter = ta.parentElement.querySelector('.charcount .cur');
+    ta.addEventListener('input', () => {
+      if (ta.value.length > max) ta.value = ta.value.slice(0, max);
+      if (counter) counter.textContent = ta.value.length;
+      if (ta.value.trim().length > 0) answered.add(trackId); else answered.delete(trackId);
+      updateProgress();
+    });
+  });
+
+  document.getElementById('checkBtn').addEventListener('click', () => {
+    let correct = 0, done = 0;
+    scoredTracks.forEach(trackId => {
+      const group = document.querySelector(`[data-track="${trackId}"]`);
+      if (group.dataset.answered === 'true') {
+        done++;
+        if (group.dataset.wasCorrect === 'true') correct++;
+      }
+    });
+    if (done < scoredTracks.length) {
+      document.getElementById('scoreDisplay').textContent = `Réponds aux ${scoredTracks.length} QCM/ordre d'abord (${done}/${scoredTracks.length} fait)`;
+    } else {
+      document.getElementById('scoreDisplay').textContent = `${correct} / ${scoredTracks.length} bonnes réponses`;
+    }
+  });
+
+  function val(trackId){
+    const el = document.querySelector(`[data-track="${trackId}"]`);
+    if (!el) return '(vide)';
+    if (el.tagName === 'TEXTAREA') return el.value.trim() || '(vide)';
+    return el.dataset.selected || '(non répondu)';
+  }
+
+  function buildSummary(){
+    const name = document.getElementById('learnerName').value.trim() || 'Sans nom';
+    let correct = 0;
+    scoredTracks.forEach(t => { const g = document.querySelector(`[data-track="${t}"]`); if (g.dataset.wasCorrect === 'true') correct++; });
+    let lines = [`Fiche 6 — Le rôle du BDR chez Daylindo`, `Prénom : ${name}`, '',
+      `Score QCM + Ordre : ${correct} / ${scoredTracks.length}`, '',
+      `Sit. A — Erreur : ${val('sitA-erreur')} | Correction : ${val('sitA-correction')}`,
+      `Sit. B — Erreur : ${val('sitB-erreur')} | Correction : ${val('sitB-correction')}`,
+      `Sit. C — Erreur : ${val('sitC-erreur')} | Correction : ${val('sitC-correction')}`, '',
+      `Ordre — Attirer:${val('order-attirer')} Comprendre:${val('order-comprendre')} Intérêt:${val('order-interet')} RDV:${val('order-rdv')}`, '',
+      `Q7 (phrase RDV) : ${val('q7')}`
+    ];
+    return { name, text: lines.join('\n') };
+  }
+
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+    const { name, text } = buildSummary();
+    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Fiche6_${name.replace(/\s+/g,'_')}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+    const subject = encodeURIComponent(`Exercices Fiche 6 — ${name}`);
+    const body = encodeURIComponent(text);
+    window.location.href = `mailto:miora@daylindo.com?subject=${subject}&body=${body}`;
+  });
+
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+</script>
+
+</body>
+</html>
