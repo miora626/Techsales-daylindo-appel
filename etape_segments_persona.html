@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comprendre Daylindo — Par segment & persona</title>
+<style>
+  :root{
+    --bg:#f6f7f7; --surface:#ffffff; --border:#e2e5e4;
+    --ink:#1e2a28; --ink-soft:#5a6663;
+    --accent:#1f6f64; --accent-dark:#16544c; --accent-soft:#e6f0ee;
+    --good:#2e7d53; --good-bg:#eaf6ef; --bad:#b3413b; --bad-bg:#fbeceb;
+    --warn:#a8711f; --warn-bg:#fdf3e3;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55;}
+  header{padding:14px 24px;background:var(--ink);color:#fff;font-size:14px;letter-spacing:.02em;}
+  main{max-width:760px;margin:0 auto;padding:32px 20px 80px;}
+  h1{font-family:Georgia,"Times New Roman",serif;font-size:24px;margin:0 0 6px;color:var(--ink);}
+  .lead{color:var(--ink-soft);margin:0 0 14px;font-size:15px;}
+  .breadcrumb{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;font-size:13px;}
+  .breadcrumb span{background:var(--accent-soft);border:1px solid #cfe4e0;border-radius:6px;padding:5px 10px;color:var(--accent-dark);font-weight:600;}
+  .one-liner{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);
+    border-radius:8px;padding:16px 18px;font-size:15px;margin-bottom:20px;}
+  .stat-banner{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px;}
+  .stat-card{flex:1 1 140px;background:var(--surface);border:1px solid var(--border);border-radius:8px;
+    padding:12px 14px;text-align:center;}
+  .stat-card .num{font-size:20px;font-weight:700;color:var(--accent-dark);display:block;}
+  .stat-card .lbl{font-size:11.5px;color:var(--ink-soft);}
+  .stat-note{font-size:12px;color:var(--ink-soft);margin:-18px 0 24px;font-style:italic;}
+  section{margin-bottom:36px;}
+  section > h2{font-size:17px;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:18px;}
+  .segment-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:16px;}
+  .segment-title{font-size:16px;font-weight:700;margin:0 0 4px;}
+  .segment-sub{font-size:13px;color:var(--ink-soft);margin:0 0 14px;}
+  .segment-caveat{background:var(--warn-bg);border:1px solid #ecd9b3;border-radius:7px;padding:10px 12px;
+    font-size:13px;color:var(--warn);margin:10px 0 14px;}
+  .block-title{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--accent-dark);margin:14px 0 8px;}
+  .pain-list{margin:0 0 4px;padding-left:0;list-style:none;font-size:13.5px;}
+  .pain-list li{padding:4px 0;}
+  .persona-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px;}
+  .persona-tags span{background:var(--accent-soft);border-radius:5px;padding:3px 9px;font-size:12px;color:var(--accent-dark);}
+  .benefit-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:4px;}
+  .benefit-item{flex:1 1 180px;background:var(--accent-soft);border-radius:7px;padding:9px 11px;font-size:12.5px;}
+  .benefit-item b{display:block;font-size:13px;color:var(--accent-dark);}
+  .pitch-box{background:#fbf9f4;border:1px solid #e8e2d4;border-left:3px solid var(--accent);
+    border-radius:7px;padding:12px 14px;font-size:13.5px;font-style:italic;margin-top:10px;}
+  .pitch-ref{font-size:11.5px;color:var(--ink-soft);margin-top:6px;font-style:normal;}
+  .persona-grid{display:flex;flex-direction:column;gap:14px;}
+  .persona-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;}
+  .persona-name{font-size:15px;font-weight:700;margin:0 0 2px;}
+  .persona-titles{font-size:12.5px;color:var(--ink-soft);margin:0 0 8px;}
+  .persona-problem{font-size:13.5px;margin-bottom:8px;}
+  .persona-cross{font-size:12.5px;background:var(--warn-bg);border-radius:6px;padding:8px 10px;color:var(--warn);margin-top:8px;}
+  .instructions{background:var(--accent-soft);border:1px solid #cfe4e0;border-radius:8px;padding:14px 16px;font-size:14px;margin-bottom:22px;}
+  .name-field{margin-bottom:24px;}
+  .name-field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;}
+  .name-field input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:6px;font-size:15px;font-family:inherit;}
+  .progress-wrap{margin-bottom:26px;}
+  .progress-label{font-size:13px;font-weight:600;margin-bottom:6px;}
+  .progress-bar{height:8px;background:var(--border);border-radius:6px;overflow:hidden;}
+  .progress-fill{height:100%;width:0%;background:var(--accent);transition:width .25s ease;}
+  .question{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 18px 20px;margin-bottom:16px;}
+  .q-label{font-size:12px;font-weight:700;color:var(--accent-dark);margin-bottom:6px;}
+  .q-prompt{font-size:14.5px;margin:0 0 10px;}
+  .q-prompt .quote{font-style:italic;color:var(--ink-soft);}
+  .options{display:flex;flex-direction:column;gap:8px;}
+  .opt-btn{text-align:left;padding:9px 13px;border:1px solid var(--border);border-radius:7px;background:#fff;
+    cursor:pointer;font-size:13.5px;font-family:inherit;color:var(--ink);}
+  .opt-btn:hover{border-color:var(--accent);}
+  .opt-btn.correct{background:var(--good-bg);border-color:var(--good);color:var(--good);font-weight:600;}
+  .opt-btn.incorrect{background:var(--bad-bg);border-color:var(--bad);color:var(--bad);}
+  .opt-btn:disabled{cursor:default;}
+  .choice-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px;}
+  .choice-row .opt-btn{flex:1 1 auto;text-align:center;min-width:150px;}
+  .sub-label{font-size:12.5px;font-weight:700;color:var(--ink);margin:12px 0 6px;}
+  .q-hint{font-size:12.5px;color:var(--ink-soft);margin:8px 0 0;}
+  .q-hint.edge{background:var(--warn-bg);border-radius:6px;padding:8px 10px;color:var(--warn);}
+  textarea{width:100%;min-height:65px;padding:11px 13px;border:1px solid var(--border);border-radius:7px;
+    font-family:inherit;font-size:13.5px;resize:vertical;}
+  .charcount{font-size:11.5px;color:var(--ink-soft);text-align:right;margin-top:4px;}
+  .score-block{display:flex;align-items:center;justify-content:space-between;background:var(--surface);
+    border:1px solid var(--border);border-radius:10px;padding:14px 18px;font-size:14px;font-weight:600;margin-bottom:24px;}
+  #scoreDisplay{color:var(--accent-dark);}
+  .submit-block{border-top:1px solid var(--border);padding-top:22px;}
+  .submit-block p{margin:0 0 6px;font-size:14px;}
+  .hint{color:var(--ink-soft);font-size:13px;margin-bottom:16px;}
+  .btn-row{display:flex;flex-wrap:wrap;gap:10px;}
+  button.action{padding:11px 18px;border-radius:7px;border:1px solid var(--accent);background:var(--accent);
+    color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
+  button.action:hover{background:var(--accent-dark);}
+  button.secondary{background:#fff;color:var(--accent-dark);}
+  .next-link{display:block;text-align:center;background:var(--ink);color:#fff;text-decoration:none;
+    padding:14px;border-radius:8px;font-size:14px;font-weight:600;margin-top:10px;}
+  footer{text-align:center;font-size:12px;color:var(--ink-soft);padding:20px 0 40px;}
+  @media print{header, .submit-block, .instructions{display:none;}}
+</style>
+</head>
+<body>
+
+<header>Formation BDR — Daylindo</header>
+
+<main>
+  <h1>Comprendre Daylindo par segment & persona</h1>
+  <p class="lead">Avant de pitcher, tu dois savoir à qui tu parles et pourquoi ça les intéresse. Cette étape te prépare à adapter ton discours à chaque interlocuteur.</p>
+
+  <div class="breadcrumb">
+    <span>✓ Fiches 1–7</span><span>📍 Segments & Personas (ici)</span><span>🎯 Pitchs Cold Call</span>
+  </div>
+
+  <div class="one-liner">
+    💡 <strong>Daylindo en une phrase :</strong> Daylindo structure, déploie et trace la transmission des savoir-faire là où ils se forment réellement — en situation de travail, par les formateurs terrain internes — et produit des compétences prouvées, traçables et finançables.
+  </div>
+
+  <div class="stat-banner">
+    <div class="stat-card"><span class="num">6 000+</span><span class="lbl">collaborateurs accompagnés</span></div>
+    <div class="stat-card"><span class="num">−40%</span><span class="lbl">temps d'intégration</span></div>
+    <div class="stat-card"><span class="num">−50%</span><span class="lbl">turnover précoce</span></div>
+    <div class="stat-card"><span class="num">1k–2,5k€</span><span class="lbl">récupérables / collaborateur (OPCO)</span></div>
+  </div>
+  <p class="stat-note">Ces 4 chiffres correspondent à ce qui est publié sur la page Preuves de Daylindo. Les chiffres qui apparaissaient précédemment dans les accroches S2 (pertes en €, % de départs seniors) ont été retirés faute de source confirmée — à réintégrer une fois validés.</p>
+
+  <section>
+    <h2>Les 3 segments BDR — qui sont-ils, que veulent-ils ?</h2>
+
+    <div class="segment-card">
+      <p class="segment-title">💰 S1 — Turnover & coûts d'intégration</p>
+      <p class="segment-sub">Intérim · Saisonniers · Services à forte rotation · Logistique · BTP (volet main-d'œuvre) · Retail mono-site</p>
+
+      <div class="block-title">🎯 Problèmes reconnus</div>
+      <ul class="pain-list">
+        <li>⚠️ Fort turnover → coût élevé de l'intégration permanente</li>
+        <li>⚠️ Recrues en masse qui coûtent cher → besoin d'optimiser</li>
+        <li>⚠️ Financements OPCO non valorisés — argent laissé sur la table</li>
+        <li>⚠️ Intégration non structurée → erreurs et lenteur</li>
+      </ul>
+
+      <div class="block-title">👥 Personas cibles</div>
+      <div class="persona-tags"><span>👥 DRH</span><span>👥 Resp. Formation</span><span>⚙️ Dir. exploitation</span><span>⚙️ Dir. commercial</span><span>⚙️ Dir. d'agence</span></div>
+
+      <div class="block-title">✅ Ce que Daylindo apporte</div>
+      <div class="benefit-row">
+        <div class="benefit-item"><b>1 000€–2 500€</b>récupérés par collaborateur via OPCO/AFEST — le coût devient investissement</div>
+        <div class="benefit-item"><b>−40% intégration</b>les nouvelles recrues sont opérationnelles bien plus vite</div>
+        <div class="benefit-item"><b>Automatisation</b>parcours structurés, suivi automatique, dossiers OPCO préparés</div>
+      </div>
+
+      <div class="block-title">🎤 Angle pitch S1</div>
+      <div class="pitch-box">« Je vous appelle parce que je pense que vous êtes confronté à une double contrainte que l'on voit partout : former vite des collaborateurs qui arrivent en masse, et maîtriser le coût de cette intégration qui se répète à chaque cycle. On optimise le parcours d'intégration directement au poste, et une partie peut être financée par les OPCO — est-ce que vous avez 20–30 minutes cette semaine ? »</div>
+      <p class="pitch-ref">Réf. : Supplay · Adéquat · Grands acteurs logistique · Pitch S1a/S1b</p>
+    </div>
+
+    <div class="segment-card">
+      <p class="segment-title">🔧 S2 — Gestes métiers & savoir-faire critiques</p>
+      <p class="segment-sub">Industrie · Énergie · Télécom · Aéronautique · Secteurs réglementés · BTP technique</p>
+
+      <div class="segment-caveat">⚠️ <strong>Transport — cas à part :</strong> métiers très encadrés par des protocoles de sécurité. L'enjeu Daylindo n'est souvent pas l'AFEST au sens strict, mais le suivi du parcours de formation et la traçabilité. Ne jamais forcer un argument AFEST ici, et ne jamais amener le financement de façon insistante — vérifie toujours le contexte avant.</div>
+      <div class="segment-caveat">⚠️ <strong>Agroalimentaire — à évaluer poste par poste :</strong> certains métiers de production ressemblent davantage à S1 (tâches simples, turnover élevé) ; d'autres relèvent bien de S2. Raisonne métier par métier, ne généralise pas.</div>
+      <div class="segment-caveat">⚠️ <strong>Santé — hybride, pas purement S2 :</strong> combine turnover, compétences spécifiques ET fidélisation. La priorité n°1 en santé est souvent de former vite et efficacement — pas la capitalisation d'un savoir-faire expert comme en industrie lourde. Adapte l'angle : vitesse + attractivité/fidélisation plutôt que "perte de savoir-faire".</div>
+
+      <div class="block-title">🎯 Problèmes reconnus</div>
+      <ul class="pain-list">
+        <li>⚠️ Perte de savoir-faire critique quand les experts partent</li>
+        <li>⚠️ Gestes techniques transmis de façon informelle et non traçable</li>
+        <li>⚠️ Conformité réglementaire difficile à prouver (habilitations, audits)</li>
+        <li>⚠️ Coût caché : arrêts de ligne, rebuts, incidents faute de compétences tracées</li>
+      </ul>
+
+      <div class="block-title">👥 Personas cibles</div>
+      <div class="persona-tags"><span>👥 DRH</span><span>📊 Dir. Formation / L&D</span><span>⚙️ Dir. Production</span><span>⚙️ Dir. Opérations</span><span>⚙️ Resp. HSE / Conformité</span><span>⚙️ Resp. Transmission Savoirs</span></div>
+
+      <div class="block-title">✅ Ce que Daylindo apporte</div>
+      <div class="benefit-row">
+        <div class="benefit-item"><b>Sécurisation</b>les gestes critiques sont capturés, validés, tracés avant les départs seniors</div>
+        <div class="benefit-item"><b>Conformité prouvée</b>chaque compétence est opposable pour les audits, habilitations, OPCO</div>
+      </div>
+
+      <div class="block-title">🎤 Angles pitch S2</div>
+      <div class="pitch-box"><strong>Coût caché :</strong> « On voit souvent, chez les industriels, des pertes liées au manque de traçabilité des compétences terrain — lignes arrêtées, rebuts, erreurs évitables. Ça vous parle, ce genre de sujet ? »</div>
+      <div class="pitch-box" style="margin-top:8px;"><strong>Départs seniors :</strong> « Une bonne partie de vos collaborateurs les plus expérimentés partiront dans les prochaines années — et avec eux, des savoir-faire qui n'ont jamais vraiment été documentés. Vous avez ce risque identifié ? »</div>
+      <p class="pitch-ref">Réf. : Orange · Thalès · Saur · Dekra · Pitch S2a / S2c / S2d</p>
+    </div>
+
+    <div class="segment-card">
+      <p class="segment-title">🏦 S3 — Réseaux multi-sites</p>
+      <p class="segment-sub">Franchise · Bancaire · Assurance · Réseaux boutiques · Retail multi-sites · Agences intérim (réseau)</p>
+
+      <div class="block-title">🎯 Problèmes reconnus</div>
+      <ul class="pain-list">
+        <li>⚠️ Hétérogénéité des pratiques d'un site à l'autre</li>
+        <li>⚠️ Aucune visibilité centrale sur les compétences terrain par site</li>
+        <li>⚠️ Onboarding des permanents/managers non standardisé</li>
+        <li>⚠️ Financement OPCO des permanents sous-exploité</li>
+      </ul>
+
+      <div class="block-title">👥 Personas cibles</div>
+      <div class="persona-tags"><span>👥 DRH groupe</span><span>📊 Dir. Formation</span><span>⚙️ Dir. Réseau</span><span>⚙️ Dir. Exploitation</span><span>⚙️ Resp. Réseau</span></div>
+
+      <div class="block-title">✅ Ce que Daylindo apporte</div>
+      <div class="benefit-row">
+        <div class="benefit-item"><b>Visibilité centrale</b>tableau de bord temps réel des compétences par site, écarts identifiés</div>
+        <div class="benefit-item"><b>Homogénéisation</b>référentiel commun déployé sur tous les sites, pratiques standardisées</div>
+        <div class="benefit-item"><b>2 500€/pers.</b>gain par permanent en agence via financement structuré OPCO</div>
+      </div>
+
+      <div class="block-title">🎤 Angle pitch S3</div>
+      <div class="pitch-box">« Je vous appelle parce que je pense que vous avez un défi que l'on voit chez tous les réseaux : des dizaines d'agences, des centaines de collaborateurs — et très peu de visibilité sur l'homogénéité des pratiques et des compétences d'une agence à l'autre. Vous avez ce sujet chez vous ? »</div>
+      <p class="pitch-ref">Réf. : Supplay · Adéquat · Réseau franchises · Pitch S3a/S3b</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Les 3 personas — comment leur parler ?</h2>
+    <div class="persona-grid">
+      <div class="persona-card">
+        <p class="persona-name">👥 RH — DRH</p>
+        <p class="persona-titles">DRH · Resp. RH · Directeur des relations sociales</p>
+        <p class="persona-problem">Son problème : les gens partent, les équipes sont instables, l'intégration recommence à zéro.</p>
+        <div class="persona-tags"><span>Turnover</span><span>Fidélisation</span><span>Intégration</span><span>Engagement</span><span>Financement OPCO</span></div>
+        <p class="q-hint" style="margin-top:8px;">Le financement est le 5ᵉ mot-clé, pas le 1ᵉʳ — à amener en réponse, jamais en ouverture.</p>
+      </div>
+
+      <div class="persona-card">
+        <p class="persona-name">⚙️ Opérationnel</p>
+        <p class="persona-titles">Dir. Production · Dir. Exploitation · Manager terrain · Resp. Production</p>
+        <p class="persona-problem">Son problème : les erreurs coûtent cher, les nouvelles recrues ne tiennent pas la cadence, et il n'a pas le temps de former.</p>
+        <div class="persona-tags"><span>Efficacité</span><span>Rapidité</span><span>Moins d'erreurs</span><span>Performance</span><span>Cadence</span></div>
+        <p class="persona-cross">⚠️ Sa priorité change selon le segment : en S1 (turnover), il veut de la rapidité et moins d'erreurs. En S2 (savoir-faire critique), ce même titre de poste veut avant tout sécuriser une transmission avant un départ clé — la rapidité n'est pas son sujet. Identifie toujours le segment avant de choisir l'angle.</p>
+      </div>
+
+      <div class="persona-card">
+        <p class="persona-name">📊 Resp. Formation — L&D</p>
+        <p class="persona-titles">Dir. Formation · Responsable L&D · Dir. académie interne</p>
+        <p class="persona-problem">Son problème : il fait beaucoup sur le terrain mais n'a aucune visibilité, et ne peut pas prouver ce qui a été appris.</p>
+        <div class="persona-tags"><span>Méthode</span><span>Visibilité</span><span>Suivi</span><span>Pilotage</span><span>Compétences prouvées</span><span>AFEST</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>🎯 Exercice de validation — 6 cas concrets</h2>
+    <p class="q-hint" style="margin-bottom:16px;">Pour chaque appel simulé, identifie le segment cible, le persona qui parle, et rédige une phrase d'accroche adaptée. Tu t'entraînes à switcher instantanément de contexte — exactement comme en cold call réel.</p>
+
+    <div class="instructions">
+      <strong>Instructions :</strong> Pour chaque cas, sélectionne le segment et le persona, puis rédige ton accroche. Clique sur « Vérifier » puis « Télécharger » pour envoyer à Miora.
+    </div>
+
+    <div class="name-field">
+      <label for="learnerName">Ton prénom</label>
+      <input type="text" id="learnerName" placeholder="Ton prénom">
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-label">Progression — <span id="progressCount">0</span> / <span id="progressTotal">?</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <div class="question" data-qid="c1">
+      <div class="q-label">1 — Contexte de l'appel sortant</div>
+      <p class="q-prompt">📞 Tu appelles le DRH d'une entreprise d'intérim. Il te dit : <span class="quote">« On a 400 intérimaires qui tournent chaque mois. Le coût de leur intégration est une vraie charge — et je sais qu'on ne récupère pas tout ce qu'on pourrait auprès des OPCO. »</span></p>
+      <div class="sub-label">Quel segment ?</div>
+      <div class="choice-row" data-track="c1-segment">
+        <button class="opt-btn" data-correct="true">💰 S1 — Turnover & coûts</button>
+        <button class="opt-btn" data-correct="false">🔧 S2 — Gestes métiers</button>
+        <button class="opt-btn" data-correct="false">🏦 S3 — Réseaux multi-sites</button>
+      </div>
+      <div class="sub-label">Quel persona ?</div>
+      <div class="choice-row" data-track="c1-persona">
+        <button class="opt-btn" data-correct="true">👥 RH / DRH</button>
+        <button class="opt-btn" data-correct="false">⚙️ Opérationnel</button>
+        <button class="opt-btn" data-correct="false">📊 Resp. Formation / L&D</button>
+      </div>
+      <div class="sub-label">Ta phrase d'accroche adaptée</div>
+      <textarea class="track-answer" data-track="c1-accroche" data-max="400" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 400</div>
+    </div>
+
+    <div class="question" data-qid="c2">
+      <div class="q-label">2 — Contexte de l'appel sortant</div>
+      <p class="q-prompt">📞 Tu appelles un Directeur de production dans une usine. Il te dit : <span class="quote">« On a des opérateurs confirmés qui partent à la retraite dans les 2 prochaines années. Leurs gestes, on ne sait pas comment les garder — c'est dans leur tête depuis 20 ans. »</span></p>
+      <div class="sub-label">Quel segment ?</div>
+      <div class="choice-row" data-track="c2-segment">
+        <button class="opt-btn" data-correct="false">💰 S1 — Turnover & coûts</button>
+        <button class="opt-btn" data-correct="true">🔧 S2 — Gestes métiers</button>
+        <button class="opt-btn" data-correct="false">🏦 S3 — Réseaux multi-sites</button>
+      </div>
+      <div class="sub-label">Quel persona ?</div>
+      <div class="choice-row" data-track="c2-persona">
+        <button class="opt-btn" data-correct="false">👥 RH / DRH</button>
+        <button class="opt-btn" data-correct="true">⚙️ Opérationnel</button>
+        <button class="opt-btn" data-correct="false">📊 Resp. Formation / L&D</button>
+      </div>
+      <div class="sub-label">Ta phrase d'accroche adaptée</div>
+      <textarea class="track-answer" data-track="c2-accroche" data-max="400" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 400</div>
+    </div>
+
+    <div class="question" data-qid="c3">
+      <div class="q-label">3 — Contexte de l'appel sortant</div>
+      <p class="q-prompt">📞 Tu appelles une Directrice Formation d'un réseau bancaire de 60 agences. Elle te dit : <span class="quote">« On a le même parcours d'intégration pour tous, mais je n'ai aucun moyen de savoir si chaque agence l'applique vraiment et si les collaborateurs ont vraiment acquis les compétences. »</span></p>
+      <div class="sub-label">Quel segment ?</div>
+      <div class="choice-row" data-track="c3-segment">
+        <button class="opt-btn" data-correct="false">💰 S1 — Turnover & coûts</button>
+        <button class="opt-btn" data-correct="false">🔧 S2 — Gestes métiers</button>
+        <button class="opt-btn" data-correct="true">🏦 S3 — Réseaux multi-sites</button>
+      </div>
+      <div class="sub-label">Quel persona ?</div>
+      <div class="choice-row" data-track="c3-persona">
+        <button class="opt-btn" data-correct="false">👥 RH / DRH</button>
+        <button class="opt-btn" data-correct="false">⚙️ Opérationnel</button>
+        <button class="opt-btn" data-correct="true">📊 Resp. Formation / L&D</button>
+      </div>
+      <div class="sub-label">Ta phrase d'accroche adaptée</div>
+      <textarea class="track-answer" data-track="c3-accroche" data-max="400" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 400</div>
+    </div>
+
+    <div class="question" data-qid="c4">
+      <div class="q-label">4 — Contexte de l'appel — PIVOT</div>
+      <p class="q-prompt">📞 Tu appelles pour parler au DRH d'une entreprise logistique (S1 — turnover). Le standard te transfère au Directeur d'exploitation. Il te dit : <span class="quote">« Les nouveaux, ils ne sont pas à la hauteur avant 3 semaines. On perd beaucoup en productivité. »</span></p>
+      <p class="q-hint edge">Le segment de l'entreprise ne change pas — c'est le persona qui change. Abandonne l'angle financement, parle productivité.</p>
+      <div class="sub-label">Quel segment reste-t-il ?</div>
+      <div class="choice-row" data-track="c4-segment">
+        <button class="opt-btn" data-correct="true">💰 S1 — Turnover & coûts</button>
+        <button class="opt-btn" data-correct="false">🔧 S2 — Gestes métiers</button>
+        <button class="opt-btn" data-correct="false">🏦 S3 — Réseaux multi-sites</button>
+      </div>
+      <div class="sub-label">Quel persona est devant toi maintenant ?</div>
+      <div class="choice-row" data-track="c4-persona">
+        <button class="opt-btn" data-correct="false">👥 RH / DRH</button>
+        <button class="opt-btn" data-correct="true">⚙️ Opérationnel</button>
+        <button class="opt-btn" data-correct="false">📊 Resp. Formation / L&D</button>
+      </div>
+      <div class="sub-label">Ta phrase pivotée — abandonne le financement, parle productivité</div>
+      <textarea class="track-answer" data-track="c4-accroche" data-max="400" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 400</div>
+    </div>
+
+    <div class="question" data-qid="c5">
+      <div class="q-label">5 — Contexte de l'appel — Conformité (cas frontière)</div>
+      <p class="q-prompt">📞 Tu appelles un Responsable HSE dans une entreprise de l'énergie. Il te dit : <span class="quote">« On a eu un audit la semaine dernière. On n'a pas pu prouver que certains opérateurs avaient bien les habilitations à jour. Le directeur est furieux. »</span></p>
+      <p class="q-hint edge">Cas volontairement à la frontière : le titre est HSE/Opérationnel, mais le besoin exprimé — prouver une compétence lors d'un audit — est exactement le problème du persona L&D. Les deux réponses sont acceptées si ta justification mentionne la traçabilité/preuve.</p>
+      <div class="sub-label">Quel segment ?</div>
+      <div class="choice-row" data-track="c5-segment">
+        <button class="opt-btn" data-correct="false">💰 S1 — Turnover & coûts</button>
+        <button class="opt-btn" data-correct="true">🔧 S2 — Gestes métiers</button>
+        <button class="opt-btn" data-correct="false">🏦 S3 — Réseaux multi-sites</button>
+      </div>
+      <div class="sub-label">Quel persona ? (justifie ton choix dans l'accroche ci-dessous)</div>
+      <div class="choice-row" data-track="c5-persona">
+        <button class="opt-btn" data-correct="true">⚙️ Opérationnel / HSE</button>
+        <button class="opt-btn" data-correct="true">📊 Resp. Formation / L&D</button>
+        <button class="opt-btn" data-correct="false">👥 RH / DRH</button>
+      </div>
+      <div class="sub-label">Ta phrase d'accroche — mets en avant la traçabilité opposable</div>
+      <textarea class="track-answer" data-track="c5-accroche" data-max="400" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 400</div>
+    </div>
+
+    <div class="question" data-qid="c6">
+      <div class="q-label">6 — Contexte de l'appel — Transport (prudence)</div>
+      <p class="q-prompt">📞 Tu appelles un Responsable Formation d'une entreprise de transport routier. Il te dit : <span class="quote">« On doit suivre les habilitations et les formations obligatoires de nos conducteurs, mais on n'a pas un suivi centralisé — c'est un vrai casse-tête pour les contrôles. »</span></p>
+      <p class="q-hint edge">Secteur à traiter avec prudence : ne force jamais un argument AFEST ici, et n'amène jamais le financement de façon insistante. L'angle qui fonctionne est le suivi/la traçabilité du parcours — pas la pédagogie ni l'argent.</p>
+      <div class="sub-label">Quel segment ?</div>
+      <div class="choice-row" data-track="c6-segment">
+        <button class="opt-btn" data-correct="false">💰 S1 — Turnover & coûts</button>
+        <button class="opt-btn" data-correct="true">🔧 S2 — Gestes métiers (avec prudence)</button>
+        <button class="opt-btn" data-correct="false">🏦 S3 — Réseaux multi-sites</button>
+      </div>
+      <div class="sub-label">Quel persona ?</div>
+      <div class="choice-row" data-track="c6-persona">
+        <button class="opt-btn" data-correct="false">👥 RH / DRH</button>
+        <button class="opt-btn" data-correct="false">⚙️ Opérationnel</button>
+        <button class="opt-btn" data-correct="true">📊 Resp. Formation / L&D</button>
+      </div>
+      <div class="sub-label">Ta phrase d'accroche — angle suivi/traçabilité, pas AFEST ni financement</div>
+      <textarea class="track-answer" data-track="c6-accroche" data-max="400" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 400</div>
+    </div>
+
+    <div class="score-block">
+      <span>Score Segment + Persona</span>
+      <span id="scoreDisplay">—</span>
+    </div>
+
+    <div class="submit-block">
+      <p><strong>Prêt·e à envoyer tes réponses ?</strong></p>
+      <p class="hint">Vérifie tes 6 cas, puis télécharge le fichier et envoie-le à Miora.</p>
+      <div class="btn-row">
+        <button class="action" id="checkBtn">Vérifier mes 6 cas</button>
+        <button class="action secondary" id="downloadBtn">Télécharger mes réponses</button>
+        <button class="action secondary" id="printBtn">Imprimer</button>
+      </div>
+    </div>
+
+    <a class="next-link" href="https://andrianalymioratiana-dotcom.github.io/Pitch-techsales-daylindo/daylindo_pitchs_cold_call.html">Accéder aux Pitchs Cold Call →</a>
+  </section>
+</main>
+
+<footer>Daylindo — Formation BDR · Étape intermédiaire : Segments & Personas · Exercice interne</footer>
+
+<script>
+  const answered = new Set();
+  const scoredTracks = ['c1-segment','c1-persona','c2-segment','c2-persona','c3-segment','c3-persona',
+    'c4-segment','c4-persona','c5-segment','c5-persona','c6-segment','c6-persona'];
+  const allTracks = document.querySelectorAll('[data-track]');
+  const totalQ = allTracks.length;
+  document.getElementById('progressTotal').textContent = totalQ;
+
+  function updateProgress(){
+    document.getElementById('progressCount').textContent = answered.size;
+    document.getElementById('progressFill').style.width = (answered.size/totalQ*100) + '%';
+  }
+
+  document.querySelectorAll('[data-track]').forEach(group => {
+    if (!group.classList.contains('choice-row')) return;
+    const trackId = group.dataset.track;
+    const isMulti = trackId === 'c5-persona'; // frontier case: 2 correct options
+    group.querySelectorAll('.opt-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (group.dataset.answered === 'true') return;
+        group.dataset.answered = 'true';
+        group.dataset.selected = btn.textContent.trim();
+        group.dataset.wasCorrect = btn.dataset.correct;
+        group.querySelectorAll('.opt-btn').forEach(b => {
+          b.disabled = true;
+          if (b.dataset.correct === 'true') b.classList.add('correct');
+          else if (b === btn) b.classList.add('incorrect');
+        });
+        answered.add(trackId);
+        updateProgress();
+      });
+    });
+  });
+
+  document.querySelectorAll('.track-answer').forEach(ta => {
+    const max = parseInt(ta.dataset.max, 10);
+    const trackId = ta.dataset.track;
+    const counter = ta.parentElement.querySelector('.charcount .cur');
+    ta.addEventListener('input', () => {
+      if (ta.value.length > max) ta.value = ta.value.slice(0, max);
+      if (counter) counter.textContent = ta.value.length;
+      if (ta.value.trim().length > 0) answered.add(trackId); else answered.delete(trackId);
+      updateProgress();
+    });
+  });
+
+  document.getElementById('checkBtn').addEventListener('click', () => {
+    let correct = 0, done = 0;
+    scoredTracks.forEach(trackId => {
+      const group = document.querySelector(`[data-track="${trackId}"]`);
+      if (group.dataset.answered === 'true') {
+        done++;
+        if (group.dataset.wasCorrect === 'true') correct++;
+      }
+    });
+    if (done < scoredTracks.length) {
+      document.getElementById('scoreDisplay').textContent = `Réponds aux ${scoredTracks.length} segments/personas d'abord (${done}/${scoredTracks.length} fait)`;
+    } else {
+      document.getElementById('scoreDisplay').textContent = `${correct} / ${scoredTracks.length} bonnes réponses`;
+    }
+  });
+
+  function val(trackId){
+    const el = document.querySelector(`[data-track="${trackId}"]`);
+    if (!el) return '(vide)';
+    if (el.tagName === 'TEXTAREA') return el.value.trim() || '(vide)';
+    return el.dataset.selected || '(non répondu)';
+  }
+
+  function buildSummary(){
+    const name = document.getElementById('learnerName').value.trim() || 'Sans nom';
+    let correct = 0;
+    scoredTracks.forEach(t => { const g = document.querySelector(`[data-track="${t}"]`); if (g.dataset.wasCorrect === 'true') correct++; });
+    let lines = [`Comprendre Daylindo — Segments & Personas`, `Prénom : ${name}`, '',
+      `Score Segment + Persona : ${correct} / ${scoredTracks.length}`, ''];
+    ['c1','c2','c3','c4','c5','c6'].forEach(c => {
+      lines.push(`Cas ${c.slice(1)} — Segment : ${val(c+'-segment')} | Persona : ${val(c+'-persona')} | Accroche : ${val(c+'-accroche')}`);
+    });
+    return { name, text: lines.join('\n') };
+  }
+
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+    const { name, text } = buildSummary();
+    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `SegmentsPersonas_${name.replace(/\s+/g,'_')}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+    const subject = encodeURIComponent(`Exercice Segments & Personas — ${name}`);
+    const body = encodeURIComponent(text);
+    window.location.href = `mailto:miora@daylindo.com?subject=${subject}&body=${body}`;
+  });
+
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+</script>
+
+</body>
+</html>
