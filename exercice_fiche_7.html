@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche 7 — Le parcours client chez Daylindo</title>
+<style>
+  :root{
+    --bg:#f6f7f7; --surface:#ffffff; --border:#e2e5e4;
+    --ink:#1e2a28; --ink-soft:#5a6663;
+    --accent:#1f6f64; --accent-dark:#16544c; --accent-soft:#e6f0ee;
+    --good:#2e7d53; --good-bg:#eaf6ef; --bad:#b3413b; --bad-bg:#fbeceb;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55;}
+  header{padding:14px 24px;background:var(--ink);color:#fff;font-size:14px;letter-spacing:.02em;}
+  main{max-width:700px;margin:0 auto;padding:32px 20px 80px;}
+  h1{font-family:Georgia,"Times New Roman",serif;font-size:23px;margin:0 0 6px;color:var(--ink);}
+  .lead{color:var(--ink-soft);margin:0 0 14px;font-size:15px;}
+  .meta{font-size:13px;color:var(--accent-dark);font-weight:600;margin-bottom:14px;}
+  .stage-legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+  .stage-legend span{background:var(--accent-soft);border:1px solid #cfe4e0;border-radius:6px;
+    padding:6px 11px;font-size:12px;font-weight:600;color:var(--accent-dark);}
+  .instructions{background:var(--accent-soft);border:1px solid #cfe4e0;border-radius:8px;padding:14px 16px;font-size:14px;margin-bottom:22px;}
+  .name-field{margin-bottom:24px;}
+  .name-field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;}
+  .name-field input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:6px;font-size:15px;font-family:inherit;}
+  .progress-wrap{margin-bottom:30px;}
+  .progress-label{font-size:13px;font-weight:600;margin-bottom:6px;}
+  .progress-bar{height:8px;background:var(--border);border-radius:6px;overflow:hidden;}
+  .progress-fill{height:100%;width:0%;background:var(--accent);transition:width .25s ease;}
+  section{margin-bottom:34px;}
+  section > h2{font-size:16px;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:20px;}
+  .question{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 18px 20px;margin-bottom:16px;}
+  .q-label{font-size:12px;font-weight:700;color:var(--accent-dark);margin-bottom:6px;}
+  .q-prompt{font-size:15px;font-weight:600;margin:0 0 6px;}
+  .q-prompt .quote{font-style:italic;color:var(--ink-soft);font-weight:500;}
+  .options{display:flex;flex-direction:column;gap:8px;}
+  .opt-btn{text-align:left;padding:10px 14px;border:1px solid var(--border);border-radius:7px;background:#fff;
+    cursor:pointer;font-size:14px;font-family:inherit;color:var(--ink);}
+  .opt-btn:hover{border-color:var(--accent);}
+  .opt-btn.correct{background:var(--good-bg);border-color:var(--good);color:var(--good);font-weight:600;}
+  .opt-btn.incorrect{background:var(--bad-bg);border-color:var(--bad);color:var(--bad);}
+  .opt-btn:disabled{cursor:default;}
+  .stage-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 12px;}
+  .stage-row .opt-btn{flex:1 1 auto;text-align:center;min-width:100px;font-size:13px;padding:8px 8px;}
+  .q-hint{font-size:13px;color:var(--ink-soft);margin:8px 0 0;}
+  .sub-label{font-size:13px;font-weight:700;color:var(--ink);margin:14px 0 6px;}
+  textarea{width:100%;min-height:70px;padding:12px 14px;border:1px solid var(--border);border-radius:7px;
+    font-family:inherit;font-size:14px;resize:vertical;}
+  .charcount{font-size:12px;color:var(--ink-soft);text-align:right;margin-top:4px;}
+  .score-block{display:flex;align-items:center;justify-content:space-between;background:var(--surface);
+    border:1px solid var(--border);border-radius:10px;padding:14px 18px;font-size:14px;font-weight:600;margin-bottom:24px;}
+  #scoreDisplay{color:var(--accent-dark);}
+  .submit-block{border-top:1px solid var(--border);padding-top:22px;}
+  .submit-block p{margin:0 0 6px;font-size:14px;}
+  .hint{color:var(--ink-soft);font-size:13px;margin-bottom:16px;}
+  .btn-row{display:flex;flex-wrap:wrap;gap:10px;}
+  button.action{padding:11px 18px;border-radius:7px;border:1px solid var(--accent);background:var(--accent);
+    color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
+  button.action:hover{background:var(--accent-dark);}
+  button.secondary{background:#fff;color:var(--accent-dark);}
+  .completion{background:var(--good-bg);border:1px solid var(--good);border-radius:8px;padding:14px 16px;
+    font-size:14px;color:var(--good);margin-bottom:24px;display:none;}
+  footer{text-align:center;font-size:12px;color:var(--ink-soft);padding:20px 0 40px;}
+  @media print{header, .submit-block, .instructions{display:none;}}
+</style>
+</head>
+<body>
+
+<header>Formation BDR — Daylindo</header>
+
+<main>
+  <h1>Fiche 7 — Le parcours client chez Daylindo</h1>
+  <p class="lead">Maîtrise les 5 étapes du parcours client, identifie ton rôle précis et sache rassurer le prospect sur la suite.</p>
+  <div class="meta">~15 minutes · 4 Identifications · 4 QCM · 1 Phrase clé</div>
+
+  <div class="stage-legend">
+    <span>1 · Découverte</span>
+    <span>2 · Diagnostic</span>
+    <span>3 · Construction</span>
+    <span>4 · Mise en place</span>
+    <span>5 · Résultats</span>
+  </div>
+
+  <div class="instructions">
+    <strong>Instructions :</strong> Partie 1 — sélectionne l'étape et explique brièvement. Partie 2 — QCM. Partie 3 — rédige la phrase exacte de la fiche pour rassurer le prospect.
+    Clique sur « Vérifier » puis « Télécharger » pour envoyer à Miora.
+  </div>
+
+  <div class="name-field">
+    <label for="learnerName">Ton prénom</label>
+    <input type="text" id="learnerName" placeholder="Ton prénom">
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">Progression — <span id="progressCount">0</span> / <span id="progressTotal">?</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <section>
+    <h2>Partie 1 — Le relais BDR-Expert : identifie l'étape du parcours</h2>
+    <p class="q-hint" style="margin-bottom:16px;">Pour chaque situation, identifie à quelle étape du parcours client elle correspond.</p>
+
+    <div class="question" data-qid="sitA">
+      <div class="q-label">📍 Situation A</div>
+      <p class="q-prompt">L'équipe Daylindo vient sur le terrain pour outiller et former les formateurs terrain de l'entreprise et mettre en œuvre les outils.</p>
+      <div class="sub-label">Quelle étape ?</div>
+      <div class="stage-row" data-track="sitA-stage">
+        <button class="opt-btn" data-correct="false">1 · Découverte</button>
+        <button class="opt-btn" data-correct="false">2 · Diagnostic</button>
+        <button class="opt-btn" data-correct="false">3 · Construction</button>
+        <button class="opt-btn" data-correct="true">4 · Mise en place</button>
+        <button class="opt-btn" data-correct="false">5 · Résultats</button>
+      </div>
+      <div class="sub-label">Explique en une phrase</div>
+      <textarea class="track-answer" data-track="sitA-explain" data-max="250" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 250</div>
+    </div>
+
+    <div class="question" data-qid="sitB">
+      <div class="q-label">📍 Situation B</div>
+      <p class="q-prompt">Tu es au téléphone avec un Directeur de production. Tu lui expliques qu'il existe une démarche pour sécuriser la transmission du savoir-faire de ses équipes, et tu lui proposes un rendez-vous pour créer une première prise de conscience.</p>
+      <div class="sub-label">Quelle étape ?</div>
+      <div class="stage-row" data-track="sitB-stage">
+        <button class="opt-btn" data-correct="true">1 · Découverte</button>
+        <button class="opt-btn" data-correct="false">2 · Diagnostic</button>
+        <button class="opt-btn" data-correct="false">3 · Construction</button>
+        <button class="opt-btn" data-correct="false">4 · Mise en place</button>
+        <button class="opt-btn" data-correct="false">5 · Résultats</button>
+      </div>
+      <div class="sub-label">Explique en une phrase</div>
+      <textarea class="track-answer" data-track="sitB-explain" data-max="250" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 250</div>
+    </div>
+
+    <div class="question" data-qid="sitC">
+      <div class="q-label">📍 Situation C</div>
+      <p class="q-prompt">Le client constate que ses nouvelles recrues montent en compétences beaucoup plus vite et font moins d'erreurs, ce qui optimise son budget.</p>
+      <div class="sub-label">Quelle étape ?</div>
+      <div class="stage-row" data-track="sitC-stage">
+        <button class="opt-btn" data-correct="false">1 · Découverte</button>
+        <button class="opt-btn" data-correct="false">2 · Diagnostic</button>
+        <button class="opt-btn" data-correct="false">3 · Construction</button>
+        <button class="opt-btn" data-correct="false">4 · Mise en place</button>
+        <button class="opt-btn" data-correct="true">5 · Résultats</button>
+      </div>
+      <div class="sub-label">Explique en une phrase</div>
+      <textarea class="track-answer" data-track="sitC-explain" data-max="250" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 250</div>
+    </div>
+
+    <div class="question" data-qid="sitD">
+      <div class="q-label">📍 Situation D</div>
+      <p class="q-prompt">Lors du premier rendez-vous, un expert Daylindo pose des questions pour comprendre comment sont formées les recrues actuellement et s'il existe des formateurs terrain internes.</p>
+      <div class="sub-label">Quelle étape ?</div>
+      <div class="stage-row" data-track="sitD-stage">
+        <button class="opt-btn" data-correct="false">1 · Découverte</button>
+        <button class="opt-btn" data-correct="true">2 · Diagnostic</button>
+        <button class="opt-btn" data-correct="false">3 · Construction</button>
+        <button class="opt-btn" data-correct="false">4 · Mise en place</button>
+        <button class="opt-btn" data-correct="false">5 · Résultats</button>
+      </div>
+      <div class="sub-label">Explique en une phrase</div>
+      <textarea class="track-answer" data-track="sitD-explain" data-max="250" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 250</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Partie 2 — QCM : Maîtriser le parcours client</h2>
+
+    <div class="question" data-qid="q1">
+      <div class="q-label">Q1</div>
+      <p class="q-prompt">Selon la fiche, à quelle étape exacte se situe le rôle du BDR ?</p>
+      <div class="options" data-track="q1">
+        <button class="opt-btn" data-correct="false">A — Lors de l'étape 3 (Construction de la solution).</button>
+        <button class="opt-btn" data-correct="true">B — Lors de l'étape 1 (Découverte).</button>
+        <button class="opt-btn" data-correct="false">C — Le BDR accompagne le client du début à la fin du projet.</button>
+      </div>
+    </div>
+
+    <div class="question" data-qid="q2">
+      <div class="q-label">Q2</div>
+      <p class="q-prompt">Que se passe-t-il lors de l'étape de « Diagnostic » ?</p>
+      <div class="options" data-track="q2">
+        <button class="opt-btn" data-correct="true">A — Un expert analyse la situation du client, ses besoins et ses pratiques actuelles.</button>
+        <button class="opt-btn" data-correct="false">B — On facture le client.</button>
+        <button class="opt-btn" data-correct="false">C — On déploie les outils directement sur le terrain.</button>
+      </div>
+    </div>
+
+    <div class="question" data-qid="q3">
+      <div class="q-label">Q3</div>
+      <p class="q-prompt">Quel est l'objectif de l'étape « Construction de la solution » ?</p>
+      <div class="options" data-track="q3">
+        <button class="opt-btn" data-correct="false">A — Mesurer les gains financiers.</button>
+        <button class="opt-btn" data-correct="true">B — Créer un dispositif sur mesure (ex : structuration des formateurs terrain, optimisation des financements).</button>
+        <button class="opt-btn" data-correct="false">C — Appeler de nouveaux prospects.</button>
+      </div>
+    </div>
+
+    <div class="question" data-qid="q4">
+      <div class="q-label">Q4</div>
+      <p class="q-prompt">Selon le texte, que se passe-t-il si le BDR ne remplit pas sa mission lors de la première étape ?</p>
+      <div class="options" data-track="q4">
+        <button class="opt-btn" data-correct="false">A — Un autre commercial prendra le relais.</button>
+        <button class="opt-btn" data-correct="true">B — Il n'y aura pas de rendez-vous, donc pas de diagnostic, et donc pas de client.</button>
+        <button class="opt-btn" data-correct="false">C — Le client passera directement à l'étape des résultats.</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Partie 3 — Rassurer le prospect</h2>
+    <div class="question" data-qid="q5">
+      <div class="q-label">Q5</div>
+      <p class="q-prompt">Comment lui réponds-tu simplement pour lui expliquer ce qui se passe après le rendez-vous ?</p>
+      <p class="q-hint">Contexte : tu es à la fin de ton appel. Le prospect a compris l'intérêt, mais il hésite à bloquer un créneau. Il te demande : <span class="quote">« D'accord pour un rendez-vous, mais concrètement, après ce rendez-vous, il se passe quoi ? »</span><br>
+      Utilise les mots exacts recommandés par la fiche — simple, rassurant, sans détails techniques. 1–2 phrases.</p>
+      <textarea class="track-answer" data-track="q5" data-max="400" placeholder="Ta réponse..."></textarea>
+      <div class="charcount"><span class="cur">0</span> / 400</div>
+      <p class="q-hint">✅ Phrase type tirée de la fiche : <em>« Après le rendez-vous, un expert analyse votre situation et construit une solution adaptée pour vous. »</em> Pas besoin d'entrer dans les détails techniques — cette phrase suffit.</p>
+    </div>
+  </section>
+
+  <div class="score-block">
+    <span>Score Identifications + QCM</span>
+    <span id="scoreDisplay">—</span>
+  </div>
+
+  <div class="submit-block">
+    <p><strong>Prêt·e à envoyer tes réponses ?</strong></p>
+    <p class="hint">Vérifie tes identifications et QCM, puis télécharge le fichier et envoie-le à Miora.</p>
+    <div class="btn-row">
+      <button class="action" id="checkBtn">Vérifier mes réponses</button>
+      <button class="action secondary" id="downloadBtn">Télécharger mes réponses</button>
+      <button class="action secondary" id="printBtn">Imprimer</button>
+    </div>
+  </div>
+
+  <div class="completion" id="completionMsg">🎉 Les 7 fiches « Connaître Daylindo » sont terminées — bravo !</div>
+</main>
+
+<footer>Daylindo — Formation BDR · Fiche 7 — Le parcours client · Exercice interne</footer>
+
+<script>
+  const answered = new Set();
+  const scoredTracks = ['sitA-stage','sitB-stage','sitC-stage','sitD-stage','q1','q2','q3','q4'];
+  const allTracks = document.querySelectorAll('[data-track]');
+  const totalQ = allTracks.length;
+  document.getElementById('progressTotal').textContent = totalQ;
+
+  function updateProgress(){
+    document.getElementById('progressCount').textContent = answered.size;
+    document.getElementById('progressFill').style.width = (answered.size/totalQ*100) + '%';
+    if (answered.size === totalQ) document.getElementById('completionMsg').style.display = 'block';
+  }
+
+  document.querySelectorAll('[data-track]').forEach(group => {
+    if (!group.classList.contains('options') && !group.classList.contains('stage-row')) return;
+    const trackId = group.dataset.track;
+    group.querySelectorAll('.opt-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (group.dataset.answered === 'true') return;
+        group.dataset.answered = 'true';
+        group.dataset.selected = btn.textContent.trim();
+        group.dataset.wasCorrect = btn.dataset.correct;
+        group.querySelectorAll('.opt-btn').forEach(b => {
+          b.disabled = true;
+          if (b.dataset.correct === 'true') b.classList.add('correct');
+          else if (b === btn) b.classList.add('incorrect');
+        });
+        answered.add(trackId);
+        updateProgress();
+      });
+    });
+  });
+
+  document.querySelectorAll('.track-answer').forEach(ta => {
+    const max = parseInt(ta.dataset.max, 10);
+    const trackId = ta.dataset.track;
+    const counter = ta.parentElement.querySelector('.charcount .cur');
+    ta.addEventListener('input', () => {
+      if (ta.value.length > max) ta.value = ta.value.slice(0, max);
+      if (counter) counter.textContent = ta.value.length;
+      if (ta.value.trim().length > 0) answered.add(trackId); else answered.delete(trackId);
+      updateProgress();
+    });
+  });
+
+  document.getElementById('checkBtn').addEventListener('click', () => {
+    let correct = 0, done = 0;
+    scoredTracks.forEach(trackId => {
+      const group = document.querySelector(`[data-track="${trackId}"]`);
+      if (group.dataset.answered === 'true') {
+        done++;
+        if (group.dataset.wasCorrect === 'true') correct++;
+      }
+    });
+    if (done < scoredTracks.length) {
+      document.getElementById('scoreDisplay').textContent = `Réponds aux ${scoredTracks.length} identifications/QCM d'abord (${done}/${scoredTracks.length} fait)`;
+    } else {
+      document.getElementById('scoreDisplay').textContent = `${correct} / ${scoredTracks.length} bonnes réponses`;
+    }
+  });
+
+  function val(trackId){
+    const el = document.querySelector(`[data-track="${trackId}"]`);
+    if (!el) return '(vide)';
+    if (el.tagName === 'TEXTAREA') return el.value.trim() || '(vide)';
+    return el.dataset.selected || '(non répondu)';
+  }
+
+  function buildSummary(){
+    const name = document.getElementById('learnerName').value.trim() || 'Sans nom';
+    let correct = 0;
+    scoredTracks.forEach(t => { const g = document.querySelector(`[data-track="${t}"]`); if (g.dataset.wasCorrect === 'true') correct++; });
+    let lines = [`Fiche 7 — Le parcours client chez Daylindo`, `Prénom : ${name}`, '',
+      `Score Identifications + QCM : ${correct} / ${scoredTracks.length}`, '',
+      `Sit. A — Étape : ${val('sitA-stage')} | Explication : ${val('sitA-explain')}`,
+      `Sit. B — Étape : ${val('sitB-stage')} | Explication : ${val('sitB-explain')}`,
+      `Sit. C — Étape : ${val('sitC-stage')} | Explication : ${val('sitC-explain')}`,
+      `Sit. D — Étape : ${val('sitD-stage')} | Explication : ${val('sitD-explain')}`, '',
+      `Q5 (phrase de réassurance) : ${val('q5')}`
+    ];
+    return { name, text: lines.join('\n') };
+  }
+
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+    const { name, text } = buildSummary();
+    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Fiche7_${name.replace(/\s+/g,'_')}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+    const subject = encodeURIComponent(`Exercices Fiche 7 — ${name}`);
+    const body = encodeURIComponent(text);
+    window.location.href = `mailto:miora@daylindo.com?subject=${subject}&body=${body}`;
+  });
+
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+</script>
+
+</body>
+</html>
